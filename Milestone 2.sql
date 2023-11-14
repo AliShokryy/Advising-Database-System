@@ -236,22 +236,22 @@ GO
 --2.2
 -----A
 GO
-	CREATE VIEW Active_Student 
+	CREATE VIEW view_Students 
 	AS 
 		SELECT * FROM STUDENT S WHERE S.financial_status=1;
 GO
 -----B
 GO
-	CREATE VIEW AllCourses_with_Prec 
+	CREATE VIEW view_Course_prerequisites 
 	AS 
-		SELECT * 
+		SELECT C1.course_id AS 'Prerequsisite Course Id' , C1.name AS 'Prerequsisite Course Name' , C1.major AS 'Prerequisite Course Major' , C1.is_offered AS 'Prerequisite Course if offered' , C1.credit_hours AS 'Prerequisite Course Credit Hours' , C1.semester AS 'Prerequisite Course Semester' ,C2.course_id AS 'Course Id' , C2.name AS 'Course Name' , C2.major AS 'Course Major' , C2.is_offered AS 'Course if offered' , C2.credit_hours AS 'Course Credit Hours' , C2.semester AS 'Course Semester'  
 		FROM Course C1
 		INNER JOIN PreqCourse_course P On(C1.course_id=P.prerequisite_course_id)
 		INNER JOIN Course C2 ON(P.course_id=C2.course_id);
 GO
 -----C
 GO
-	CREATE VIEW Instructor_with_assignedCourse
+	CREATE VIEW Instructors_AssignedCourses
 	AS
 		SELECT *
 		FROM Instructor I
@@ -260,9 +260,9 @@ GO
 GO
 -----D
 GO
-	CREATE VIEW Payments_with_Students
+	CREATE VIEW Student_Payment
 	AS
-		SELECT *
+		SELECT P.* , S.f_name + ' ' + S.l_name AS 'Student Name'
 		FROM Payment P
 		INNER JOIN Student S ON(P.student_id=S.student_id);
 GO
@@ -270,7 +270,7 @@ GO
 GO
 	CREATE VIEW Courses_Slots_Instructor
 	AS
-		SELECT C.course_id AS 'CourseID' , C.name AS 'Course Name' , S.slot_id , S.location, I.name  
+		SELECT C.course_id AS 'CourseID' , C.name AS 'Course Name' , S.slot_id, S.day, S.time , S.location, I.name  
 		FROM Course C
 		INNER JOIN Slot S ON(S.course_id = C.course_id)
 		INNER JOIN Instructor I ON(S.intsructor_id = I.intsructor_id);
@@ -279,7 +279,7 @@ GO
 GO
 	CREATE VIEW Courses_MakeupExams 
 	AS
-		SELECT C.name AS 'Course Name' , C.semester AS 'Course Semester',M.*  
+		SELECT C.name AS 'Course’s Name' , C.semester AS 'Course’s Semester', M.*  
 		FROM Course C 
 		INNER JOIN MakeUp_Exam M ON M.course_id = C.course_id
 GO
@@ -287,7 +287,7 @@ GO
 GO
 	CREATE VIEW Student_Courses_transcript
 	AS
-		SELECT S.student_id,S.f_name+' '+S.l_name AS student_name,C.course_id,C.name AS course_name,SCT.exam_type,SCT.grade AS course_grade,SCT.semester_code AS semester,I.name AS 'Instructor Name'
+		SELECT S.student_id,S.f_name+' '+S.l_name AS student_name,C.course_id,C.name AS course_name,SCT.exam_type,SCT.grade AS 'course grade',SCT.semester_code AS semester,I.name AS 'Instructor Name'
 		FROM Student S
 		INNER JOIN Student_Instructor_Course_Take SCT ON SCT.student_id = S.id
 		INNER JOIN Course C ON C.course_id = SCT.course_id 
@@ -295,7 +295,7 @@ GO
 GO
 -----H
 GO
-	CREATE VIEW Semsters_with_OfferedCourse
+	CREATE VIEW Semster_offered_Courses
 	AS
 		SELECT C.course_id AS 'Course ID',C.name AS 'Course Name',S.semster_code As 'Semster Code'
 		FROM Course C
@@ -303,7 +303,7 @@ GO
 GO
 -----I
 GO
-	CREATE VIEW GradPlan_with_Advisor
+	CREATE VIEW Advisors_Graduation_Plan
 	AS
 		SELECT G.*,A.name As 'Advisor name'
 		FROM Graduation_Plan G
