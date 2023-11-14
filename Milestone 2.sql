@@ -187,3 +187,127 @@ AS
 		CONSTRAINT fk_Installment FOREIGN KEY (payment_id) REFERENCES Payment(payment_id)  ON DELETE CASCADE ON UPDATE CASCADE 
 	);
 GO
+
+GO 
+CREATE PROC DropAllTables
+AS
+	DROP TABLE Student;
+	DROP TABLE Student_Phone;
+	DROP TABLE Course;
+	DROP TABLE PreqCourse_Course;
+	DROP TABLE Instructor;
+	DROP TABLE Instructor_Course;
+	DROP TABLE Student_Instructor_Course_Take;
+	DROP TABLE Semster;
+	DROP TABLE Course_Semster;
+	DROP TABLE Advisor;
+	DROP TABLE Slot;
+	DROP TABLE Graduation_Plan;
+	DROP TABLE GradPlan_Course;
+	DROP TABLE Request;
+	DROP TABLE MakeUp_Exam;
+	DROP TABLE Exam_Student;
+	DROP TABLE Payment;
+	DROP TABLE Installment;
+Go
+------
+GO
+CREATE PROC ClearAllTablesRecords
+AS
+	TRUNCATE TABLE Student;
+	TRUNCATE TABLE Student_Phone;
+	TRUNCATE TABLE Course;
+	TRUNCATE TABLE PreqCourse_Course;
+	TRUNCATE TABLE Instructor;
+	TRUNCATE TABLE Instructor_Course;
+	TRUNCATE TABLE Student_Instructor_Course_Take;
+	TRUNCATE TABLE Semster;
+	TRUNCATE TABLE Course_Semster;
+	TRUNCATE TABLE Advisor;
+	TRUNCATE TABLE Slot;
+	TRUNCATE TABLE Graduation_Plan;
+	TRUNCATE TABLE GradPlan_Course;
+	TRUNCATE TABLE Request;
+	TRUNCATE TABLE MakeUp_Exam;
+	TRUNCATE TABLE Exam_Student;
+	TRUNCATE TABLE Payment;
+	TRUNCATE TABLE Installment; 
+GO
+--2.2
+-----A
+GO
+	CREATE VIEW Active_Student 
+	AS 
+		SELECT * FROM STUDENT S WHERE S.financial_status=1;
+GO
+-----B
+GO
+	CREATE VIEW AllCourses_with_Prec 
+	AS 
+		SELECT * 
+		FROM Course C1
+		INNER JOIN PreqCourse_course P On(C1.course_id=P.prerequisite_course_id)
+		INNER JOIN Course C2 ON(P.course_id=C2.course_id);
+GO
+-----C
+GO
+	CREATE VIEW Instructor_with_assignedCourse
+	AS
+		SELECT *
+		FROM Instructor I
+		INNER JOIN Instructor_Course L ON(I.instructor_id=L.instructor_id)
+		INNER JOIN Course C ON(L.course_id=C.course_id);
+GO
+-----D
+GO
+	CREATE VIEW Payments_with_Students
+	AS
+		SELECT *
+		FROM Payment P
+		INNER JOIN Student S ON(P.student_id=S.student_id);
+GO
+-----E
+GO
+	CREATE VIEW Courses_Slots_Instructor
+	AS
+		SELECT C.course_id AS 'CourseID' , C.name AS 'Course Name' , S.slot_id , S.location, I.name  
+		FROM Course C
+		INNER JOIN Slot S ON(S.course_id = C.course_id)
+		INNER JOIN Instructor I ON(S.intsructor_id = I.intsructor_id);
+GO
+-----F
+GO
+	CREATE VIEW Courses_MakeupExams 
+	AS
+		SELECT C.name AS 'Course Name' , C.semester AS 'Course Semester',M.*  
+		FROM Course C 
+		INNER JOIN MakeUp_Exam M ON M.course_id = C.course_id
+GO
+-----G
+GO
+	CREATE VIEW Student_Courses_transcript
+	AS
+		SELECT S.student_id,S.f_name+' '+S.l_name AS student_name,C.course_id,C.name AS course_name,SCT.exam_type,SCT.grade AS course_grade,SCT.semester_code AS semester,I.name AS 'Instructor Name'
+		FROM Student S
+		INNER JOIN Student_Instructor_Course_Take SCT ON SCT.student_id = S.id
+		INNER JOIN Course C ON C.course_id = SCT.course_id 
+		INNER JOIN Instructor I ON I.instructor_id = SCT.instructor_id
+GO
+-----H
+GO
+	CREATE VIEW Semsters_with_OfferedCourse
+	AS
+		SELECT C.course_id AS 'Course ID',C.name AS 'Course Name',S.semster_code As 'Semster Code'
+		FROM Course C
+		INNER JOIN Course_Semster S ON(S.semster_code=C.semster_code);
+GO
+-----I
+GO
+	CREATE VIEW GradPlan_with_Advisor
+	AS
+		SELECT G.*,A.name As 'Advisor name'
+		FROM Graduation_Plan G
+		INNER JOIN Advisor A ON(G.advisor_id=A.advisor_id);
+GO
+--2.3
+-----A
