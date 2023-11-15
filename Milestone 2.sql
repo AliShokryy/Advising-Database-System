@@ -311,3 +311,104 @@ GO
 GO
 --2.3
 -----A
+GO
+	CREATE PROCEDURE Procedures_StudentRegistration
+		@f_name VARCHAR(40),
+		@l_name VARCHAR(40),
+		@password VARCHAR(40),
+		@faculty VARCHAR(40),
+		@email VARCHAR(40),
+		@major VARCHAR(40),
+		@semester INT,
+		@student_id INT OUTPUT
+	AS
+		INSERT INTO Student(f_name,l_name,password,faculty,email,major,semester)
+		VALUES(@f_name,@l_name,@password,@faculty,@email,@major,@semester);
+		SELECT @student_id = student_id FROM Student WHERE f_name = @f_name AND l_name = @l_name AND password = @password AND faculty = @faculty AND email = @email AND major = @major AND semester = @semester;
+GO
+-----B
+GO	
+	CREATE PROCEDURE Procedures_AdvisorRegistration
+		@advisor_name VARCHAR(40),
+		@password VARCHAR(40),
+		@email VARCHAR(40),
+		@office VARCHAR(40),
+		@advisor_id INT OUTPUT
+	AS
+		INSERT INTO Advisor(name,password,email,office)
+		VALUES(@advisor_name,@password,@email);
+		SELECT @advisor_id = advisor_id FROM Advisor WHERE name = @advisor_name AND password = @password AND email = @email AND office = @office;
+GO
+-----C
+GO 
+	CREATE PROCEDURE Procedures_AdminListStudents
+	AS
+		SELECT * FROM Student;
+GO
+-----D
+GO
+	CREATE PROCEDURE Procedures_AdminListAdvisors
+	AS
+		SELECT * FROM Advisor;
+GO
+-----E
+GO
+	CREATE PROCEDURE AdminListStudentsWithAdvisors
+	AS	
+		SELECT S.*,A.*
+		FROM Student S
+		INNER JOIN Advisor A ON(S.advisor_id=A.advisor_id);
+GO
+-----F
+GO 
+	CREATE PROCEDURE AdminAddingSemeseter
+		@start_date DATE,
+		@end_date DATE,
+		@semester_code VARCHAR(40)
+	AS
+		INSERT INTO Semester(start_date,end_date,semester_code)
+		VALUES(@start_date,@end_date,@semester_code);
+GO
+-----G
+GO
+	CREATE PROCEDURE Procedures_AdminAddingCourse
+		@major VARCHAR(40),
+		@semester INT,
+		@credit_hours INT,
+		@course_name VARCHAR(40),
+		@offered BIT
+	AS
+		INSERT INTO Course(major,semester,credit_hours,name,is_offered)
+		VALUES(@major,@semester,@credit_hours,@course_name,@offered);
+GO
+-----H
+GO 
+	CREATE PROCEDURE Procedures_AdminLinkInstuctorToCourse
+		@instructor_id INT,
+		@course_id INT,
+		@slot_id INT
+		AS
+		INSERT INTO Instructor_Course(instructor_id,course_id)
+		VALUES(@instructor_id,@course_id);
+GO
+-----I
+GO
+	CREATE PROCEDURE Procedures_AdminLinkStudent
+		@instructor_id INT,
+		@student_id INT,
+		@course_id INT,
+		@semester_code VARCHAR(40)
+	AS
+		INSERT INTO Student_Instructor_Course_Take(instructor_id,student_id,course_id,semester_code)
+		VALUES(@instructor_id,@student_id,@course_id,@semester_code);
+GO
+-----J
+GO
+	CREATE PROCEDURE Procedures_AdminLinkStudentToAdvisor
+		@student_id INT,
+		@advisor_id INT
+	AS
+		UPDATE Student
+		SET advisor_id = @advisor_id
+		WHERE student_id = @student_id;
+GO
