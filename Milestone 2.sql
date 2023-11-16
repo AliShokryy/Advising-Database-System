@@ -1,4 +1,4 @@
-﻿CREATE DATABASE Advising_Team_6
+﻿CREATE DATABASE Advising_Team_6;
 
 GO
 CREATE PROCEDURE CreateAllTables
@@ -198,8 +198,8 @@ AS
 	DROP TABLE Instructor;
 	DROP TABLE Instructor_Course;
 	DROP TABLE Student_Instructor_Course_Take;
-	DROP TABLE Semster;
-	DROP TABLE Course_Semster;
+	DROP TABLE Semester;
+	DROP TABLE Course_Semester;
 	DROP TABLE Advisor;
 	DROP TABLE Slot;
 	DROP TABLE Graduation_Plan;
@@ -221,8 +221,8 @@ AS
 	TRUNCATE TABLE Instructor;
 	TRUNCATE TABLE Instructor_Course;
 	TRUNCATE TABLE Student_Instructor_Course_Take;
-	TRUNCATE TABLE Semster;
-	TRUNCATE TABLE Course_Semster;
+	TRUNCATE TABLE Semester;
+	TRUNCATE TABLE Course_Semester;
 	TRUNCATE TABLE Advisor;
 	TRUNCATE TABLE Slot;
 	TRUNCATE TABLE Graduation_Plan;
@@ -295,13 +295,13 @@ GO
 GO
 -----H
 GO
-	CREATE VIEW Semster_offered_Courses
+	CREATE VIEW Semester_offered_Courses
 	AS
-		SELECT C.course_id AS 'Course ID',C.name AS 'Course Name',S.semster_code As 'Semster Code'
+		SELECT C.course_id AS 'Course ID',C.name AS 'Course Name',S.semester_code As 'Semester Code'
 		FROM Course C
-		INNER JOIN Course_Semster S ON(S.semster_code=C.semster_code);
+		INNER JOIN Course_Semester S ON(S.semester_code=C.semester_code);
 GO
------I
+-----I 
 GO
 	CREATE VIEW Advisors_Graduation_Plan
 	AS
@@ -411,4 +411,81 @@ GO
 		UPDATE Student
 		SET advisor_id = @advisor_id
 		WHERE student_id = @student_id;
+GO
+-----K   ask about Exam(makeup)
+GO
+	CREATE PROC Prcedures_AdminAddExam
+		@Type VARCHAR(40),
+		@date DATETIME,
+		@courseID INT
+	AS
+		INSERT INTO MakeUp_Exam(date,type,course_id)
+		VALUES(@Type,@date,@courseID);
+GO
+-----L --->Not Done
+GO
+	CREATE PROC Prcedures_AdminIssueInstllment
+		@payment_id INT
+	AS
+
+	--think about it
+
+GO
+-----M
+GO
+	CREATE PROC Prcedures_AdminDeleteCourse
+		@courseID INT
+	AS
+		DELETE FROM Course C WHERE C.course_id=@courseID;
+		DELETE FROM Slot S WHERE S.course_id=@courseID;
+GO
+-----N
+GO
+	CREATE PROC Prcedures_AdminUpdateStudentStatus 
+		@StudentID INT
+	AS
+		IF EXISTS(
+			SELECT I.payment_id 
+			FROM Student S 
+			INNER JOIN Payment P ON S.student_id=P.student_id 
+			INNER JOIN Installment I ON P.payment_id=I.payment_id
+			WHERE student_id=@StudentID AND CURRENT_TIMESTAMP > I.deadline AND I.status='NotPaid'
+			)
+		UPDATE Student SET financial_status=0 WHERE student_id=@StudentID;
+
+		ELSE
+		UPDATE Student SET financial_status=1 WHERE student_id=@StudentID;
+GO
+-----O
+GO
+	CREATE VIEW all_Pending_Requests
+	AS
+		SELECT R.Request_id AS 'Request ID',R.type AS 'Type',R.comment AS 'Comment',R.status AS 'Request status',R.credit_hours AS 'Credit Hours',R.course_id AS 'Course ID', S.f_name+''+S.l_name AS 'Student Name', A.name AS 'Related Advisor Name'
+		FROM Request R 
+		INNER JOIN Student S ON R.student_id=S.student_id
+		INNER JOIN Advisor A ON R.advisor_id=A.advisor_id
+		WHERE R.status='Pending';
+GO
+-----P
+GO
+	CREATE PROC Prcedures_AdminDeleteSlots
+		@current_semester VARCHAR(40)
+	As
+		DELETE FROM Slot S WHERE S.course_id IN (
+			SELECT C.course_id
+			FROM Course_Semester C 
+			WHERE C.semester_code<>@current_semester
+			);	
+Go
+-----Q
+GO
+	CREATE PROC FN_AdvisorLogin
+		@ID INT,
+		@password VARCHAR(40)
+		@Success BIT OUTPUT
+	AS
+		IF EXISTS(SELECT * FROM Advisor WHERE advisor_id=@ID AND password=@password)
+			SET @Success=1;
+		ELSE
+			SET @Success=0;
 GO
