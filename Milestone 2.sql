@@ -28,7 +28,7 @@ AS
 		advisor_id INT
 		CONSTRAINT pk_Student PRIMARY KEY (student_id),
 		CONSTRAINT fk_Student FOREIGN KEY (advisor_id) REFERENCES Advisor(advisor_id) ON DELETE SET NULL ON UPDATE CASCADE, --!!!!!!!!!!
-		CONSTRAINT check_financial_status CHECK (financial_status = 1 AND current_timestamp > (SELECT MAX(deadline) FROM Installment WHERE status = 1))
+		CONSTRAINT check_financial_status CHECK (financial_status = 1 AND current_timestamp > (SELECT MAX(deadline) FROM Installment WHERE status = 1)) -- derived attribute?
 
 		);
 
@@ -85,7 +85,19 @@ AS
 		CONSTRAINT fk_Student_Instructor_Course_Take1 FOREIGN KEY (student_id) REFERENCES Student(student_id) ON DELETE CASCADE ON UPDATE CASCADE,
 		CONSTRAINT fk_Student_Instructor_Course_Take2 FOREIGN KEY (course_id) REFERENCES Course(course_id) ON DELETE CASCADE ON UPDATE CASCADE,
 		CONSTRAINT fk_Student_Instructor_Course_Take3 FOREIGN KEY (instructor_id) REFERENCES Instructor(instructor_id) ON DELETE CASCADE ON UPDATE CASCADE,
-		CONSTRAINT exam_type CHECK (type IN ('Normal','First_makeup','Second_makeup')) --!!!!!!!!!!!!!!!!!!!!!
+		CONSTRAINT exam_type CHECK (type IN ('Normal','First_makeup','Second_makeup')) 
+	);
+
+	CREATE TABLE Slot (
+		slot_id INT IDENTITY,
+		day VARCHAR(40),
+		time VARCHAR(40),
+		location VARCHAR(40),
+		course_id INT,
+		instructor_id INT,
+		CONSTRAINT pk_Slot PRIMARY KEY (slot_id),
+		CONSTRAINT fk_Slot1 FOREIGN KEY (course_id) REFERENCES Course(course_id) ON DELETE CASCADE ON UPDATE CASCADE,
+		CONSTRAINT fk_Slot2 FOREIGN KEY (instructor_id) REFERENCES Instructor(instructor_id) ON DELETE CASCADE ON UPDATE CASCADE
 	);
 
 	CREATE TABLE Semester (
@@ -107,7 +119,7 @@ AS
 		plan_id INT,
 		semester_code VARCHAR(40),
 		semester_credit_hours INT,
-		expected_grad_semester INT,
+		expected_grad_semester VARCHAR(40), --INT,
 		advisor_id INT,
 		student_id INT,
 		CONSTRAINT pk_Graduation_Plan PRIMARY KEY (plan_id, semester_code),
@@ -122,7 +134,7 @@ AS
 		CONSTRAINT pk_GradPlan_Course PRIMARY KEY (plan_id, semester_code, course_id),
 		CONSTRAINT fk_GradPlan_Course1 FOREIGN KEY (plan_id) REFERENCES Graduation_Plan(plan_id) ON DELETE CASCADE ON UPDATE CASCADE,
 		CONSTRAINT fk_GradPlan_Course2 FOREIGN KEY (semester_code) REFERENCES Graduation_Plan(semester_code) ON DELETE CASCADE ON UPDATE CASCADE,
-		CONSTRAINT fk_GradPlan_Course3 FOREIGN KEY (course_id) REFERENCES Course(course_id) ON DELETE CASCADE ON UPDATE CASCADE
+		--CONSTRAINT fk_GradPlan_Course3 FOREIGN KEY (course_id) REFERENCES Course(course_id) ON DELETE CASCADE ON UPDATE CASCADE
 	);
 
 	CREATE TABLE Request (
@@ -137,17 +149,18 @@ AS
 		CONSTRAINT pk_Request PRIMARY KEY (request_id),
 		CONSTRAINT fk_Request1 FOREIGN KEY (student_id) REFERENCES Student(student_id) ON DELETE CASCADE ON UPDATE CASCADE,
 		CONSTRAINT fk_Request2 FOREIGN KEY (advisor_id) REFERENCES Advisor(advisor_id) ON DELETE SET NULL ON UPDATE CASCADE, --!!!!!!!
+		CONSTRAINT fk_Request3 FOREIGN KEY (course_id) REFERENCES Course(course_id) ON DELETE CASCADE ON UPDATE CASCADE, --added reference
 		CONSTRAINT check_Request_Status CHECK (status IN ('pending','accepted','rejected')) --!!!!!!!
 	);
 
 	CREATE TABLE MakeUp_Exam (
 		exam_id INT IDENTITY,
 		date DATE,
-		type VARCHAR(40) DEFAULT 'Normal',
+		type VARCHAR(40) DEFAULT 'First_makeup',--'Normal',
 		course_id INT,
 		CONSTRAINT pk_MakeUp_Exam PRIMARY KEY (exam_id),
 		CONSTRAINT fk_MakeUp_Exam FOREIGN KEY (course_id) REFERENCES Course(course_id) ON DELETE CASCADE ON UPDATE CASCADE ,
-		CONSTRAINT exam_type CHECK (type IN ('Normal','First_makeup','Second_makeup'))
+		CONSTRAINT exam_type CHECK (type IN ('First_makeup','Second_makeup'))
 
 	);
 
@@ -162,14 +175,14 @@ AS
 
 	CREATE TABLE Payment (
 		payment_id INT IDENTITY,
-		amount DECIMAL(10, 2),
-		deadline DATE,
+		amount INT,--DECIMAL(10, 2),
+		deadline DATETIME, --DATE,
 		n_installments INT NOT NULL,
 		status VARCHAR(40) DEFAULT 'notPaid',
 		fund_percentage DECIMAL(5, 2),
+		start_date DATETIME, --DATE,
 		student_id INT,
 		semester_code VARCHAR(40),
-		start_date DATE,
 		CONSTRAINT pk_Payment PRIMARY KEY (payment_id),
 		CONSTRAINT fk_Payment1 FOREIGN KEY (student_id) REFERENCES Student(student_id) ON DELETE NO ACTION ON UPDATE CASCADE ,
 		CONSTRAINT fk_Payment2 FOREIGN KEY (semester_code) REFERENCES Semester(semester_code) ON DELETE SET NULL ON UPDATE CASCADE, --!!!!!!!!!!!!!!!!!
@@ -179,10 +192,10 @@ AS
 
 	CREATE TABLE Installment (
 		payment_id INT,
-		deadline DATE,
-		amount DECIMAL(10, 2),
-		status INT,
-		start_date DATE,
+		deadline DATETIME, --DATE
+		amount INT, --DECIMAL(10, 2),
+		status VARCHAR(40) DEFAULT 'NotPaid',
+		start_date DATETIME, --DATE,
 		CONSTRAINT pk_Installment PRIMARY KEY (payment_id, deadline),
 		CONSTRAINT fk_Installment FOREIGN KEY (payment_id) REFERENCES Payment(payment_id)  ON DELETE CASCADE ON UPDATE CASCADE 
 	);
@@ -390,6 +403,7 @@ GO
 		AS
 		INSERT INTO Instructor_Course(instructor_id,course_id)
 		VALUES(@instructor_id,@course_id);
+		UPDATE Slot SET instructor_id = @instructor_id WHERE slot_id = @slot_id;
 GO
 -----I
 GO
@@ -399,7 +413,7 @@ GO
 		@course_id INT,
 		@semester_code VARCHAR(40)
 	AS
-		INSERT INTO Student_Instructor_Course_Take(instructor_id,student_id,course_id,semester_code)
+		INSERT INTO Student_Instructor_Course_Take(instructor_id,student_id,course_id,semester_code) --should we insert null into grade? or it is by default
 		VALUES(@instructor_id,@student_id,@course_id,@semester_code);
 GO
 -----J
@@ -460,7 +474,7 @@ GO
 GO
 	CREATE VIEW all_Pending_Requests
 	AS
-		SELECT R.Request_id AS 'Request ID',R.type AS 'Type',R.comment AS 'Comment',R.status AS 'Request status',R.credit_hours AS 'Credit Hours',R.course_id AS 'Course ID', S.f_name+''+S.l_name AS 'Student Name', A.name AS 'Related Advisor Name'
+		SELECT R.Request_id AS 'Request ID',R.type AS 'Type',R.comment AS 'Comment',R.status AS 'Request status',R.credit_hours AS 'Credit Hours',R.course_id AS 'Course ID',R.student_id AS 'Student ID', S.f_name+''+S.l_name AS 'Student Name',R.advisor_id AS 'Advisor ID', A.name AS 'Related Advisor Name'
 		FROM Request R 
 		INNER JOIN Student S ON R.student_id=S.student_id
 		INNER JOIN Advisor A ON R.advisor_id=A.advisor_id
@@ -478,14 +492,40 @@ GO
 			);	
 Go
 -----Q
-GO
-	CREATE PROC FN_AdvisorLogin
-		@ID INT,
-		@password VARCHAR(40),
-		@Success BIT OUTPUT
+--GO
+	--CREATE PROC FN_AdvisorLogin (Scalar Function?)
+	--	@ID INT,
+	--	@password VARCHAR(40),
+	--	@Success BIT OUTPUT
+	--AS
+	--	IF EXISTS(SELECT * FROM Advisor WHERE advisor_id=@ID AND password=@password)
+	--		SET @Success=1;
+	--	ELSE
+	--		SET @Success=0;
+--GO
+-----R
+GO 
+	CREATE PROCEDURE Procedures_AdvisorCreateGP
+		@semester_code VARCHAR(40),
+		@expected_grad_date DATE,
+		@sem_credit_hours INT,
+		@advisor_id INT,
+		@student_id INT
 	AS
-		IF EXISTS(SELECT * FROM Advisor WHERE advisor_id=@ID AND password=@password)
-			SET @Success=1;
-		ELSE
-			SET @Success=0;
+		DECLARE @semester VARCHAR(40)
+		SELECT @expected_semester = semester_code FROM Semester WHERE start_date <= @expected_grad_date AND end_date >= @expected_grad_date;
+		INSERT INTO Graduation_Plan(semester_code,expected_grad_semester,semester_credit_hours,advisor_id,student_id)
+		VALUES(@semester_code,@expected_semester,@sem_credit_hours,@advisor_id,@student_id);
+GO
+-----S
+GO
+	CREATE PROCEDURE Procedures_AdvisorAddCourseGP
+		@student_id INT,
+		@semester_code VARCHAR(40),
+		@course_name VARCHAR(40)
+	AS
+		DECLARE @course_id INT
+		SELECT @course_id = course_id FROM Course WHERE name = @course_name;
+		INSERT INTO GradPlan_Course(student_id,semester_code,course_id)
+		VALUES(@student_id,@semester_code,@course_id);
 GO
