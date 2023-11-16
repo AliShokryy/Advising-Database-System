@@ -436,8 +436,8 @@ GO
 	CREATE PROC Prcedures_AdminDeleteCourse
 		@courseID INT
 	AS
-		DELETE FROM Course C WHERE C.course_id=@courseID;
-		DELETE FROM Slot S WHERE S.course_id=@courseID;
+		DELETE FROM Course WHERE Course.course_id=@courseID;
+		DELETE FROM Slot WHERE  Slot.course_id=@courseID;
 GO
 -----N
 GO
@@ -471,7 +471,7 @@ GO
 	CREATE PROC Prcedures_AdminDeleteSlots
 		@current_semester VARCHAR(40)
 	As
-		DELETE FROM Slot S WHERE S.course_id IN (
+		DELETE FROM Slot WHERE Slot.course_id IN (
 			SELECT C.course_id
 			FROM Course_Semester C 
 			WHERE C.semester_code<>@current_semester
@@ -481,7 +481,7 @@ Go
 GO
 	CREATE PROC FN_AdvisorLogin
 		@ID INT,
-		@password VARCHAR(40)
+		@password VARCHAR(40),
 		@Success BIT OUTPUT
 	AS
 		IF EXISTS(SELECT * FROM Advisor WHERE advisor_id=@ID AND password=@password)
