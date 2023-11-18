@@ -529,6 +529,51 @@ GO
 		INSERT INTO GradPlan_Course(student_id,semester_code,course_id)
 		VALUES(@student_id,@semester_code,@course_id);
 GO
+-----T
+
+-----U
+GO
+	CREATE PROC Prcedures_AdvisorDeleteFromGP
+		@studentID INT,
+		@semesterCode VARCHAR(40),
+		@courseID INT
+	AS
+		DELETE FROM GradPlan_Course 
+		WHERE GradPlan_Course.course_id=@CourseID AND GradPlan_Course.semester_code=@semesterCode 
+		AND GradPlan_Course.plan_id IN 
+		(SELECT student_id
+		FROM Graduation_Plan 
+		WHERE Graduation_Plan.student_id=@StudentID);
+GO
+-----V
+GO
+	CREATE Function FN_Advisors_Request (@AdvisorID INT)
+	RETURNS TABLE
+	AS
+	RETURN
+	(
+		SELECT R.*
+		FROM Request R 
+		WHERE R.advisor_id=@AdvisorID
+	);	
+GO
+-----W
+
+-----X
+
+-----Y
+GO
+
+GO
+-----Z
+GO
+	CREATE PROC Procedures_AdvisorViewPendingRequests
+		@AdvisorID INT
+	AS
+		SELECT R.*
+		FROM Request R   -- should join with student for his details?
+		WHERE R.status='Pending' AND R.advisor_id=@AdvisorID;
+GO
 -----AA (REVIEW)
 GO
 
@@ -634,8 +679,19 @@ BEGIN
 END;
 GO
 -----HH
-
-
+GO
+	CREATE FUNCTION FN_StudentViewSlot (@CourseID INT,@InstructorID INT)
+	RETURN TABLE 
+	AS
+	RETURN
+	(
+		SELECT S.slot_id AS 'Slot ID',S.location AS'Location',S.time AS 'Time',S.day AS 'Day',C.name AS 'Course name',I.name AS 'Instructor name'
+		FROM Slot S
+		INNER JOIN Course C ON S.course_id=C.course_id
+		INNER JOIN Instructor I ON S.instructor_id=I.instructor_id
+		WHERE S.course_id=@CourseID AND S.instructor_id=@InstructorID;
+	);
+GO
 -----II  ---Ask what is the current semester and what do you mean by first makeup and second makeup
 GO
 CREATE PROCEDURE Procedures_StudentRegisterFirstMakeup
@@ -659,20 +715,104 @@ CREATE PROCEDURE Procedures_StudentRegisterFirstMakeup
 			VALUES(@exam_id,@StudentID,@course_id);
 
 			UPDATE Student_Instructor_Course_Take
-			SET exam_type = 'First_makeup'
+			SET exam_type = 'First_makeup' --AND grade = NULL
 			WHERE student_id = @StudentID AND course_id = @course_id AND semester_code = @studentCurrentSemester;
 		END
------LL
+GO
+-----JJ
+GO
+	CREATE FUNCTION FN_StudentCheckSMEligibility(@CourseID INT,@student_id INT)
+	RETURNS BIT
+	AS
+	DECLARE @countFailed INT
+	SELECT @countFailed = COUNT(DISTINCT course_id)
+		FROM Student_Instructor_Course_Take 
+		WHERE grade = 'F' AND student_id = @StudentID 
+	
+	DECLARE @firstMakeup INT
+	SELECT @firstMakeup = course_id
+		FROM Student_Instructor_Course_Take 
+		WHERE  student_id = @StudentID AND course_id = @course_id AND exam_type = 'First_makeup' AND (grade = 'F') --OR grade IS NULL) 
+
+	IF @countFailed > 2 OR @firstMakeup IS NULL
+		RETURN 0
+	ELSE
+		RETURN 1
+GO
+-----KK
+GO
+	CREATE PROCEDURE Procedures_StudentRegisterSecondMakeup
+		@StudentID INT,
+		@course_id INT,
+		@studentCurrentSemester VARCHAR(40)
+		AS
+			DECLARE @isEligible BIT
+			SELECT @isEligible = dbo.FN_StudentCheckSMEligibility(@course_id,@StudentID)
+			DECLARE @course INT
+			SELECT @course = course_id
+			FROM Student_Instructor_Course_Take 
+			WHERE semester_code = @studentCurrentSemester AND grade = 'F' AND student_id = @StudentID AND course_id = @course_id AND exam_type = 'First_makeup';
+			IF @course IS NOT NULL AND @isEligible = 1
+			BEGIN
+				DECLARE @exam_id INT
+
+				SELECT @exam_id = exam_id
+				FROM MakeUp_Exam
+				WHERE course_id = @course_id AND type = 'Second_makeup';
+
+				INSERT INTO Exam_Student(exam_id,student_id,course_id)
+				VALUES(@exam_id,@StudentID,@course_id);
+
+				UPDATE Student_Instructor_Course_Take
+				SET exam_type = 'Second_makeup' --AND grade = NULL
+				WHERE student_id = @StudentID AND course_id = @course_id AND semester_code = @studentCurrentSemester;
+			END
+-----LL  ---Ask the dr about what unattended means!!!! And what to do with the current semester code
 GO
 CREATE PROCEDURE Procedures_ViewRequiredCourses
 	@student_id INT,
 	@current_semester_code VARCHAR(40)
 	AS
-		SELECT C.*
+		(SELECT C.*
 		FROM Course C
 				INNER JOIN Student_Instructor_Course_Take SCT ON C.course_id = SCT.course_id 
-		WHERE SCT.grade = 'F' AND SCT.student_id = @student_id 
-
+		WHERE SCT.grade = 'F' AND SCT.student_id = @student_id AND dbo.FN_StudentCheckSMEligibility(C.course_id,@student_id) = 0)
+		UNION
+		(SELECT C.*
+		FROM Course C 
+		WHERE C.course_id  NOT IN (SELECT SCT.course_id
+									FROM Student_Instructor_Course_Take SCT 
+									WHERE SCT.student_id = @student_id)
+			AND C.major = (SELECT S.major
+							FROM Student S
+							WHERE S.student_id = @student_id)	
+		)
+GO
+-----MM   ------ASK ABOUT IT TO UNDERSTAND IT ANDD IMPLEMENT IT CORRECTLY
+-- GO
+-- 	CREATE PROCEDURE Procedures_ViewOptionalCourse
+-- 		@student_id INT,
+-- 		@current_semester_code VARCHAR(40)
+-- 		AS
+-- GO
+-----NN
+GO
+	CREATE PROCEDURE Procedures_viewMS
+		@student_id INT
+		AS
+			(SELECT C.*
+			FROM Course C
+			WHERE C.major = SELECT S.major
+							FROM Student S
+							WHERE S.student_id = @student_id)
+			EXCEPT
+			(SELECT C.*
+			FROM Course C
+					INNER JOIN Student_Instructor_Course_Take SCT ON C.course_id = SCT.course_id 
+			WHERE SCT.grade <> 'F' AND SCT.student_id = @student_id
+			)
+			
+GO
 -----OO  --insert or update??
 GO	
 CREATE PROCEDURE Procedures_ChooseInstructor
