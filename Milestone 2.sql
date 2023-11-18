@@ -58,7 +58,7 @@ AS
 	);
 
 	CREATE TABLE Instructor(
-		instructor_id INT,
+		instructor_id INT IDENTITY,
 		name VARCHAR(40),
 		email VARCHAR(40),
 		faculty VARCHAR(40),
@@ -138,7 +138,7 @@ AS
 	);
 
 	CREATE TABLE Request (
-		request_id INT,
+		request_id INT IDENTITY,
 		type VARCHAR(40),
 		comment VARCHAR(40),
 		status VARCHAR(40) DEFAULT 'pending',
@@ -529,3 +529,170 @@ GO
 		INSERT INTO GradPlan_Course(student_id,semester_code,course_id)
 		VALUES(@student_id,@semester_code,@course_id);
 GO
+-----AA (REVIEW)
+GO
+
+CREATE FUNCTION FN_StudentLogin
+(
+	@student_id INT,
+	@password VARCHAR(40)
+)
+RETURNS BIT
+AS
+BEGIN
+	DECLARE @Success BIT
+
+	IF EXISTS(SELECT * FROM Student WHERE student_id = @student_id AND password = @password)
+		SET @Success = 1;
+	ELSE
+		SET @Success = 0;
+
+	RETURN @Success;
+END;
+
+GO
+-----BB 
+GO
+CREATE PROCEDURE Prodceures_StudentaddMobile
+	@StudentID INT,
+	@mobile_number VARCHAR(40)
+	AS
+		INSERT INTO Student_Phone(student_id,phone_number)
+		VALUES(@student_id,@mobile_number);
+GO
+-----CC (REVIEW) --> Shoould we check if the we are in the current semester ??
+GO
+
+CREATE FUNCTION FN_SemesterAvailabeCourses(@semester_code VARCHAR(40))
+RETURNS TABLE
+AS
+RETURN
+(
+	SELECT C.*
+	FROM Course C
+	INNER JOIN Course_Semester CS ON(C.course_id = CS.course_id)
+	WHERE status = 'Available' AND CS.semester_code = @semester_code
+);
+
+GO
+-----DD
+GO
+
+CREATE PROCEDURE Procedures_StudentSendingCourseRequest
+	@StudentID INT,
+	@CourseID INT,
+	@type VARCHAR(40),
+	@comment VARCHAR(40)
+	AS
+		INSERT INTO Request(type,comment,course_id,student_id)
+		VALUES(@type,@comment,@CourseID,@StudentID);
+
+GO
+-----EE
+GO
+
+CREATE PROCEDURE Procedures_StudentSendingCHRequest
+	@StudentID INT,
+	@credit_hours INT,
+	@type VARCHAR(40),
+	@comment VARCHAR(40)
+	
+	AS
+		INSERT INTO Request(type,comment,credit_hours,student_id)
+		VALUES(@type,@comment,@credit_hours,@StudentID);
+
+GO
+-----FF
+GO
+CREATE FUNCTION FN_StudentViewGP(@student_id INT)
+RETURNS TABLE
+AS
+RETURN
+(
+	SELECT S.Student_id , S.name , GP.plan_id , C.course_id , C.name , GP.semester_code , SEM.end_date , GP.semester_credit_hours , GP.advisor_id
+	FROM Graduation_Plan GP
+		INNER JOIN Student S On GP.student_id= S.student_id
+		INNER JOIN GradPlan_Course GC ON (GP.plan_id= GC.plan_id AND GP.semester_code=GC.semester_code)
+		INNER JOIN Course C on GC.course_id= C.course_id
+		INNER JOIN Semester SEM ON GP.expected_grad_semester=SEM.semester_code
+	WHERE S.student_id = @student_id
+);		
+GO
+-----GG
+CREATE FUNCTION FN_StudentUpcoming_installment(@student_id INT)
+RETURNS DATETIME
+AS
+BEGIN
+	DECLARE @upcoming_installment DATETIME
+
+	SELECT TOP 1 @upcoming_installment = deadline
+	FROM Installment
+	WHERE student_id = @student_id
+	AND payment_status = 'NotPaid'
+	ORDER BY deadline ASC
+	RETURN @upcoming_installment
+END;
+GO
+-----HH
+
+
+-----II  ---Ask what is the current semester and what do you mean by first makeup and second makeup
+GO
+CREATE PROCEDURE Procedures_StudentRegisterFirstMakeup
+	@StudentID INT,
+	@course_id INT,
+	@studentCurrentSemester VARCHAR(40)
+	AS
+		DECLARE @course INT
+		SELECT @course = course_id
+		FROM Student_Instructor_Course_Take 
+		WHERE semester_code = @studentCurrentSemester AND grade = 'F' AND student_id = @StudentID AND course_id = @course_id AND exam_type = 'Normal';
+		IF @course IS NOT NULL
+		BEGIN
+			DECLARE @exam_id INT
+
+			SELECT @exam_id = exam_id
+			FROM MakeUp_Exam
+			WHERE course_id = @course_id AND type = 'First_makeup';
+
+			INSERT INTO Exam_Student(exam_id,student_id,course_id)
+			VALUES(@exam_id,@StudentID,@course_id);
+
+			UPDATE Student_Instructor_Course_Take
+			SET exam_type = 'First_makeup'
+			WHERE student_id = @StudentID AND course_id = @course_id AND semester_code = @studentCurrentSemester;
+		END
+-----LL
+GO
+CREATE PROCEDURE Procedures_ViewRequiredCourses
+	@student_id INT,
+	@current_semester_code VARCHAR(40)
+	AS
+		SELECT C.*
+		FROM Course C
+				INNER JOIN Student_Instructor_Course_Take SCT ON C.course_id = SCT.course_id 
+		WHERE SCT.grade = 'F' AND SCT.student_id = @student_id 
+
+-----OO  --insert or update??
+GO	
+CREATE PROCEDURE Procedures_ChooseInstructor
+	@student_id INT,
+	@instructor_id INT,
+	@course_id INT
+	AS
+		UPDATE Student_Instructor_Course_Take
+		SET instructor_id = @instructor_id
+		WHERE student_id = @student_id AND course_id = @course_id;
+GO
+
+
+
+
+
+
+
+
+
+
+
+
