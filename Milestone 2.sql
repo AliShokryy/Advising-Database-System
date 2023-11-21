@@ -681,7 +681,7 @@ GO
 -----HH
 GO
 	CREATE FUNCTION FN_StudentViewSlot (@CourseID INT,@InstructorID INT)
-	RETURN TABLE 
+	RETURNS TABLE 
 	AS
 	RETURN
 	(
@@ -689,7 +689,7 @@ GO
 		FROM Slot S
 		INNER JOIN Course C ON S.course_id=C.course_id
 		INNER JOIN Instructor I ON S.instructor_id=I.instructor_id
-		WHERE S.course_id=@CourseID AND S.instructor_id=@InstructorID;
+		WHERE S.course_id=@CourseID AND S.instructor_id=@InstructorID
 	);
 GO
 -----II  ---Ask what is the current semester and what do you mean by first makeup and second makeup
@@ -721,9 +721,10 @@ CREATE PROCEDURE Procedures_StudentRegisterFirstMakeup
 GO
 -----JJ
 GO
-	CREATE FUNCTION FN_StudentCheckSMEligibility(@CourseID INT,@student_id INT)
+	CREATE FUNCTION FN_StudentCheckSMEligibility(@courseID INT,@Student_id INT)
 	RETURNS BIT
 	AS
+	BEGIN
 	DECLARE @countFailed INT
 	SELECT @countFailed = COUNT(DISTINCT course_id)
 		FROM Student_Instructor_Course_Take 
@@ -734,10 +735,10 @@ GO
 		FROM Student_Instructor_Course_Take 
 		WHERE  student_id = @StudentID AND course_id = @course_id AND exam_type = 'First_makeup' AND (grade = 'F') --OR grade IS NULL) 
 
-	IF @countFailed > 2 OR @firstMakeup IS NULL
-		RETURN 0
-	ELSE
-		RETURN 1
+	RETURN CASE WHEN  (@countFailed > 2 OR @firstMakeup IS NULL) THEN 0
+																 ELSE 1
+				END
+	END
 GO
 -----KK
 GO
@@ -802,9 +803,9 @@ GO
 		AS
 			(SELECT C.*
 			FROM Course C
-			WHERE C.major = SELECT S.major
+			WHERE C.major = (SELECT S.major
 							FROM Student S
-							WHERE S.student_id = @student_id)
+							WHERE S.student_id = @student_id))
 			EXCEPT
 			(SELECT C.*
 			FROM Course C
