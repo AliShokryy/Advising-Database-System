@@ -530,6 +530,15 @@ GO
 		VALUES(@student_id,@semester_code,@course_id);
 GO
 -----T
+GO
+	CREATE PROCEDURE Procedures_AdvisorUpdateGP
+	@expected_grad_semster VARCHAR (40),
+	@studentID INT
+	AS
+		UPDATE Graduation_Plan 
+		SET expected_grad_semester = @expected_grad_semster
+		WHERE student_id= @id
+GO
 
 -----U
 GO
@@ -558,13 +567,44 @@ GO
 	);	
 GO
 -----W
+GO 
+	CREATE PROCEDURE Procedures_AdvisorApproveRejectCHRequest
+	@RequestID INT,
+	@Current_semester_code VARCHAR (40)
+	AS
+	BEGIN 
+		DECLARE @gpa INT
+		SELECT @gpa = S.gpa FROM Student S
+		INNER JOIN Request R ON (R.request_id = @RequestID AND R.student_id = S.student_id)
+		--IF (cond)
+		--BEGIN
+
+		--END
+		--ELSE
+		--BEGIN
+
+		--END
+	END
+GO
 
 -----X
-
------Y
 GO
-
+	CREATE PROCEDURE Procedures_AdvisorViewAssignedStudents
+	@AdvisorID INT,
+	@major VARCHAR(40)
+	AS
+		SELECT S.student_id AS 'Student ID' , S.f_name + ' ' + S.l_name AS 'Student Full Name' , C.name AS 'Course Name'
+		FROM Student S INNER JOIN Student_Instructor_Take T ON T.student_id = S.student_id
+					   INNER JOIN Course C ON C.course_id = T.course_id
+		WHERE S.advisor_id = @AdvisorID AND S.major = @major 
 GO
+-----Y  --not done
+--GO
+--	CREATE PROCEDURE Procedures_AdvisorApproveRejectCourseRequest
+--	@RequestID INT,
+--	@studentID INT,
+--	@advisorID INT
+--	AS
 -----Z
 GO
 	CREATE PROC Procedures_AdvisorViewPendingRequests
@@ -768,34 +808,70 @@ GO
 				SET exam_type = 'Second_makeup' --AND grade = NULL
 				WHERE student_id = @StudentID AND course_id = @course_id AND semester_code = @studentCurrentSemester;
 			END
------LL  ---Ask the dr about what unattended means!!!! And what to do with the current semester code
+-----LL  ---Ask the dr about what unattended means!!!! And what to do with the current semester code -- CHeck if strictly less than or less than or equal!!!!!!!!!!!
 GO
 CREATE PROCEDURE Procedures_ViewRequiredCourses
 	@student_id INT,
 	@current_semester_code VARCHAR(40)
 	AS
+		(SELECT C.* 
+		FROM Course C
+		INNER JOIN Student_Instructor_Course_Take SCT ON (C.course_id = SCT.course_id AND SCT.student_id = @student_id)
+		WHERE SCT.grade = 'F' AND dbo.FN_StudentCheckSMEligibility(C.course_id, @student_id) = 0)
+		UNION
+		((SELECT C.*
+		FROM Course C
+		WHERE C.semester < (SELECT S.semester
+							FROM Student S
+							WHERE S.student_id = @student_id AND S.major = C.major)
+		EXCEPT 
+		(SELECT C.* 
+		FROM Course C
+		INNER JOIN Student_Instructor_Course_Take SCT ON (C.course_id = SCT.course_id AND SCT.student_id = @student_id)
+		WHERE SCT.grade NOT LIKE 'F' )
+		)
+
+		
+		)
+
+		--(SELECT C.*
+		--FROM Course C
+		--		INNER JOIN Student_Instructor_Course_Take SCT ON C.course_id = SCT.course_id 
+		--WHERE SCT.grade = 'F' AND SCT.student_id = @student_id AND dbo.FN_StudentCheckSMEligibility(C.course_id,@student_id) = 0)
+		--UNION
+		--(SELECT C.*
+		--FROM Course C 
+		--WHERE C.course_id  NOT IN (SELECT SCT.course_id
+		--							FROM Student_Instructor_Course_Take SCT 
+		--							WHERE SCT.student_id = @student_id)
+		--	AND C.major = (SELECT S.major
+		--					FROM Student S
+		--					WHERE S.student_id = @student_id)	
+		--)
+GO
+-----MM   ------ASK ABOUT IT TO UNDERSTAND IT ANDD IMPLEMENT IT CORRECTLY   --Ask about what is the current semester code
+ GO 
+ 	CREATE PROCEDURE Procedures_ViewOptionalCourse
+ 		@student_id INT,
+ 		@current_semester_code VARCHAR(40)
+ 		AS
 		(SELECT C.*
 		FROM Course C
-				INNER JOIN Student_Instructor_Course_Take SCT ON C.course_id = SCT.course_id 
-		WHERE SCT.grade = 'F' AND SCT.student_id = @student_id AND dbo.FN_StudentCheckSMEligibility(C.course_id,@student_id) = 0)
-		UNION
-		(SELECT C.*
-		FROM Course C 
-		WHERE C.course_id  NOT IN (SELECT SCT.course_id
-									FROM Student_Instructor_Course_Take SCT 
-									WHERE SCT.student_id = @student_id)
-			AND C.major = (SELECT S.major
+		WHERE C.semester >= (SELECT S.semester
 							FROM Student S
-							WHERE S.student_id = @student_id)	
+							WHERE S.student_id = @student_id AND S.major = C.major)
+			 AND NOT EXISTS( 
+						(SELECT P.prerequisite_course_id
+						FROM PreqCourse_course P
+						WHERE P.course_id = C.course_id
+						)
+						EXCEPT
+						(SELECT SCT.course_id
+						FROM Student_Instructor_Take SCT
+						WHERE SCT.student_id = @student_id AND SCT.grade NOT LIKE 'F')
+			 )
 		)
-GO
------MM   ------ASK ABOUT IT TO UNDERSTAND IT ANDD IMPLEMENT IT CORRECTLY
--- GO
--- 	CREATE PROCEDURE Procedures_ViewOptionalCourse
--- 		@student_id INT,
--- 		@current_semester_code VARCHAR(40)
--- 		AS
--- GO
+ GO
 -----NN
 GO
 	CREATE PROCEDURE Procedures_viewMS
@@ -825,15 +901,6 @@ CREATE PROCEDURE Procedures_ChooseInstructor
 		SET instructor_id = @instructor_id
 		WHERE student_id = @student_id AND course_id = @course_id;
 GO
-
-
-
-
-
-
-
-
-
 
 
 
