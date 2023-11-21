@@ -114,7 +114,7 @@ AS
 	);
 
 	CREATE TABLE Graduation_Plan (
-		plan_id INT,
+		plan_id INT IDENTITY,
 		semester_code VARCHAR(40),
 		semester_credit_hours INT,
 		expected_grad_semester VARCHAR(40), --INT,
@@ -872,7 +872,7 @@ GO
 	DECLARE @firstMakeup INT
 	SELECT @firstMakeup = course_id
 		FROM Student_Instructor_Course_Take 
-		WHERE  student_id = @StudentID AND course_id = @course_id AND exam_type = 'First_makeup' AND (grade = 'F') --OR grade IS NULL) 
+		WHERE  student_id = @StudentID AND course_id = @course_id AND exam_type = 'First_makeup' AND (grade LIKE 'F%' OR grade IS NULL) 
 
 	RETURN CASE WHEN  (@countFailed > 2 OR @firstMakeup IS NULL) THEN 0
 																 ELSE 1
