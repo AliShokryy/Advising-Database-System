@@ -1,6 +1,23 @@
-﻿CREATE DATABASE Advising_Team_6;
+﻿------------------------- Testing Snippets -------------------------
+
+CREATE DATABASE Advising_Team_6;
+
+USE Advising_Team_6;
+
+USE master;
+DROP DATABASE Advising_Team_6;
 
 DROP PROCEDURE CreateAllTables
+
+SELECT Schema_Name(Schema_id) as TableSchemaName,
+object_name(FK.parent_object_id) ParentTableName,
+object_name(FK.referenced_object_id) ReferenceTableName
+	FROM sys.foreign_keys AS FK
+	WHERE object_name(FK.referenced_object_id)='Advisor'
+	and Schema_Name(Schema_id)='dbo'
+
+DROP TABLE Payment
+--------------------------------------------------------------
 
 GO
 CREATE PROCEDURE CreateAllTables
@@ -53,10 +70,9 @@ AS
 		prerequisite_course_id INT,
 		course_id INT,
 		CONSTRAINT pk_PreqCourse_course PRIMARY KEY (prerequisite_course_id, course_id),
-		CONSTRAINT fk_PreqCourse_course1 FOREIGN KEY (prerequisite_course_id) REFERENCES Course(course_id), -- ON DELETE CASCADE , --ON UPDATE CASCADE,
-		CONSTRAINT fk_PreqCourse_course2 FOREIGN KEY (course_id) REFERENCES Course(course_id) ON DELETE CASCADE-- ON UPDATE CASCADE
+		CONSTRAINT fk_PreqCourse_course1 FOREIGN KEY (prerequisite_course_id) REFERENCES Course(course_id) ON DELETE CASCADE ON UPDATE CASCADE,
+		CONSTRAINT fk_PreqCourse_course2 FOREIGN KEY (course_id) REFERENCES Course(course_id) -- * ON DELETE CASCADE ON UPDATE CASCADE
 	);
-	--DROP TABLE PreqCourse_course;
 
 	CREATE TABLE Instructor(
 		instructor_id INT IDENTITY,
@@ -124,10 +140,9 @@ AS
 		advisor_id INT,
 		student_id INT,
 		CONSTRAINT pk_Graduation_Plan PRIMARY KEY (plan_id, semester_code),
-		CONSTRAINT fk_Graduation_Plan1 FOREIGN KEY (advisor_id) REFERENCES Advisor(advisor_id)ON DELETE CASCADE ON UPDATE CASCADE,
-		CONSTRAINT fk_Graduation_Plan2 FOREIGN KEY (student_id) REFERENCES Student(student_id) ON DELETE CASCADE-- ON UPDATE CASCADE
+		CONSTRAINT fk_Graduation_Plan1 FOREIGN KEY (advisor_id) REFERENCES Advisor(advisor_id) ON DELETE CASCADE ON UPDATE CASCADE,
+		CONSTRAINT fk_Graduation_Plan2 FOREIGN KEY (student_id) REFERENCES Student(student_id) ON DELETE CASCADE -- * ON UPDATE CASCADE
 	);
-	--DROP TABLE Graduation_Plan;
 	
 	CREATE TABLE GradPlan_Course (
 		plan_id INT,
@@ -148,11 +163,12 @@ AS
 		advisor_id INT,
 		course_id INT,
 		CONSTRAINT pk_Request PRIMARY KEY (request_id),
-		CONSTRAINT fk_Request1 FOREIGN KEY (student_id) REFERENCES Student(student_id) ON DELETE CASCADE,-- ON UPDATE CASCADE,
-		CONSTRAINT fk_Request2 FOREIGN KEY (advisor_id) REFERENCES Advisor(advisor_id) ON DELETE CASCADE, -- ON UPDATE CASCADE, 
-		CONSTRAINT fk_Request3 FOREIGN KEY (course_id) REFERENCES Course(course_id) ON DELETE CASCADE, --ON UPDATE CASCADE, 
+		CONSTRAINT fk_Request1 FOREIGN KEY (student_id) REFERENCES Student(student_id) ON DELETE CASCADE, -- * ON UPDATE CASCADE,
+		CONSTRAINT fk_Request2 FOREIGN KEY (advisor_id) REFERENCES Advisor(advisor_id) ON DELETE CASCADE ON UPDATE CASCADE, 
+		CONSTRAINT fk_Request3 FOREIGN KEY (course_id) REFERENCES Course(course_id) ON DELETE CASCADE ON UPDATE CASCADE, 
 		CONSTRAINT check_Request_Status CHECK (status IN ('pending','accepted','rejected'))
 	);
+
 
 	CREATE TABLE MakeUp_Exam (
 		exam_id INT IDENTITY,
@@ -185,10 +201,13 @@ AS
 		student_id INT,
 		semester_code VARCHAR(40),
 		CONSTRAINT pk_Payment PRIMARY KEY (payment_id),
-		CONSTRAINT fk_Payment1 FOREIGN KEY (student_id) REFERENCES Student(student_id) ON DELETE NO ACTION ON UPDATE CASCADE ,
-		CONSTRAINT fk_Payment2 FOREIGN KEY (semester_code) REFERENCES Semester(semester_code) ON DELETE SET NULL ON UPDATE CASCADE,
+		CONSTRAINT fk_Payment1 FOREIGN KEY (student_id) REFERENCES Student(student_id) ON UPDATE CASCADE ,
+		CONSTRAINT fk_Payment2 FOREIGN KEY (semester_code) REFERENCES Semester(semester_code) ON UPDATE CASCADE,
 		CONSTRAINT check_PaymentStatus CHECK ( status IN ('notPaid','Paid'))
 	);
+
+
+
 
 	CREATE TABLE Installment (
 		payment_id INT,
@@ -202,9 +221,9 @@ AS
 GO
 
 EXECUTE CreateAllTables;
-
+------
 GO 
-CREATE PROC DropAllTables
+CREATE PROCEDURE DropAllTables
 AS
 	DROP TABLE Installment;
 	DROP TABLE Payment;
@@ -218,38 +237,138 @@ AS
 	DROP TABLE Slot;
 	DROP TABLE Student_Instructor_Course_Take;
 	DROP TABLE Instructor_Course;
+	DROP TABLE Instructor;
 	DROP TABLE PreqCourse_course;
 	DROP TABLE Course;
 	DROP TABLE Student_Phone;
 	DROP TABLE Student;
 	DROP TABLE Advisor;
-	--DROP TABLE ;
 GO
 
 EXECUTE DropAllTables;
 ------
+
 GO
-CREATE PROC ClearAllTablesRecords
+CREATE PROCEDURE ClearAllTablesRecordTRUNCATE
 AS
-	TRUNCATE TABLE Student;
-	TRUNCATE TABLE Student_Phone;
-	TRUNCATE TABLE Course;
-	TRUNCATE TABLE PreqCourse_Course;
-	TRUNCATE TABLE Instructor;
-	TRUNCATE TABLE Instructor_Course;
-	TRUNCATE TABLE Student_Instructor_Course_Take;
-	TRUNCATE TABLE Semester;
-	TRUNCATE TABLE Course_Semester;
-	TRUNCATE TABLE Advisor;
-	TRUNCATE TABLE Slot;
-	TRUNCATE TABLE Graduation_Plan;
-	TRUNCATE TABLE GradPlan_Course;
-	TRUNCATE TABLE Request;
-	TRUNCATE TABLE MakeUp_Exam;
-	TRUNCATE TABLE Exam_Student;
+	TRUNCATE TABLE Installment;
+
+	ALTER TABLE Installment DROP CONSTRAINT fk_Installment;
 	TRUNCATE TABLE Payment;
-	TRUNCATE TABLE Installment; 
+	ALTER TABLE Installment ADD CONSTRAINT
+		fk_Installment FOREIGN KEY (payment_id) REFERENCES Payment(payment_id)  ON DELETE CASCADE ON UPDATE CASCADE ;
+
+	TRUNCATE TABLE Exam_Student;
+
+	ALTER TABLE Exam_Student DROP CONSTRAINT fk_Exam_Student1;
+	TRUNCATE TABLE MakeUp_Exam;
+	ALTER TABLE Exam_Student ADD CONSTRAINT
+		fk_Exam_Student1 FOREIGN KEY (exam_id) REFERENCES MakeUp_Exam(exam_id) ON DELETE CASCADE ON UPDATE CASCADE ;
+
+	TRUNCATE TABLE Request;
+	TRUNCATE TABLE GradPlan_Course;
+
+	ALTER TABLE GradPlan_Course DROP CONSTRAINT fk_GradPlan_Course1;
+	TRUNCATE TABLE Graduation_Plan;
+	ALTER TABLE GradPlan_Course ADD CONSTRAINT
+		fk_GradPlan_Course1 FOREIGN KEY (plan_id,semester_code) REFERENCES Graduation_Plan(plan_id,semester_code)
+		ON DELETE CASCADE ON UPDATE CASCADE ;
+
+	TRUNCATE TABLE Course_Semester;
+
+	ALTER TABLE Course_Semester DROP CONSTRAINT fk_Course_Semester2;
+	ALTER TABLE Payment DROP CONSTRAINT fk_Payment2;
+	TRUNCATE TABLE Semester;
+	ALTER TABLE Course_Semester ADD CONSTRAINT
+		fk_Course_Semester2 FOREIGN KEY (semester_code) REFERENCES Semester(semester_code) ON DELETE CASCADE ON UPDATE CASCADE;
+	ALTER TABLE Payment ADD CONSTRAINT
+		fk_Payment2 FOREIGN KEY (semester_code) REFERENCES Semester(semester_code) ON UPDATE CASCADE;
+
+	TRUNCATE TABLE Slot;
+	TRUNCATE TABLE Student_Instructor_Course_Take;
+	TRUNCATE TABLE Instructor_Course;
+	
+	ALTER TABLE Instructor_Course DROP CONSTRAINT fk_Instructor_Course2;
+	ALTER TABLE Student_Instructor_Course_Take DROP CONSTRAINT fk_Student_Instructor_Course_Take3;
+	ALTER TABLE Slot DROP CONSTRAINT fk_Slot2;
+	TRUNCATE TABLE Instructor;
+	ALTER TABLE Instructor_Course ADD CONSTRAINT
+		fk_Instructor_Course2 FOREIGN KEY (instructor_id) REFERENCES Instructor(instructor_id) ON DELETE CASCADE ON UPDATE CASCADE;
+	ALTER TABLE Student_Instructor_Course_Take ADD CONSTRAINT
+		fk_Student_Instructor_Course_Take3 FOREIGN KEY (instructor_id) REFERENCES Instructor(instructor_id) ON DELETE CASCADE ON UPDATE CASCADE;
+	ALTER TABLE Slot ADD CONSTRAINT
+		fk_Slot2 FOREIGN KEY (instructor_id) REFERENCES Instructor(instructor_id) ON DELETE CASCADE ON UPDATE CASCADE;
+
+	TRUNCATE TABLE PreqCourse_course;
+
+	ALTER TABLE PreqCourse_course DROP CONSTRAINT fk_PreqCourse_course1, fk_PreqCourse_course2;
+	ALTER TABLE Instructor_Course DROP CONSTRAINT fk_Instructor_Course1;
+	ALTER TABLE Student_Instructor_Course_Take DROP CONSTRAINT fk_Student_Instructor_Course_Take2;
+	ALTER TABLE Course_Semester DROP CONSTRAINT fk_Course_Semester1;
+	ALTER TABLE GradPlan_Course DROP CONSTRAINT fk_GradPlan_Course2;
+	ALTER TABLE Request DROP CONSTRAINT fk_Request3;
+	ALTER TABLE MakeUp_Exam DROP CONSTRAINT fk_MakeUp_Exam;
+	ALTER TABLE Slot DROP CONSTRAINT fk_Slot1;
+	TRUNCATE TABLE Course;
+	ALTER TABLE PreqCourse_course ADD CONSTRAINT
+		fk_PreqCourse_course1 FOREIGN KEY (prerequisite_course_id) REFERENCES Course(course_id) ON DELETE CASCADE ON UPDATE CASCADE;
+	ALTER TABLE PreqCourse_course ADD CONSTRAINT
+		fk_PreqCourse_course2 FOREIGN KEY (course_id) REFERENCES Course(course_id);
+	ALTER TABLE Instructor_Course ADD CONSTRAINT
+		fk_Instructor_Course1 FOREIGN KEY (course_id) REFERENCES Course(course_id) ON DELETE CASCADE ON UPDATE CASCADE;
+	ALTER TABLE Student_Instructor_Course_Take ADD CONSTRAINT
+		fk_Student_Instructor_Course_Take2 FOREIGN KEY (course_id) REFERENCES Course(course_id) ON DELETE CASCADE ON UPDATE CASCADE;
+	ALTER TABLE Course_Semester ADD CONSTRAINT
+		fk_Course_Semester1 FOREIGN KEY (course_id) REFERENCES Course(course_id) ON DELETE CASCADE ON UPDATE CASCADE;
+	ALTER TABLE GradPlan_Course ADD CONSTRAINT
+		fk_GradPlan_Course2 FOREIGN KEY (course_id) REFERENCES Course(course_id) ON DELETE CASCADE ON UPDATE CASCADE;
+	ALTER TABLE Request ADD CONSTRAINT
+		fk_Request3 FOREIGN KEY (course_id) REFERENCES Course(course_id) ON DELETE CASCADE ON UPDATE CASCADE;
+	ALTER TABLE MakeUp_Exam ADD CONSTRAINT
+		fk_MakeUp_Exam FOREIGN KEY (course_id) REFERENCES Course(course_id) ON DELETE CASCADE ON UPDATE CASCADE;
+	ALTER TABLE Slot ADD CONSTRAINT
+		fk_Slot1 FOREIGN KEY (course_id) REFERENCES Course(course_id) ON DELETE CASCADE ON UPDATE CASCADE;
+
+	
+	TRUNCATE TABLE Student_Phone;
+
+	ALTER TABLE Request DROP CONSTRAINT fk_Request1;
+	ALTER TABLE Exam_Student DROP CONSTRAINT fk_Exam_Student2;
+	ALTER TABLE Payment DROP CONSTRAINT fk_Payment1;
+	ALTER TABLE Student_Phone DROP CONSTRAINT fk_Student_Phone;
+	ALTER TABLE Student_Instructor_Course_Take DROP CONSTRAINT fk_Student_Instructor_Course_Take1;
+	ALTER TABLE Graduation_Plan DROP CONSTRAINT fk_Graduation_Plan2;
+	TRUNCATE TABLE Student;
+	ALTER TABLE Request ADD CONSTRAINT
+		fk_Request1 FOREIGN KEY (student_id) REFERENCES Student(student_id) ON DELETE CASCADE -- * ON UPDATE CASCADE;
+	ALTER TABLE Exam_Student ADD CONSTRAINT
+		fk_Exam_Student2 FOREIGN KEY (student_id) REFERENCES Student(student_id) ON DELETE CASCADE ON UPDATE CASCADE;
+	ALTER TABLE Payment ADD CONSTRAINT
+		fk_Payment1 FOREIGN KEY (student_id) REFERENCES Student(student_id) ON UPDATE CASCADE;
+	ALTER TABLE Student_Phone ADD CONSTRAINT
+		fk_Student_Phone FOREIGN KEY (student_id) REFERENCES Student(student_id) ON DELETE CASCADE ON UPDATE CASCADE;
+	ALTER TABLE Student_Instructor_Course_Take ADD CONSTRAINT
+		fk_Student_Instructor_Course_Take1 FOREIGN KEY (student_id) REFERENCES Student(student_id) ON DELETE CASCADE ON UPDATE CASCADE;
+	ALTER TABLE Graduation_Plan ADD CONSTRAINT
+		fk_Graduation_Plan2 FOREIGN KEY (student_id) REFERENCES Student(student_id) ON DELETE CASCADE -- * ON UPDATE CASCADE;
+
+	ALTER TABLE Request DROP CONSTRAINT fk_Request2;
+	ALTER TABLE Graduation_Plan DROP CONSTRAINT fk_Graduation_Plan1;
+	ALTER TABLE Student DROP CONSTRAINT fk_Student;
+	TRUNCATE TABLE Advisor;
+	ALTER TABLE Request ADD CONSTRAINT
+		fk_Request2 FOREIGN KEY (advisor_id) REFERENCES Advisor(advisor_id) ON DELETE CASCADE ON UPDATE CASCADE;
+	ALTER TABLE Graduation_Plan ADD CONSTRAINT
+		fk_Graduation_Plan1 FOREIGN KEY (advisor_id) REFERENCES Advisor(advisor_id) ON DELETE CASCADE ON UPDATE CASCADE;
+	ALTER TABLE Student ADD CONSTRAINT
+		fk_Student FOREIGN KEY (advisor_id) REFERENCES Advisor(advisor_id) ON DELETE SET NULL ON UPDATE CASCADE;
 GO
+
+DROP PROCEDURE ClearAllTablesRecordTRUNCATE
+
+EXECUTE ClearAllTablesRecordTRUNCATE;
+------
+
 --2.2
 -----A
 GO
@@ -270,7 +389,7 @@ GO
 GO
 	CREATE VIEW Instructors_AssignedCourses
 	AS
-		SELECT *
+		SELECT I.name AS 'Instructor Name',C.name AS 'Course Name',C.major AS 'Course Major',C.is_offered AS 'Course if offered',C.credit_hours AS 'Course Credit Hours',C.semester AS 'Course Semester'
 		FROM Instructor I
 		INNER JOIN Instructor_Course L ON(I.instructor_id=L.instructor_id)
 		INNER JOIN Course C ON(L.course_id=C.course_id);
