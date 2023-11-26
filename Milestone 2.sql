@@ -1,13 +1,14 @@
 ﻿------------------------- Testing Snippets -------------------------
 
 CREATE DATABASE Advising_Team_6;
-
 USE Advising_Team_6;
 
 USE master;
 DROP DATABASE Advising_Team_6;
 
-DROP PROCEDURE CreateAllTables
+EXECUTE CreateAllTables;
+EXECUTE DropAllTables;
+EXECUTE ClearAllTablesRecordTRUNCATE;
 
 SELECT Schema_Name(Schema_id) as TableSchemaName,
 object_name(FK.parent_object_id) ParentTableName,
@@ -16,7 +17,6 @@ object_name(FK.referenced_object_id) ReferenceTableName
 	WHERE object_name(FK.referenced_object_id)='Advisor'
 	and Schema_Name(Schema_id)='dbo'
 
-DROP TABLE Payment
 --------------------------------------------------------------
 
 GO
@@ -136,7 +136,7 @@ AS
 		plan_id INT IDENTITY,
 		semester_code VARCHAR(40),
 		semester_credit_hours INT,
-		expected_grad_semester VARCHAR(40), 
+		expected_grad_date DATE, 
 		advisor_id INT,
 		student_id INT,
 		CONSTRAINT pk_Graduation_Plan PRIMARY KEY (plan_id, semester_code),
@@ -220,8 +220,8 @@ AS
 	);
 GO
 
-EXECUTE CreateAllTables;
 ------
+
 GO 
 CREATE PROCEDURE DropAllTables
 AS
@@ -245,7 +245,6 @@ AS
 	DROP TABLE Advisor;
 GO
 
-EXECUTE DropAllTables;
 ------
 
 GO
@@ -364,9 +363,6 @@ AS
 		fk_Student FOREIGN KEY (advisor_id) REFERENCES Advisor(advisor_id) ON DELETE SET NULL ON UPDATE CASCADE;
 GO
 
-DROP PROCEDURE ClearAllTablesRecordTRUNCATE
-
-EXECUTE ClearAllTablesRecordTRUNCATE;
 ------
 
 --2.2
@@ -656,9 +652,7 @@ GO
 		@advisor_id INT,
 		@student_id INT
 	AS
-		DECLARE @semester VARCHAR(40)
-		SELECT @expected_semester = semester_code FROM Semester WHERE start_date <= @expected_grad_date AND end_date >= @expected_grad_date;
-		INSERT INTO Graduation_Plan(semester_code,expected_grad_semester,semester_credit_hours,advisor_id,student_id)
+		INSERT INTO Graduation_Plan(semester_code,expected_grad_date,semester_credit_hours,advisor_id,student_id)
 		VALUES(@semester_code,@expected_semester,@sem_credit_hours,@advisor_id,@student_id);
 GO
 -----S
@@ -676,11 +670,11 @@ GO
 -----T
 GO
 	CREATE PROCEDURE Procedures_AdvisorUpdateGP
-	@expected_grad_semster VARCHAR (40),
+	@expected_grad_date DATE,
 	@studentID INT
 	AS
 		UPDATE Graduation_Plan 
-		SET expected_grad_semester = @expected_grad_semster
+		SET expected_grad_date = @expected_grad_date
 		WHERE student_id= @id
 GO
 
@@ -763,21 +757,20 @@ GO
 	AS
 		SELECT S.student_id AS 'Student ID' , S.f_name + ' ' + S.l_name AS 'Student Full Name' , C.name AS 'Course Name'
 		FROM Student S INNER JOIN Student_Instructor_Take T ON T.student_id = S.student_id
-					   INNER JOIN Course C ON C.course_id = T.course_id
+		INNER JOIN Course C ON C.course_id = T.course_id
 		WHERE S.advisor_id = @AdvisorID AND S.major = @major 
 GO
 -----Y  --not done -- Ask should I check that the advisor is the one who is assigned to the student or not?
 GO
 	CREATE PROCEDURE Procedures_AdvisorApproveRejectCourseRequest
 	@RequestID INT,
-	@studentID INT,
-	@advisorID INT
+	@current_semester_code VARCHAR(40)
 	AS
-		DECLARE @course_id INT , @crs_credHrs INT , @assigned_hours INT , @advID INT , @tookPREQ BIT
+		DECLARE @course_id INT, @student_id INT, @advisor_id INT,
+		@crs_credHrs INT, @assigned_hours INT, @advID INT, @tookPREQ BIT
 
-		SELECT @course_id = course_id 
-		FROM Request
-		WHERE request_id = @RequestID;
+		SELECT @student_id = student_id, @advisor_id = advisor_id, @course_id = course_id
+		FROM Request WHERE request_id = @RequestID;
 
 		SELECT @crs_credHrs = credit_hours
 		FROM Course
@@ -785,7 +778,7 @@ GO
 
 		SELECT @assigned_hours = assigned_hours
 		FROM Student
-		WHERE student_id = @studentID;
+		WHERE student_id = @student_id;
 
 		SELECT @advID = advisor_id
 		FROM Student
@@ -803,7 +796,7 @@ GO
 						EXCEPT
 						(SELECT SCT.course_id
 						FROM Student_Instructor_Take SCT
-						WHERE SCT.student_id = @student_id AND SCT.grade NOT LIKE 'F')
+						WHERE SCT.student_id = @student_id AND SCT.grade NOT LIKE 'F%')
 						))
 			SET @tookPREQ = 1;
 		ELSE
@@ -816,7 +809,7 @@ GO
 			WHERE request_id = @RequestID;
 
 			INSERT INTO Student_Instructor_Course_Take(student_id,course_id,instructor_id,semester_code)
-			VALUES(@studentID,@course_id,@advisorID,@current_semester_code);
+			VALUES(@studentID,@course_id,@advisor_id,@current_semester_code);
 
 			UPDATE Student
 			SET assigned_hours = @assigned_hours - @crs_credHrs
@@ -918,12 +911,11 @@ RETURNS TABLE
 AS
 RETURN
 (
-	SELECT S.Student_id , S.name , GP.plan_id , C.course_id , C.name , GP.semester_code , SEM.end_date , GP.semester_credit_hours , GP.advisor_id
+	SELECT S.Student_id , S.name , GP.plan_id , C.course_id , C.name , GP.semester_code , GP.expected_grad_date , GP.semester_credit_hours , GP.advisor_id
 	FROM Graduation_Plan GP
 		INNER JOIN Student S On GP.student_id= S.student_id
 		INNER JOIN GradPlan_Course GC ON (GP.plan_id= GC.plan_id AND GP.semester_code=GC.semester_code)
 		INNER JOIN Course C on GC.course_id= C.course_id
-		INNER JOIN Semester SEM ON GP.expected_grad_semester=SEM.semester_code
 	WHERE S.student_id = @student_id
 );		
 GO
@@ -992,7 +984,7 @@ GO
 	DECLARE @countFailed INT
 	SELECT @countFailed = COUNT(DISTINCT course_id)
 		FROM Student_Instructor_Course_Take 
-		WHERE grade = 'F' AND student_id = @StudentID 
+		WHERE grade LIKE 'F%' AND student_id = @StudentID 
 	
 	DECLARE @firstMakeup INT
 	SELECT @firstMakeup = course_id
@@ -1016,7 +1008,7 @@ GO
 			DECLARE @course INT
 			SELECT @course = course_id
 			FROM Student_Instructor_Course_Take 
-			WHERE semester_code = @studentCurrentSemester AND grade = 'F' AND student_id = @StudentID AND course_id = @course_id AND exam_type = 'First_makeup';
+			WHERE semester_code = @studentCurrentSemester AND grade LIKE 'F%' AND student_id = @StudentID AND course_id = @course_id AND exam_type = 'First_makeup';
 			IF @course IS NOT NULL AND @isEligible = 1
 			BEGIN
 				DECLARE @exam_id INT
@@ -1041,7 +1033,7 @@ CREATE PROCEDURE Procedures_ViewRequiredCourses
 		((SELECT C.* 
 		FROM Course C
 		INNER JOIN Student_Instructor_Course_Take SCT ON (C.course_id = SCT.course_id AND SCT.student_id = @student_id)
-		WHERE SCT.grade = 'F' AND dbo.FN_StudentCheckSMEligibility(C.course_id, @student_id) = 0)
+		WHERE SCT.grade LIKE 'F%' AND dbo.FN_StudentCheckSMEligibility(C.course_id, @student_id) = 0)
 		UNION
 		((SELECT C.*
 		FROM Course C
@@ -1081,7 +1073,7 @@ GO
 						EXCEPT
 						(SELECT SCT.course_id
 						FROM Student_Instructor_Take SCT
-						WHERE SCT.student_id = @student_id AND SCT.grade NOT LIKE 'F')
+						WHERE SCT.student_id = @student_id AND SCT.grade NOT LIKE 'F%')
 			 ))
 			 INTERSECT
 			(SELECT C.*
@@ -1114,9 +1106,16 @@ GO
 CREATE PROCEDURE Procedures_ChooseInstructor
 	@student_id INT,
 	@instructor_id INT,
-	@course_id INT
+	@course_id INT,
+	@current_semester_code varchar(40)
 	AS
-		UPDATE Student_Instructor_Course_Take
-		SET instructor_id = @instructor_id
-		WHERE student_id = @student_id AND course_id = @course_id;
+	IF 	(
+		EXISTS(SELECT * FROM Instructor_Course WHERE instructor_id = @instructor_id AND course_id = @course_id) AND
+		EXISTS(SELECT * FROM Course_Semester WHERE semester_code = @current_semester_code AND course_id = @course_id)
+		)
+	BEGIN
+		INSERT INTO Student_Instructor_Course_Take (student_id,instructor_id,course_id,semester_code)
+		VALUES (@student_id,@instructor_id,@course_id,@current_semester_code);
+	END
+	ELSE PRINT('Instructor is not assigned to this course or the course is not offered this semester');	
 GO
