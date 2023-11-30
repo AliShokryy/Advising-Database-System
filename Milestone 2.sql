@@ -35,7 +35,7 @@ AS
 		student_id INT IDENTITY,
 		f_name VARCHAR(40),
 		l_name VARCHAR(40),
-		gpa DECIMAL(2,2),
+		gpa DECIMAL(3,2),
 		faculty VARCHAR(40),
 		email VARCHAR(40),
 		major VARCHAR(40),
@@ -248,7 +248,7 @@ GO
 ------
 
 GO
-CREATE PROCEDURE ClearAllTablesRecordTRUNCATE
+CREATE PROCEDURE clearAllTables
 AS
 	TRUNCATE TABLE Installment;
 
@@ -653,7 +653,7 @@ GO
 		@student_id INT
 	AS
 		INSERT INTO Graduation_Plan(semester_code,expected_grad_date,semester_credit_hours,advisor_id,student_id)
-		VALUES(@semester_code,@expected_semester,@sem_credit_hours,@advisor_id,@student_id);
+		VALUES(@semester_code,@expected_grad_date,@sem_credit_hours,@advisor_id,@student_id);
 GO
 -----S
 GO
