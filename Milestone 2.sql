@@ -46,7 +46,9 @@ AS
 		assigned_hours INT,
 		advisor_id INT
 		CONSTRAINT pk_Student PRIMARY KEY (student_id),
-		CONSTRAINT fk_Student FOREIGN KEY (advisor_id) REFERENCES Advisor(advisor_id) ON DELETE SET NULL ON UPDATE CASCADE
+		CONSTRAINT fk_Student FOREIGN KEY (advisor_id) REFERENCES Advisor(advisor_id) ON DELETE SET NULL ON UPDATE CASCADE,
+		CONSTRAINT check_assigned_hours CHECK (assigned_hours <= 34  AND assigned_hours >= 0),
+		CONSTRAINT check_gpa CHECK (gpa <= 5.0 AND gpa >= 0.7)
 		);
 
 	CREATE TABLE Student_Phone(
@@ -166,7 +168,8 @@ AS
 		CONSTRAINT fk_Request1 FOREIGN KEY (student_id) REFERENCES Student(student_id) ON DELETE CASCADE, -- * ON UPDATE CASCADE,
 		CONSTRAINT fk_Request2 FOREIGN KEY (advisor_id) REFERENCES Advisor(advisor_id) ON DELETE CASCADE ON UPDATE CASCADE, 
 		CONSTRAINT fk_Request3 FOREIGN KEY (course_id) REFERENCES Course(course_id) ON DELETE CASCADE ON UPDATE CASCADE, 
-		CONSTRAINT check_Request_Status CHECK (status IN ('pending','accepted','rejected'))
+		CONSTRAINT check_Request_Status CHECK (status IN ('pending','accepted','rejected')),
+		CONSTRAINT check_credit_hours CHECK (credit_hours <= 3 AND credit_hours > 0),
 	);
 
 
@@ -414,7 +417,9 @@ GO
 		SELECT C.name AS 'Course’s Name' , C.semester AS 'Course’s Semester', M.*  
 		FROM Course C 
 		INNER JOIN MakeUp_Exam M ON M.course_id = C.course_id
+
 GO
+
 -----G
 GO
 	CREATE VIEW Student_Courses_transcript
@@ -560,24 +565,36 @@ GO
 	CREATE PROC Prcedures_AdminIssueInstllment
 		@payment_id INT
 	AS
-		DECLARE @start_date DATE ,@end_date DATE, @monthDiff INT , @amount INT , @counter INT
+
+		DECLARE @n_installments INT, @start_date DATE
+
+		SELECT @n_installments = n_installments
+		FROM Payment
+		WHERE payment_id = @payment_id;
 
 		SELECT @start_date = start_date , @end_date = deadline
 		FROM Payment
 		WHERE payment_id = @payment_id;
 
-		SET @monthDiff = DATEDIFF(MONTH,@start_date,@end_date);
+		-- DECLARE @start_date DATE ,@end_date DATE, @monthDiff INT , @amount INT , @counter INT
 
-		UPDATE Payment
-		SET n_installments = @monthDiff
-		WHERE payment_id = @payment_id;
- 	
-		SELECT @amount = amount/@monthDiff
-		FROM Payment
-		WHERE payment_id = @payment_id;
+
+		-- UPDATE Payment
+		-- SET n_installments = @monthDiff
+		-- WHERE payment_id = @payment_id;
+
+		
+
+		-- SET @monthDiff = DATEDIFF(MONTH,@start_date,@end_date);
+
+
+
+		-- SELECT @amount = amount/@monthDiff
+		-- FROM Payment
+		-- WHERE payment_id = @payment_id;
 
 		SET @counter = 1;
-		WHILE (@counter <= @monthDiff)
+		WHILE (@counter <= @n_installments)
 		BEGIN
 			INSERT INTO Installment(payment_id,deadline,amount)
 			VALUES(@payment_id,DATEADD(MONTH,@counter,@start_date),@amount);
@@ -594,19 +611,30 @@ GO
 GO
 -----N
 GO
-	CREATE PROC Prcedures_AdminUpdateStudentStatus 
-		@StudentID INT
+CREATE FUNCTION get_status(@student_id INT)
+	RETURNS BIT
 	AS
+	BEGIN
+		DECLARE @status BIT
 		IF EXISTS(
 			SELECT I.payment_id 
 			FROM Student S 
 			INNER JOIN Payment P ON S.student_id=P.student_id 
 			INNER JOIN Installment I ON P.payment_id=I.payment_id
-			WHERE student_id=@StudentID AND CURRENT_TIMESTAMP > I.deadline AND I.status='NotPaid'
+			WHERE student_id=@student_id AND CURRENT_TIMESTAMP > I.deadline AND I.status='NotPaid'
 			)
-		UPDATE Student SET financial_status=0 WHERE student_id=@StudentID;
+		SET @status = 0;
 		ELSE
-		UPDATE Student SET financial_status=1 WHERE student_id=@StudentID;
+		SET @status = 1;
+		RETURN @status;
+	END;
+GO
+
+GO
+	CREATE PROC Prcedures_AdminUpdateStudentStatus 
+		@StudentID INT
+	AS
+		UPDATE Student SET financial_status=  dbo.get_status(@StudentID) WHERE student_id=@StudentID;
 GO
 -----O
 GO
@@ -652,8 +680,15 @@ GO
 		@advisor_id INT,
 		@student_id INT
 	AS
-		INSERT INTO Graduation_Plan(semester_code,expected_grad_date,semester_credit_hours,advisor_id,student_id)
-		VALUES(@semester_code,@expected_grad_date,@sem_credit_hours,@advisor_id,@student_id);
+		BEGIN
+		DECLARE @acq_hours INT, @expected_advisor_id INT
+		SELECT @acq_hours = acquired_hours FROM Student WHERE student_id = @student_id;
+		SELECT @expected_advisor_id = advisor_id FROM Student WHERE student_id = @student_id;
+
+		IF (@acq_hours > 157) AND (@expected_advisor_id = @advisor_id)
+			INSERT INTO Graduation_Plan(semester_code,expected_grad_date,semester_credit_hours,advisor_id,student_id)
+			VALUES(@semester_code,@expected_grad_date,@sem_credit_hours,@advisor_id,@student_id);
+		END
 GO
 -----S
 GO
@@ -711,10 +746,18 @@ GO
 	@Current_semester_code VARCHAR (40)
 	AS
 	BEGIN 
-		DECLARE @gpa INT, @student_id INT, @total_credit_hours INT, @credit_hours INT ,  @assigned_hours INT
-		SELECT @student_id = student_id, @credit_hours = credit_hours FROM Request WHERE request_id = @RequestID;
+		DECLARE @gpa INT, @student_id INT, @total_credit_hours INT, @credit_hours INT ,  @assigned_hours INT, @type VARCHAR(40),
+		@advID INT, @advisor_id INT
+
+		SELECT @type = type FROM Request WHERE request_id = @RequestID;
+
+		SELECT @student_id = student_id, @credit_hours = credit_hours, @advisor_id = advisor_id FROM Request WHERE request_id = @RequestID;
 
 		SELECT @gpa = S.gpa FROM Student S WHERE S.student_id = @student_id;
+
+		SELECT @advID = advisor_id
+		FROM Student
+		WHERE student_id = @studentID;
 		
 		SELECT @total_credit_hours = SUM(credit_hours) 
 		FROM Student_Instructor_Course_Take SCT 
@@ -724,27 +767,31 @@ GO
 		SELECT @assigned_hours = assigned_hours 
 		FROM Student
 		WHERE student_id = @student_id;
-		IF (@gpa>3.7 AND (@total_credit_hours + @assigned_hours + @credit_hours >34))
-		BEGIN
-			UPDATE Request
-			SET status = 'Rejected'
-			WHERE request_id = @RequestID;
-		END
-		ELSE
-		BEGIN
-			UPDATE Request
-			SET status = 'Accepted'
-			WHERE request_id = @RequestID;
-			DECLARE @assignHrs INT;
 
-			IF @assigned_hours IS NULL 
-				SET @assignHrs = 0;
+		IF (@type = 'credit')
+		BEGIN
+			IF ((@gpa>3.7 OR (@total_credit_hours + @assigned_hours + @credit_hours >34) OR @advID <> @advisor_id))
+			BEGIN
+				UPDATE Request
+				SET status = 'Rejected'
+				WHERE request_id = @RequestID;
+			END
 			ELSE
-				SET @assignHrs = @assigned_hours;												
+			BEGIN
+				UPDATE Request
+				SET status = 'Accepted'
+				WHERE request_id = @RequestID;
+				DECLARE @assignHrs INT;
 
-			UPDATE Student
-			SET assigned_hours = @assignHrs + @credit_hours
-			WHERE student_id = @student_id;
+				IF @assigned_hours IS NULL 
+					SET @assignHrs = 0;
+				ELSE
+					SET @assignHrs = @assigned_hours;												
+
+				UPDATE Student
+				SET assigned_hours = @assignHrs + @credit_hours
+				WHERE student_id = @student_id;
+			END
 		END
 	END
 GO
@@ -756,8 +803,8 @@ GO
 	@major VARCHAR(40)
 	AS
 		SELECT S.student_id AS 'Student ID' , S.f_name + ' ' + S.l_name AS 'Student Full Name' , C.name AS 'Course Name'
-		FROM Student S INNER JOIN Student_Instructor_Take T ON T.student_id = S.student_id
-		INNER JOIN Course C ON C.course_id = T.course_id
+		FROM Student S INNER JOIN Student_Instructor_Course_Take SCT ON SCT.student_id = S.student_id
+		INNER JOIN Course C ON C.course_id = SCT.course_id
 		WHERE S.advisor_id = @AdvisorID AND S.major = @major 
 GO
 -----Y  --not done -- Ask should I check that the advisor is the one who is assigned to the student or not?
@@ -767,7 +814,9 @@ GO
 	@current_semester_code VARCHAR(40)
 	AS
 		DECLARE @course_id INT, @student_id INT, @advisor_id INT,
-		@crs_credHrs INT, @assigned_hours INT, @advID INT, @tookPREQ BIT
+		@crs_credHrs INT, @assigned_hours INT, @advID INT, @tookPREQ BIT, @type VARCHAR(40)
+
+		SELECT @type = type FROM Request WHERE request_id = @RequestID;
 
 		SELECT @student_id = student_id, @advisor_id = advisor_id, @course_id = course_id
 		FROM Request WHERE request_id = @RequestID;
@@ -802,24 +851,27 @@ GO
 		ELSE
 			SET @tookPREQ = 0;
 
-		IF (@courseID IS NOT NULL AND @advID = @advisor_id AND @assigned_hours >= @crs_credHrs AND @tookPREQ =1)
+		IF (@type = 'course')
 		BEGIN
-			UPDATE Request
-			SET status = 'Accepted'
-			WHERE request_id = @RequestID;
+			IF (@courseID IS NOT NULL AND @advID = @advisor_id AND @assigned_hours >= @crs_credHrs AND @tookPREQ =1)
+			BEGIN
+				UPDATE Request
+				SET status = 'Accepted'
+				WHERE request_id = @RequestID;
 
-			INSERT INTO Student_Instructor_Course_Take(student_id,course_id,instructor_id,semester_code)
-			VALUES(@studentID,@course_id,@advisor_id,@current_semester_code);
+				INSERT INTO Student_Instructor_Course_Take(student_id,course_id,instructor_id,semester_code)
+				VALUES(@studentID,@course_id,@advisor_id,@current_semester_code);
 
-			UPDATE Student
-			SET assigned_hours = @assigned_hours - @crs_credHrs
-			WHERE student_id = @studentID;
-		END
-		ELSE
-		BEGIN
-			UPDATE Request
-			SET status = 'Rejected'
-			WHERE request_id = @RequestID;
+				UPDATE Student
+				SET assigned_hours = @assigned_hours - @crs_credHrs
+				WHERE student_id = @studentID;
+			END
+			ELSE
+			BEGIN
+				UPDATE Request
+				SET status = 'Rejected'
+				WHERE request_id = @RequestID;
+			END
 		END
 GO
 -----Z
@@ -886,9 +938,12 @@ CREATE PROCEDURE Procedures_StudentSendingCourseRequest
 	@type VARCHAR(40),
 	@comment VARCHAR(40)
 	AS
-		INSERT INTO Request(type,comment,course_id,student_id)
-		VALUES(@type,@comment,@CourseID,@StudentID);
+		DECLARE @advisor_id INT
+		
+		SELECT @advisor_id = advisor_id FROM Student WHERE student_id = @StudentID;
 
+		INSERT INTO Request(type,comment,course_id,student_id, advisor_id)
+		VALUES(@type,@comment,@CourseID,@StudentID, @advisor_id);
 GO
 -----EE
 GO
@@ -900,8 +955,12 @@ CREATE PROCEDURE Procedures_StudentSendingCHRequest
 	@comment VARCHAR(40)
 	
 	AS
-		INSERT INTO Request(type,comment,credit_hours,student_id)
-		VALUES(@type,@comment,@credit_hours,@StudentID);
+		DECLARE @advisor_id INT
+		
+		SELECT @advisor_id = advisor_id FROM Student WHERE student_id = @StudentID;
+
+		INSERT INTO Request(type,comment,credit_hours,student_id, advisor_id)
+		VALUES(@type,@comment,@credit_hours,@StudentID, @advisor_id);
 
 GO
 -----FF
@@ -991,8 +1050,7 @@ GO
 		FROM Student_Instructor_Course_Take 
 		WHERE  student_id = @StudentID AND course_id = @course_id AND exam_type = 'First_makeup' AND (grade LIKE 'F%' OR grade IS NULL) 
 
-	RETURN CASE WHEN  (@countFailed > 2 OR @firstMakeup IS NULL) THEN 0
-																 ELSE 1
+	RETURN CASE WHEN  (@countFailed > 2 OR @firstMakeup IS NULL) THEN 0 ELSE 1
 				END
 	END
 GO
@@ -1055,7 +1113,7 @@ CREATE PROCEDURE Procedures_ViewRequiredCourses
 
 GO
 -----MM  
- GO 
+GO 
  	CREATE PROCEDURE Procedures_ViewOptionalCourse
  		@student_id INT,
  		@current_semester_code VARCHAR(40)
@@ -1082,7 +1140,7 @@ GO
 			)
 
 		
- GO
+GO
 -----NN  
 GO
 	CREATE PROCEDURE Procedures_viewMS
@@ -1109,13 +1167,7 @@ CREATE PROCEDURE Procedures_ChooseInstructor
 	@course_id INT,
 	@current_semester_code varchar(40)
 	AS
-	IF 	(
-		EXISTS(SELECT * FROM Instructor_Course WHERE instructor_id = @instructor_id AND course_id = @course_id) AND
-		EXISTS(SELECT * FROM Course_Semester WHERE semester_code = @current_semester_code AND course_id = @course_id)
-		)
-	BEGIN
-		INSERT INTO Student_Instructor_Course_Take (student_id,instructor_id,course_id,semester_code)
-		VALUES (@student_id,@instructor_id,@course_id,@current_semester_code);
-	END
-	ELSE PRINT('Instructor is not assigned to this course or the course is not offered this semester');	
+		UPDATE Student_Instructor_Course_Take
+		SET instructor_id = @instructor_id
+		WHERE student_id = @student_id AND course_id = @course_id AND semester_code = @current_semester_code;
 GO

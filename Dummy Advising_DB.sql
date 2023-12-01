@@ -1,4 +1,6 @@
-﻿INSERT INTO Advisor (name, email, office, password) VALUES
+﻿USE Advising_Team_6
+
+INSERT INTO Advisor (name, email, office, password) VALUES
 ('John Doe', 'john@example.com', 'Office A', 'password1'),
 ('Jane Smith', 'jane@example.com', 'Office B', 'password2'),
 ('Alice Johnson', 'alice@example.com', 'Office C', 'password3'),
