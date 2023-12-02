@@ -4,11 +4,11 @@ CREATE DATABASE Advising_Team_6;
 USE Advising_Team_6;
 
 USE master;
-DROP DATABASE Advising_Team_6;
+
 
 EXECUTE CreateAllTables;
 EXECUTE DropAllTables;
-EXECUTE ClearAllTablesRecordTRUNCATE;
+EXECUTE clearAllTables;
 
 SELECT Schema_Name(Schema_id) as TableSchemaName,
 object_name(FK.parent_object_id) ParentTableName,
@@ -47,7 +47,7 @@ AS
 		advisor_id INT
 		CONSTRAINT pk_Student PRIMARY KEY (student_id),
 		CONSTRAINT fk_Student FOREIGN KEY (advisor_id) REFERENCES Advisor(advisor_id) ON DELETE SET NULL ON UPDATE CASCADE,
-		CONSTRAINT check_assigned_hours CHECK (assigned_hours <= 34  AND assigned_hours >= 0),
+		CONSTRAINT check_assigned_hours CHECK (assigned_hours <= 34  AND assigned_hours >= 0 AND acquired_hours >=34),
 		CONSTRAINT check_gpa CHECK (gpa <= 5.0 AND gpa >= 0.7)
 		);
 
@@ -100,11 +100,12 @@ AS
 		semester_code VARCHAR(40),
 		exam_type VARCHAR(40) DEFAULT 'Normal',
 		grade VARCHAR(40),
-		CONSTRAINT pk_Student_Instructor_Course_Take PRIMARY KEY (student_id, course_id, instructor_id),
+		CONSTRAINT pk_Student_Instructor_Course_Take PRIMARY KEY (student_id, course_id, semester_code),
 		CONSTRAINT fk_Student_Instructor_Course_Take1 FOREIGN KEY (student_id) REFERENCES Student(student_id) ON DELETE CASCADE ON UPDATE CASCADE,
 		CONSTRAINT fk_Student_Instructor_Course_Take2 FOREIGN KEY (course_id) REFERENCES Course(course_id) ON DELETE CASCADE ON UPDATE CASCADE,
 		CONSTRAINT fk_Student_Instructor_Course_Take3 FOREIGN KEY (instructor_id) REFERENCES Instructor(instructor_id) ON DELETE CASCADE ON UPDATE CASCADE,
-		CONSTRAINT exam_type_check CHECK (exam_type IN ('Normal','First_makeup','Second_makeup')) 
+		CONSTRAINT exam_type_check CHECK (exam_type IN ('Normal','First_makeup','Second_makeup')),
+		CONSTRAINT chk_grade CHECK (grade IN ('A+' , 'A' , 'A-' , 'B+' , 'B' , 'B-' , 'C+' , 'C' , 'C-' , 'D+' , 'D' , 'F','FF','FA')) 
 	);
 
 	CREATE TABLE Slot (
@@ -168,8 +169,8 @@ AS
 		CONSTRAINT fk_Request1 FOREIGN KEY (student_id) REFERENCES Student(student_id) ON DELETE CASCADE, -- * ON UPDATE CASCADE,
 		CONSTRAINT fk_Request2 FOREIGN KEY (advisor_id) REFERENCES Advisor(advisor_id) ON DELETE CASCADE ON UPDATE CASCADE, 
 		CONSTRAINT fk_Request3 FOREIGN KEY (course_id) REFERENCES Course(course_id) ON DELETE CASCADE ON UPDATE CASCADE, 
-		CONSTRAINT check_Request_Status CHECK (status IN ('pending','accepted','rejected')),
-		CONSTRAINT check_credit_hours CHECK (credit_hours <= 3 AND credit_hours > 0),
+		CONSTRAINT check_Request_Status CHECK (status IN ('pending','accepted','rejected'))--,
+		--CONSTRAINT check_credit_hours CHECK ((credit_hours <= 3 AND credit_hours > 0) OR credit_hours IS NULL),
 	);
 
 
@@ -216,7 +217,7 @@ AS
 		payment_id INT,
 		deadline DATETIME, 
 		amount INT, 
-		status VARCHAR(40) DEFAULT 'NotPaid',
+		status VARCHAR(40) DEFAULT 'notPaid',
 		start_date DATETIME, 
 		CONSTRAINT pk_Installment PRIMARY KEY (payment_id, deadline),
 		CONSTRAINT fk_Installment FOREIGN KEY (payment_id) REFERENCES Payment(payment_id)  ON DELETE CASCADE ON UPDATE CASCADE 
@@ -518,16 +519,17 @@ GO
 		INSERT INTO Course(major,semester,credit_hours,name,is_offered)
 		VALUES(@major,@semester,@credit_hours,@course_name,@offered);
 GO
------H
+-----H  --Is the instructor already linked to the course or should we just link the course to the instructor
 GO 
 	CREATE PROCEDURE Procedures_AdminLinkInstuctorToCourse
 		@instructor_id INT,
 		@course_id INT,
 		@slot_id INT
 		AS
-		INSERT INTO Instructor_Course(instructor_id,course_id)
-		VALUES(@instructor_id,@course_id);
-		UPDATE Slot SET instructor_id = @instructor_id WHERE slot_id = @slot_id;
+			INSERT INTO Instructor_Course(instructor_id,course_id)
+			VALUES(@instructor_id,@course_id);
+
+			UPDATE Slot SET instructor_id = @instructor_id WHERE slot_id = @slot_id;
 GO
 -----I
 GO
@@ -562,7 +564,7 @@ GO
 GO
 -----L 
 GO
-	CREATE PROC Prcedures_AdminIssueInstllment
+	CREATE PROC Prcedures_AdminIssueInstallment
 		@payment_id INT
 	AS
 
@@ -739,7 +741,7 @@ GO
 		WHERE R.advisor_id=@AdvisorID
 	);	
 GO
------W  
+-----W  -- Ask should I check that the advisor is the one who is assigned to the student or not?  ||| Should we handle the case if the stiudents has no unpaid installlments
 GO 
 	CREATE PROCEDURE Procedures_AdvisorApproveRejectCHRequest
 	@RequestID INT,
@@ -757,20 +759,20 @@ GO
 
 		SELECT @advID = advisor_id
 		FROM Student
-		WHERE student_id = @studentID;
+		WHERE student_id = @student_id;
 		
 		SELECT @total_credit_hours = SUM(credit_hours) 
 		FROM Student_Instructor_Course_Take SCT 
-		INNER JOIN Course C ON (C.semester_code = SCT.semester_code)
+		INNER JOIN Course C ON (C.course_id = SCT.course_id)
 		WHERE SCT.student_id = @student_id AND SCT.semester_code = @Current_semester_code;
 
 		SELECT @assigned_hours = assigned_hours 
 		FROM Student
 		WHERE student_id = @student_id;
 
-		IF (@type = 'credit')
-		BEGIN
-			IF ((@gpa>3.7 OR (@total_credit_hours + @assigned_hours + @credit_hours >34) OR @advID <> @advisor_id))
+		IF (@type = 'credit_hours')
+		BEGIN   --@totalCreditHours+
+			IF ((@gpa>3.7 OR @credit_hours>3 OR (( @assigned_hours + @credit_hours) >34) OR @advID <> @advisor_id))
 			BEGIN
 				UPDATE Request
 				SET status = 'Rejected'
@@ -791,10 +793,33 @@ GO
 				UPDATE Student
 				SET assigned_hours = @assignHrs + @credit_hours
 				WHERE student_id = @student_id;
+
+				DECLARE @pid INT , @amount INT
+				SELECT @pid = payment_id  , @amount = amount
+				FROM Payment 
+				WHERE student_id = @student_id AND @Current_semester_code = semester_code AND status = 'notPaid'
+
+				IF @pid IS NOT NULL AND @amount IS NOT NULL
+				BEGIN 
+					UPDATE Payment 
+					SET amount = @amount + 1000* @credit_hours
+					WHERE payment_id=@pid
+
+					DECLARE  @instAmount INT, @deadline DATE
+					SELECT TOP 1 @instAmount = amount , @deadline = deadline
+					FROM Installment
+					WHERE payment_id = @pid  AND status = 'notPaid'
+					ORDER BY deadline
+
+					UPDATE Installment
+					SET amount = @instAmount + 1000* @credit_hours
+					WHERE payment_id = @pid AND deadline = @deadline
+				END
 			END
 		END
 	END
 GO
+
 
 -----X
 GO
@@ -802,7 +827,7 @@ GO
 	@AdvisorID INT,
 	@major VARCHAR(40)
 	AS
-		SELECT S.student_id AS 'Student ID' , S.f_name + ' ' + S.l_name AS 'Student Full Name' , C.name AS 'Course Name'
+		SELECT S.student_id AS 'Student ID' , S.f_name AS 'Student First Name ' , S.l_name AS 'Student Last Name' , C.name AS 'Course Name'
 		FROM Student S INNER JOIN Student_Instructor_Course_Take SCT ON SCT.student_id = S.student_id
 		INNER JOIN Course C ON C.course_id = SCT.course_id
 		WHERE S.advisor_id = @AdvisorID AND S.major = @major 
@@ -859,8 +884,8 @@ GO
 				SET status = 'Accepted'
 				WHERE request_id = @RequestID;
 
-				INSERT INTO Student_Instructor_Course_Take(student_id,course_id,instructor_id,semester_code)
-				VALUES(@studentID,@course_id,@advisor_id,@current_semester_code);
+				INSERT INTO Student_Instructor_Course_Take(student_id,course_id,semester_code)
+				VALUES(@studentID,@course_id,@current_semester_code);
 
 				UPDATE Student
 				SET assigned_hours = @assigned_hours - @crs_credHrs
@@ -1007,7 +1032,7 @@ GO
 		WHERE S.course_id=@CourseID AND S.instructor_id=@InstructorID
 	);
 GO
------II 
+-----II  --Should we add FA?????????
 GO
 CREATE PROCEDURE Procedures_StudentRegisterFirstMakeup
 	@StudentID INT,
@@ -1017,7 +1042,7 @@ CREATE PROCEDURE Procedures_StudentRegisterFirstMakeup
 		DECLARE @course INT
 		SELECT @course = course_id
 		FROM Student_Instructor_Course_Take 
-		WHERE semester_code = @studentCurrentSemester AND (grade LIKE 'F%' ) AND student_id = @StudentID AND course_id = @course_id AND exam_type = 'Normal';
+		WHERE semester_code = @studentCurrentSemester AND (grade = 'F' OR grade = 'FF' OR grade IS NULL) AND student_id = @StudentID AND course_id = @course_id AND exam_type = 'Normal';
 		IF @course IS NOT NULL
 		BEGIN
 			DECLARE @exam_id INT
@@ -1083,6 +1108,7 @@ GO
 				WHERE student_id = @StudentID AND course_id = @course_id AND semester_code = @studentCurrentSemester;
 			END
 -----LL 
+
 GO
 CREATE PROCEDURE Procedures_ViewRequiredCourses
 	@student_id INT,
@@ -1091,7 +1117,7 @@ CREATE PROCEDURE Procedures_ViewRequiredCourses
 		((SELECT C.* 
 		FROM Course C
 		INNER JOIN Student_Instructor_Course_Take SCT ON (C.course_id = SCT.course_id AND SCT.student_id = @student_id)
-		WHERE SCT.grade LIKE 'F%' AND dbo.FN_StudentCheckSMEligibility(C.course_id, @student_id) = 0)
+		WHERE (SCT.grade = 'F' OR SCT.grade = 'FF') AND dbo.FN_StudentCheckSMEligibility(C.course_id, @student_id) = 0)
 		UNION
 		((SELECT C.*
 		FROM Course C
@@ -1102,11 +1128,11 @@ CREATE PROCEDURE Procedures_ViewRequiredCourses
 		(SELECT C.* 
 		FROM Course C
 		INNER JOIN Student_Instructor_Course_Take SCT ON (C.course_id = SCT.course_id AND SCT.student_id = @student_id)
-		WHERE SCT.grade NOT LIKE 'F%' )
+		WHERE SCT.grade NOT LIKE 'F%')
 		))
 		INTERSECT
 		(SELECT C.*
-		FROM Course_Semester CS
+		FROM Course_Semester CS INNER JOIN Course C ON (C.course_id = CS.course_id)
 		WHERE CS.semester_code = @current_semester_code)
 		)
 
