@@ -932,17 +932,17 @@ END;
 GO
 -----BB 
 GO
-CREATE PROCEDURE Prodceures_StudentaddMobile
+CREATE PROCEDURE Procedures_StudentaddMobile
 	@StudentID INT,
 	@mobile_number VARCHAR(40)
 	AS
 		INSERT INTO Student_Phone(student_id,phone_number)
-		VALUES(@student_id,@mobile_number);
+		VALUES(@StudentID,@mobile_number);
 GO
 -----CC (REVIEW) --> 
 GO
 
-CREATE FUNCTION FN_SemesterAvailabeCourses(@semester_code VARCHAR(40))
+CREATE FUNCTION FN_SemsterAvailableCourses(@semster_code VARCHAR(40))
 RETURNS TABLE
 AS
 RETURN
@@ -950,7 +950,7 @@ RETURN
 	SELECT C.*
 	FROM Course C
 	INNER JOIN Course_Semester CS ON(C.course_id = CS.course_id)
-	WHERE status = 'Available' AND CS.semester_code = @semester_code
+	WHERE CS.semester_code = @semster_code
 );
 
 GO
@@ -1061,7 +1061,7 @@ CREATE PROCEDURE Procedures_StudentRegisterFirstMakeup
 GO
 -----JJ
 GO
-	CREATE FUNCTION FN_StudentCheckSMEligibility(@courseID INT,@Student_id INT)
+	CREATE FUNCTION FN_StudentCheckSMEligiability(@CourseID INT,@StudentID INT)
 	RETURNS BIT
 	AS
 	BEGIN
@@ -1070,12 +1070,16 @@ GO
 		FROM Student_Instructor_Course_Take 
 		WHERE grade LIKE 'F%' AND student_id = @StudentID 
 	
-	DECLARE @firstMakeup INT
-	SELECT @firstMakeup = course_id
+	DECLARE @firstMakeup BIT
+	IF EXISTS(
+	SELECT course_id
 		FROM Student_Instructor_Course_Take 
-		WHERE  student_id = @StudentID AND course_id = @course_id AND exam_type = 'First_makeup' AND (grade LIKE 'F%' OR grade IS NULL) 
-
-	RETURN CASE WHEN  (@countFailed > 2 OR @firstMakeup IS NULL) THEN 0 ELSE 1
+		WHERE  student_id = @StudentID AND course_id = @CourseID AND exam_type = 'First_makeup' AND grade LIKE 'F%' 
+	)
+	SET @firstMakeup = 1;
+	ELSE
+	SET @firstMakeup = 0;
+	RETURN CASE WHEN  (@countFailed > 2 OR @firstMakeup = 0) THEN 0 ELSE 1
 				END
 	END
 GO
@@ -1109,63 +1113,68 @@ GO
 			END
 -----LL 
 
-GO
+GO 
 CREATE PROCEDURE Procedures_ViewRequiredCourses
-	@student_id INT,
-	@current_semester_code VARCHAR(40)
+	@StudentID INT,
+	@Current_semester_code VARCHAR(40)
 	AS
 		((SELECT C.* 
 		FROM Course C
-		INNER JOIN Student_Instructor_Course_Take SCT ON (C.course_id = SCT.course_id AND SCT.student_id = @student_id)
-		WHERE (SCT.grade = 'F' OR SCT.grade = 'FF') AND dbo.FN_StudentCheckSMEligibility(C.course_id, @student_id) = 0)
+		INNER JOIN Student_Instructor_Course_Take SCT ON (C.course_id = SCT.course_id AND SCT.student_id = @StudentID)
+		WHERE (SCT.grade = 'F' OR SCT.grade = 'FF') AND dbo.FN_StudentCheckSMEligiability(C.course_id, @StudentID) = 0)
 		UNION
-		((SELECT C.*
+		(
+		(SELECT C.*
 		FROM Course C
 		WHERE C.semester < (SELECT S.semester
 							FROM Student S
-							WHERE S.student_id = @student_id AND S.major = C.major)
+							WHERE S.student_id = @StudentID AND S.major = C.major))
 		EXCEPT 
 		(SELECT C.* 
 		FROM Course C
-		INNER JOIN Student_Instructor_Course_Take SCT ON (C.course_id = SCT.course_id AND SCT.student_id = @student_id)
+		INNER JOIN Student_Instructor_Course_Take SCT ON (C.course_id = SCT.course_id AND SCT.student_id = @StudentID)
 		WHERE SCT.grade NOT LIKE 'F%')
-		))
+		)
 		INTERSECT
 		(SELECT C.*
 		FROM Course_Semester CS INNER JOIN Course C ON (C.course_id = CS.course_id)
-		WHERE CS.semester_code = @current_semester_code)
+		WHERE CS.semester_code = @Current_semester_code)
 		)
 
 
 GO
 -----MM  
-GO 
+GO  
  	CREATE PROCEDURE Procedures_ViewOptionalCourse
- 		@student_id INT,
- 		@current_semester_code VARCHAR(40)
+ 		@StudentID INT,
+ 		@Current_semester_code VARCHAR(40)
  		AS
 		((SELECT C.*
 		FROM Course C
 		WHERE C.semester >= (SELECT S.semester
 							FROM Student S
-							WHERE S.student_id = @student_id AND S.major = C.major)
-			 AND NOT EXISTS( 
+							WHERE S.student_id = @StudentID AND S.major = C.major)
+			AND NOT EXISTS( 
 						(SELECT P.prerequisite_course_id
 						FROM PreqCourse_course P
 						WHERE P.course_id = C.course_id
 						)
 						EXCEPT
 						(SELECT SCT.course_id
-						FROM Student_Instructor_Take SCT
-						WHERE SCT.student_id = @student_id AND SCT.grade NOT LIKE 'F%')
-			 ))
+						FROM Student_Instructor_Course_Take SCT
+						WHERE SCT.student_id = @StudentID AND SCT.grade NOT LIKE 'F%')
+		))
+			EXCEPT (SELECT C.*
+					FROM Course C
+					INNER JOIN Student_Instructor_Course_Take SCT ON (C.course_id = SCT.course_id AND SCT.student_id = @StudentID)
+					WHERE SCT.grade NOT LIKE 'F%')
 			 INTERSECT
 			(SELECT C.*
-			FROM Course_Semester CS
+			FROM Course_Semester CS INNER JOIN Course C ON (C.course_id = CS.course_id)
 			WHERE CS.semester_code = @current_semester_code)
 			)
 
-		
+			
 GO
 -----NN  
 GO
