@@ -1,25 +1,8 @@
-﻿------------------------- Testing Snippets -------------------------
-
+﻿--2.1
+--1
 CREATE DATABASE Advising_Team_6;
-USE Advising_Team_6;
 
-USE master;
-DROP DATABASE Advising_Team_6;
-
-
-EXECUTE CreateAllTables;
-EXECUTE DropAllTables;
-EXECUTE clearAllTables;
-
-SELECT Schema_Name(Schema_id) as TableSchemaName,
-object_name(FK.parent_object_id) ParentTableName,
-object_name(FK.referenced_object_id) ReferenceTableName
-	FROM sys.foreign_keys AS FK
-	WHERE object_name(FK.referenced_object_id)='Advisor'
-	and Schema_Name(Schema_id)='dbo'
-
---------------------------------------------------------------
-
+--2
 GO
 CREATE PROCEDURE CreateAllTables
 AS
@@ -73,10 +56,10 @@ AS
 		prerequisite_course_id INT,
 		course_id INT,
 		CONSTRAINT pk_PreqCourse_course PRIMARY KEY (prerequisite_course_id, course_id),
-		CONSTRAINT fk_PreqCourse_course1 FOREIGN KEY (prerequisite_course_id) REFERENCES Course(course_id) ON DELETE CASCADE ON UPDATE CASCADE,
+		CONSTRAINT fk_PreqCourse_course1 FOREIGN KEY (prerequisite_course_id) REFERENCES Course(course_id), --ON DELETE CASCADE ON UPDATE CASCADE,
 		CONSTRAINT fk_PreqCourse_course2 FOREIGN KEY (course_id) REFERENCES Course(course_id) -- * ON DELETE CASCADE ON UPDATE CASCADE
-	);
-
+	); 
+	
 	CREATE TABLE Instructor(
 		instructor_id INT IDENTITY,
 		name VARCHAR(40),
@@ -117,8 +100,8 @@ AS
 		course_id INT,
 		instructor_id INT,
 		CONSTRAINT pk_Slot PRIMARY KEY (slot_id),
-		CONSTRAINT fk_Slot1 FOREIGN KEY (course_id) REFERENCES Course(course_id) ON DELETE CASCADE ON UPDATE CASCADE,
-		CONSTRAINT fk_Slot2 FOREIGN KEY (instructor_id) REFERENCES Instructor(instructor_id) ON DELETE CASCADE ON UPDATE CASCADE
+		CONSTRAINT fk_Slot1 FOREIGN KEY (course_id) REFERENCES Course(course_id) ON DELETE SET NULL ON UPDATE CASCADE,
+		CONSTRAINT fk_Slot2 FOREIGN KEY (instructor_id) REFERENCES Instructor(instructor_id) ON DELETE SET NULL ON UPDATE CASCADE
 	);
 
 	CREATE TABLE Semester (
@@ -224,9 +207,9 @@ AS
 		CONSTRAINT fk_Installment FOREIGN KEY (payment_id) REFERENCES Payment(payment_id)  ON DELETE CASCADE ON UPDATE CASCADE 
 	);
 GO
-
+EXEC CreateAllTables;
 ------
-
+--3
 GO 
 CREATE PROCEDURE DropAllTables
 AS
@@ -249,9 +232,9 @@ AS
 	DROP TABLE Student;
 	DROP TABLE Advisor;
 GO
-
+EXEC DropAllTables;
 ------
-
+--4
 GO
 CREATE PROCEDURE clearAllTables
 AS
@@ -367,7 +350,7 @@ AS
 	ALTER TABLE Student ADD CONSTRAINT
 		fk_Student FOREIGN KEY (advisor_id) REFERENCES Advisor(advisor_id) ON DELETE SET NULL ON UPDATE CASCADE;
 GO
-
+EXEC clearAllTables;
 ------
 
 --2.2
@@ -377,6 +360,7 @@ GO
 	AS 
 		SELECT * FROM STUDENT S WHERE S.financial_status=1;
 GO
+SELECT * FROM view_Students;
 -----B
 GO
 	CREATE VIEW view_Course_prerequisites 
@@ -386,6 +370,7 @@ GO
 		INNER JOIN PreqCourse_course P On(C1.course_id=P.prerequisite_course_id)
 		INNER JOIN Course C2 ON(P.course_id=C2.course_id);
 GO
+SELECT * FROM view_Course_prerequisites;
 -----C
 GO
 	CREATE VIEW Instructors_AssignedCourses(instructor_id,instructor_name,instructor_email,instructor_faculty,instructor_office,course_id,course_name,course_major,course_if_offered,course_credit_hours,course_semester)
@@ -395,6 +380,7 @@ GO
 		INNER JOIN Instructor_Course L ON(I.instructor_id=L.instructor_id)
 		INNER JOIN Course C ON(L.course_id=C.course_id);
 GO
+SELECT * FROM Instructors_AssignedCourses;
 -----D
 GO
 	CREATE VIEW Student_Payment
@@ -403,6 +389,7 @@ GO
 		FROM Payment P
 		INNER JOIN Student S ON(P.student_id=S.student_id);
 GO
+SELECT * FROM Student_Payment;
 -----E
 GO
 	CREATE VIEW Courses_Slots_Instructor(course_id,course_name,slot_id,slot_day,slot_time,slot_location,instructor_name)
@@ -412,6 +399,7 @@ GO
 		INNER JOIN Slot S ON(S.course_id = C.course_id)
 		INNER JOIN Instructor I ON(S.instructor_id = I.instructor_id);
 GO
+SELECT * FROM Courses_Slots_Instructor;
 -----F
 GO
 	CREATE VIEW Courses_MakeupExams 
@@ -421,17 +409,18 @@ GO
 		INNER JOIN MakeUp_Exam M ON M.course_id = C.course_id
 
 GO
-
+SELECT * FROM Courses_MakeupExams;
 -----G
 GO
-	CREATE VIEW Student_Courses_transcript
+	CREATE VIEW Students_Courses_transcript(student_id,student_first_name,student_last_name ,course_id,course_name,exam_type,course_grade,semester,instructor_name)
 	AS
-		SELECT S.student_id,S.f_name+' '+S.l_name AS student_name,C.course_id,C.name AS course_name,SCT.exam_type,SCT.grade AS 'course grade',SCT.semester_code AS semester,I.name AS 'Instructor Name'
+		SELECT S.student_id,S.f_name,S.l_name,C.course_id,C.name,SCT.exam_type,SCT.grade,SCT.semester_code,I.name
 		FROM Student S
-		INNER JOIN Student_Instructor_Course_Take SCT ON SCT.student_id = S.id
+		INNER JOIN Student_Instructor_Course_Take SCT ON SCT.student_id = S.student_id
 		INNER JOIN Course C ON C.course_id = SCT.course_id 
 		INNER JOIN Instructor I ON I.instructor_id = SCT.instructor_id
 GO
+SELECT * FROM Students_Courses_transcript;
 -----H
 GO
 	CREATE VIEW Semster_offered_Courses(course_id,course_name,semester_code)
@@ -440,6 +429,7 @@ GO
 		FROM Course C
 		INNER JOIN Course_Semester S ON(S.course_id=C.course_id);
 GO
+SELECT * FROM Semster_offered_Courses;
 -----I 
 GO
 	CREATE VIEW Advisors_Graduation_Plan
@@ -448,6 +438,7 @@ GO
 		FROM Graduation_Plan G
 		INNER JOIN Advisor A ON(G.advisor_id=A.advisor_id);
 GO
+SELECT * FROM Advisors_Graduation_Plan;
 --2.3
 -----A
 GO
@@ -465,6 +456,9 @@ GO
 		VALUES(@FirstName ,@LastName ,@password, @faculty, @email, @major, @Semester);
 		SELECT @StudentID = student_id FROM Student WHERE f_name = @FirstName AND l_name = @LastName AND password = @password AND faculty = @faculty AND email = @email AND major = @major AND semester = @Semester;
 GO
+DECLARE @StudentID INT
+EXEC Procedures_StudentRegistration 'Ahmed','Mohamed','123','Engineering',';','', 1 , @StudentID OUTPUT
+PRINT @StudentID;
 -----B
 GO	
 	CREATE PROCEDURE Procedures_AdvisorRegistration
@@ -475,21 +469,26 @@ GO
 		@advisor_id INT OUTPUT
 	AS
 		INSERT INTO Advisor(name,password,email,office)
-		VALUES(@advisor_name,@password,@email);
+		VALUES(@advisor_name,@password,@email,@office);
 		SELECT @advisor_id = advisor_id FROM Advisor WHERE name = @advisor_name AND password = @password AND email = @email AND office = @office;
 GO
+DECLARE @advisor_id INT
+EXEC Procedures_AdvisorRegistration 'Ahmed','123','a','b2305',@advisor_id OUTPUT
+PRINT @advisor_id;
 -----C
 GO 
 	CREATE PROCEDURE Procedures_AdminListStudents
 	AS
 		SELECT * FROM Student;
 GO
+EXEC Procedures_AdminListStudents;
 -----D
 GO
 	CREATE PROCEDURE Procedures_AdminListAdvisors
 	AS
 		SELECT * FROM Advisor;
 GO
+EXEC Procedures_AdminListAdvisors;
 -----E
 GO
 	CREATE PROCEDURE AdminListStudentsWithAdvisors
@@ -498,6 +497,7 @@ GO
 		FROM Student S
 		INNER JOIN Advisor A ON(S.advisor_id=A.advisor_id);
 GO
+EXEC AdminListStudentsWithAdvisors;
 -----F
 GO 
 	CREATE PROCEDURE AdminAddingSemester
@@ -508,6 +508,9 @@ GO
 		INSERT INTO Semester(start_date,end_date,semester_code)
 		VALUES(@start_date,@end_date,@semester_code);
 GO
+SELECT * FROM Semester;
+EXEC AdminAddingSemester '2024-09-01','2024-12-01','W25';
+SELECT * FROM Semester;
 -----G
 GO
 	CREATE PROCEDURE Procedures_AdminAddingCourse
@@ -520,9 +523,12 @@ GO
 		INSERT INTO Course(major,semester,credit_hours,name,is_offered)
 		VALUES(@major,@semester,@credit_hours,@course_name,@offered);
 GO
+SELECT * FROM Course;
+EXEC Procedures_AdminAddingCourse 'Engineering',1,3,'Math508',1;
+SELECT * FROM Course;
 -----H
 GO 
-	CREATE PROCEDURE Procedures_AdminLinkInstuctorToCourse
+	CREATE PROCEDURE  Procedures_AdminLinkInstructor
 		@InstructorId INT,
 		@courseID INT,
 		@slotID INT
@@ -531,6 +537,9 @@ GO
 			SET instructor_id = @InstructorId, course_id = @courseID
 			WHERE slot_id = @slotID;
 GO
+SELECT * FROM Slot;
+EXEC Procedures_AdminLinkInstructor 10,1,1;
+SELECT * FROM Slot;
 -----I
 GO
 	CREATE PROCEDURE Procedures_AdminLinkStudent
@@ -542,6 +551,8 @@ GO
 		INSERT INTO Student_Instructor_Course_Take(instructor_id,student_id,course_id,semester_code) 
 		VALUES(@instructor_id,@student_id,@course_id,@semester_code);
 GO
+EXEC Procedures_AdminLinkStudent 1,2,2,'W26';
+SELECT * FROM Student_Instructor_Course_Take;
 -----J
 GO
 	CREATE PROCEDURE Procedures_AdminLinkStudentToAdvisor
@@ -552,23 +563,28 @@ GO
 		SET advisor_id = @advisor_id
 		WHERE student_id = @student_id;
 GO
------K   ask about Exam(makeup)
+SELECT * FROM Student;
+EXEC Procedures_AdminLinkStudentToAdvisor 1,10;
+SELECT * FROM Student;
+-----K
 GO
-	CREATE PROC Prcedures_AdminAddExam
+	CREATE PROC Procedures_AdminAddExam
 		@Type VARCHAR(40),
 		@date DATETIME,
 		@courseID INT
 	AS
-		INSERT INTO MakeUp_Exam(date,type,course_id)
+		INSERT INTO MakeUp_Exam(type,date,course_id)
 		VALUES(@Type,@date,@courseID);
 GO
+SELECT * FROM MakeUp_Exam;
+EXEC Procedures_AdminAddExam 'First_makeup','2028-09-01',1;
+SELECT * FROM MakeUp_Exam;
 -----L 
-GO
-	CREATE PROC Prcedures_AdminIssueInstallment
+GO 
+	CREATE PROC Procedures_AdminIssueInstallment
 		@payment_id INT
 	AS
-
-		DECLARE @n_installments INT, @start_date DATE
+		DECLARE @n_installments INT, @start_date DATE,@counter INT ,@end_date DATE,@amount INT
 
 		SELECT @n_installments = n_installments
 		FROM Payment
@@ -579,38 +595,41 @@ GO
 		WHERE payment_id = @payment_id;
 
 		-- DECLARE @start_date DATE ,@end_date DATE, @monthDiff INT , @amount INT , @counter INT
-
-
 		-- UPDATE Payment
 		-- SET n_installments = @monthDiff
 		-- WHERE payment_id = @payment_id;
 
-		
-
 		-- SET @monthDiff = DATEDIFF(MONTH,@start_date,@end_date);
 
-
-
-		-- SELECT @amount = amount/@monthDiff
-		-- FROM Payment
-		-- WHERE payment_id = @payment_id;
+		 SELECT @amount = amount/@n_installments
+		 FROM Payment
+		 WHERE payment_id = @payment_id;
 
 		SET @counter = 1;
 		WHILE (@counter <= @n_installments)
 		BEGIN
-			INSERT INTO Installment(payment_id,deadline,amount)
-			VALUES(@payment_id,DATEADD(MONTH,@counter,@start_date),@amount);
+			INSERT INTO Installment(payment_id,deadline,start_date,amount)
+			VALUES(@payment_id,DATEADD(MONTH,@counter,@start_date),DATEADD(MONTH,@counter-1,@start_date),@amount);
 			SET @counter = @counter + 1;
 		END
 GO
+SELECT * FROM Payment
+INSERT INTO Payment (amount,deadline,n_installments,fund_percentage,start_date,student_id,semester_code)
+VALUES (1200,'2024-09-01',3,40,'2024-06-01',1,'W23');
+EXECUTE Procedures_AdminIssueInstallment 11
+SELECT * from Installment where payment_id = 11
 -----M
 GO
-	CREATE PROC Prcedures_AdminDeleteCourse
+	CREATE PROC Procedures_AdminDeleteCourse
 		@courseID INT
 	AS
+		DELETE FROM PreqCourse_course WHERE PreqCourse_course.course_id=@courseID OR PreqCourse_course.prerequisite_course_id=@courseID;
 		DELETE FROM Course WHERE Course.course_id=@courseID;
-		DELETE FROM Slot WHERE  Slot.course_id=@courseID;
 GO
+SELECT * FROM Course;
+SELECT * FROM Slot;
+SELECT * FROM Course_Semester;
+EXEC Procedures_AdminDeleteCourse 2;
 -----N
 GO
 CREATE FUNCTION get_status(@StudentID INT)
@@ -633,24 +652,27 @@ CREATE FUNCTION get_status(@StudentID INT)
 GO
 
 GO
-	CREATE PROC Prcedures_AdminUpdateStudentStatus 
+	CREATE PROC  Procedure_AdminUpdateStudentStatus 
 		@StudentID INT
 	AS
 		UPDATE Student SET financial_status=  dbo.get_status(@StudentID) WHERE student_id=@StudentID;
 GO
+EXEC Procedure_AdminUpdateStudentStatus 1;
 -----O
 GO
-	CREATE VIEW all_Pending_Requests
+	CREATE VIEW all_Pending_Requests(Request_ID,Request_Type,Comment,Request_status,Credit_Hours,Course_ID,Student_ID,Student_First_Name,Student_Last_Name,Advisor_ID,Related_Advisor_Name)
 	AS
-		SELECT R.Request_id AS 'Request ID',R.type AS 'Type',R.comment AS 'Comment',R.status AS 'Request status',R.credit_hours AS 'Credit Hours',R.course_id AS 'Course ID',R.student_id AS 'Student ID', S.f_name+''+S.l_name AS 'Student Name',R.advisor_id AS 'Advisor ID', A.name AS 'Related Advisor Name'
+		SELECT R.request_id,R.type,R.comment,R.status,R.credit_hours,R.course_id,R.student_id,S.f_name,S.l_name,R.advisor_id,A.name
 		FROM Request R 
 		INNER JOIN Student S ON R.student_id=S.student_id
 		INNER JOIN Advisor A ON R.advisor_id=A.advisor_id
 		WHERE R.status='Pending';
 GO
+SELECT * FROM Course;
+SELECT * FROM all_Pending_Requests;
 -----P
 GO
-	CREATE PROC Prcedures_AdminDeleteSlots
+	CREATE PROC Procedures_AdminDeleteSlots
 		@current_semester VARCHAR(40)
 	As	
 		UPDATE Slot
@@ -661,9 +683,12 @@ GO
 			WHERE C.semester_code<>@current_semester
 			);	
 GO
+select S.slot_id,S.course_id,CS.semester_code from Slot S inner join Course_Semester CS on CS.course_id=S.course_id;
+exec Procedures_AdminDeleteSlots 'W23';
+select S.slot_id,S.course_id,CS.semester_code from Slot S inner join Course_Semester CS on CS.course_id=S.course_id;
 -----Q
 GO
-	CREATE FUNCTION FN_AdvisorLogin (@iD iNT,@password VARCHAR(40))
+	CREATE FUNCTION FN_AdvisorLogin (@iD INT,@password VARCHAR(40))
 	RETURNS BIT
 	AS
 	BEGIN
@@ -675,6 +700,7 @@ GO
 		RETURN @Success;
 	END;
 GO
+PRINT dbo.FN_AdvisorLogin(1,'password1');
 -----R
 GO 
 	CREATE PROCEDURE Procedures_AdvisorCreateGP
@@ -694,6 +720,9 @@ GO
 			VALUES(@semester_code,@expected_grad_date,@sem_credit_hours,@advisor_id,@student_id);
 		END
 GO
+insert into Student (f_name,l_name,password,faculty,email,major,semester,advisor_id,acquired_hours)
+values ('Ahmed','Mohamed','123','Engineering','a','b',1,1,158);
+EXEC Procedures_AdvisorCreateGP 'W23','2024-09-01',3,1,11;
 -----S
 GO
 	CREATE PROCEDURE Procedures_AdvisorAddCourseGP
@@ -710,6 +739,10 @@ GO
 		INSERT INTO GradPlan_Course(plan_id,semester_code,course_id)
 		VALUES(@plan_id,@semester_code,@course_id);
 GO
+select * from Course
+SELECT * FROM GradPlan_Course;
+EXEC Procedures_AdvisorAddCourseGP 11,'W23','Database2';
+SELECT * FROM GradPlan_Course;
 -----T
 GO
 	CREATE PROCEDURE Procedures_AdvisorUpdateGP
@@ -720,6 +753,9 @@ GO
 		SET expected_grad_date = @expected_grad_date
 		WHERE student_id= @studentID;
 GO
+SELECT * FROM Graduation_Plan;
+EXEC Procedures_AdvisorUpdateGP '2029-09-01',11;
+SELECT * FROM Graduation_Plan;
 
 -----U
 GO
@@ -735,9 +771,12 @@ GO
 		FROM Graduation_Plan 
 		WHERE Graduation_Plan.student_id=@StudentID);
 GO
+SELECT * FROM GradPlan_Course;
+EXEC Procedures_AdvisorDeleteFromGP 11,'W23',10;
+SELECT * FROM GradPlan_Course;
 -----V
 GO
-	CREATE Function FN_Advisors_Request (@AdvisorID INT)
+	CREATE Function FN_Advisors_Requests (@AdvisorID INT)
 	RETURNS TABLE
 	AS
 	RETURN
@@ -747,6 +786,8 @@ GO
 		WHERE R.advisor_id=@AdvisorID
 	);	
 GO
+SELECT * FROM Request
+SELECT * FROM FN_Advisors_Requests(5);
 -----W
 GO 
 	CREATE PROCEDURE Procedures_AdvisorApproveRejectCHRequest
@@ -778,7 +819,7 @@ GO
 
 		IF (@type = 'credit_hours')
 		BEGIN 
-			IF ((@gpa>3.7 OR @credit_hours>3 OR (( @totalCreditHours + @assigned_hours + @credit_hours) >34) OR @advID <> @advisor_id))
+			IF ((@gpa>3.7 OR @credit_hours>3 OR (( @total_credit_hours + @assigned_hours + @credit_hours) >34) OR @advID <> @advisor_id))
 			BEGIN
 				UPDATE Request
 				SET status = 'Rejected'
@@ -825,6 +866,7 @@ GO
 		END
 	END
 GO
+EXEC Procedures_AdvisorApproveRejectCHRequest 1,'W23';
 -----X
 GO
 	CREATE PROCEDURE Procedures_AdvisorViewAssignedStudents
@@ -836,6 +878,10 @@ GO
 		INNER JOIN Course C ON C.course_id = SCT.course_id
 		WHERE S.advisor_id = @AdvisorID AND S.major = @major 
 GO
+select * from Student
+select * from Student_Instructor_Course_Take
+select * from Course
+EXEC Procedures_AdvisorViewAssignedStudents 5,'IET';
 -----Y 
 GO
 	CREATE PROCEDURE Procedures_AdvisorApproveRejectCourseRequest
@@ -908,6 +954,7 @@ GO
 			END
 		END
 GO
+exec Procedures_AdvisorApproveRejectCourseRequest 1,'W23';
 -----Z
 GO
 	CREATE PROC Procedures_AdvisorViewPendingRequests
@@ -917,6 +964,8 @@ GO
 		FROM Request R   
 		WHERE R.status='Pending' AND R.advisor_id=@AdvisorID;
 GO
+SELECT * FROM Request;
+EXEC Procedures_AdvisorViewPendingRequests 3;
 -----AA
 GO
 
@@ -939,6 +988,8 @@ BEGIN
 END;
 
 GO
+select * from Student
+PRINT dbo.FN_StudentLogin(1,'password123');
 -----BB 
 GO
 CREATE PROCEDURE Procedures_StudentaddMobile
@@ -948,10 +999,12 @@ CREATE PROCEDURE Procedures_StudentaddMobile
 		INSERT INTO Student_Phone(student_id,phone_number)
 		VALUES(@StudentID,@mobile_number);
 GO
------CC (REVIEW) --> 
+SELECT * FROM Student_Phone;
+EXEC Procedures_StudentaddMobile 1,'010';
+-----CC 
 GO
 
-CREATE FUNCTION FN_SemsterAvailableCourses(@semster_code VARCHAR(40))
+CREATE FUNCTION  FN_SemsterAvailableCourses(@semster_code VARCHAR(40))
 RETURNS TABLE
 AS
 RETURN
@@ -963,6 +1016,8 @@ RETURN
 );
 
 GO
+SELECT * from Course_Semester 
+SELECT * FROM FN_SemsterAvailableCourses('W23');
 -----DD
 GO
 
@@ -979,9 +1034,10 @@ CREATE PROCEDURE Procedures_StudentSendingCourseRequest
 		INSERT INTO Request(type,comment,course_id,student_id, advisor_id)
 		VALUES(@type,@comment,@CourseID,@StudentID, @advisor_id);
 GO
+SELECT * FROM Request;
+EXEC Procedures_StudentSendingCourseRequest 1,5,'course','PLEASE';
 -----EE
 GO
-
 CREATE PROCEDURE Procedures_StudentSendingCHRequest
 	@StudentID INT,
 	@credit_hours INT,
@@ -995,11 +1051,12 @@ CREATE PROCEDURE Procedures_StudentSendingCHRequest
 
 		INSERT INTO Request(type,comment,credit_hours,student_id, advisor_id)
 		VALUES(@type,@comment,@credit_hours,@StudentID, @advisor_id);
-
 GO
+EXEC Procedures_StudentSendingCHRequest 1,4,'credit_hours','PLEASE';
+SELECT * FROM Request;
 -----FF
 GO
-CREATE FUNCTION FN_StudentViewGP2(@student_id INT)
+CREATE FUNCTION FN_StudentViewGP(@student_id INT)
 RETURNS TABLE
 AS
 RETURN
@@ -1012,21 +1069,27 @@ RETURN
 	WHERE S.student_id = @student_id
 );		
 GO
+SELECT * FROM FN_StudentViewGP(5);
 -----GG
+GO
 CREATE FUNCTION FN_StudentUpcoming_installment(@student_id INT)
 RETURNS DATETIME
 AS
 BEGIN
 	DECLARE @upcoming_installment DATETIME
 
-	SELECT TOP 1 @upcoming_installment = deadline
-	FROM Installment
-	WHERE student_id = @student_id
-	AND payment_status = 'NotPaid'
-	ORDER BY deadline ASC
+	SELECT TOP 1 @upcoming_installment = I.deadline
+	FROM Installment I 
+	INNER JOIN Payment P ON I.payment_id = P.payment_id
+	WHERE P.student_id = @student_id
+	AND I.status = 'NotPaid'
+	ORDER BY I.deadline ASC
 	RETURN @upcoming_installment
 END;
 GO
+DECLARE @upcoming_installment DATETIME
+SELECT @upcoming_installment = dbo.FN_StudentUpcoming_installment(6);
+PRINT @upcoming_installment;
 -----HH
 GO
 	CREATE FUNCTION FN_StudentViewSlot (@CourseID INT,@InstructorID INT)
@@ -1041,6 +1104,8 @@ GO
 		WHERE S.course_id=@CourseID AND S.instructor_id=@InstructorID
 	);
 GO
+SELECT * FROM Slot;
+SELECT * FROM FN_StudentViewSlot(5,5);
 -----II
 GO
 CREATE PROCEDURE Procedures_StudentRegisterFirstMakeup
@@ -1068,8 +1133,9 @@ CREATE PROCEDURE Procedures_StudentRegisterFirstMakeup
 			WHERE student_id = @StudentID AND course_id = @course_id AND semester_code = @studentCurrentSemester;
 		END
 GO
+EXECUTE Procedures_StudentRegisterFirstMakeup 1,5,'W23';
 -----JJ
-GO
+GO 
 	CREATE FUNCTION FN_StudentCheckSMEligiability(@CourseID INT,@StudentID INT)
 	RETURNS BIT
 	AS
@@ -1092,6 +1158,8 @@ GO
 				END
 	END
 GO
+
+PRINT dbo.FN_StudentCheckSMEligiability(5,1);
 
 -----KK
 GO
@@ -1118,45 +1186,45 @@ GO
 				WHERE student_id = @student_id AND course_id = @course_id AND semester_code = @student_current_semester;
 			END
 GO
+EXECUTE Procedures_StudentRegisterSecondMakeup 1,5,'W23';
 -----LL 
-
 GO 
 CREATE PROCEDURE Procedures_ViewRequiredCourses
 	@StudentID INT,
 	@Current_semester_code VARCHAR(40)
 	AS
 		((SELECT C.* 
-		FROM Course C
-		INNER JOIN Student_Instructor_Course_Take SCT ON (C.course_id = SCT.course_id AND SCT.student_id = @StudentID)
-		WHERE (SCT.grade = 'F' OR SCT.grade = 'FF') AND dbo.FN_StudentCheckSMEligiability(C.course_id, @StudentID) = 0)
-		UNION
-		(
-		(SELECT C.*
-		FROM Course C
-		WHERE C.semester < (SELECT S.semester
-							FROM Student S
-							WHERE S.student_id = @StudentID AND S.major = C.major))
-		EXCEPT 
-		(SELECT C.* 
-		FROM Course C
-		INNER JOIN Student_Instructor_Course_Take SCT ON (C.course_id = SCT.course_id AND SCT.student_id = @StudentID)
-		WHERE SCT.grade NOT LIKE 'F%')
-		)
-		INTERSECT
-		(SELECT C.*
-		FROM Course_Semester CS INNER JOIN Course C ON (C.course_id = CS.course_id)
-		WHERE CS.semester_code = @Current_semester_code)
-		)
-
+			FROM Course C
+			INNER JOIN Student_Instructor_Course_Take SCT ON (C.course_id = SCT.course_id AND SCT.student_id = @StudentID)
+			WHERE (SCT.grade = 'F' OR SCT.grade = 'FF') AND dbo.FN_StudentCheckSMEligiability(C.course_id, @StudentID) = 0)
+			UNION
+			(
+			(SELECT C.*
+			FROM Course C
+			WHERE C.semester < (SELECT S.semester
+								FROM Student S
+								WHERE S.student_id = @StudentID AND S.major = C.major))
+			EXCEPT 
+			(SELECT C.* 
+			FROM Course C
+			INNER JOIN Student_Instructor_Course_Take SCT ON (C.course_id = SCT.course_id AND SCT.student_id = @StudentID)
+			WHERE SCT.grade NOT LIKE 'F%')
+			)
+			INTERSECT
+			(SELECT C.*
+			FROM Course_Semester CS INNER JOIN Course C ON (C.course_id = CS.course_id)
+			WHERE CS.semester_code = @Current_semester_code)
+			)
 
 GO
------MM  
+EXEC Procedures_ViewRequiredCourses 1,'W23';
+-----MM
 GO  
  	CREATE PROCEDURE Procedures_ViewOptionalCourse
  		@StudentID INT,
  		@Current_semester_code VARCHAR(40)
  		AS
-		((SELECT C.*
+			((SELECT C.*
 		FROM Course C
 		WHERE C.semester >= (SELECT S.semester
 							FROM Student S
@@ -1180,27 +1248,63 @@ GO
 			FROM Course_Semester CS INNER JOIN Course C ON (C.course_id = CS.course_id)
 			WHERE CS.semester_code = @current_semester_code)
 			)
-
 			
 GO
+EXEC Procedures_ViewOptionalCourse 1,'W23';
 -----NN  
 GO
-	CREATE PROCEDURE Procedures_viewMS
-		@student_id INT
+	CREATE PROCEDURE Procedures_ViewMS
+		@StudentID INT
 		AS
 			(SELECT C.*
 			FROM Course C
 			WHERE C.major = (SELECT S.major
 							FROM Student S
-							WHERE S.student_id = @student_id))
+							WHERE S.student_id = @StudentID))
 			EXCEPT
 			(SELECT C.*
 			FROM Course C
 					INNER JOIN Student_Instructor_Course_Take SCT ON C.course_id = SCT.course_id 
-			WHERE SCT.grade NOT LIKE 'F%' AND SCT.student_id = @student_id
-			)
-			
+			WHERE (SCT.grade NOT LIKE 'F%' OR SCT.grade IS NULL) AND SCT.student_id = @StudentID)	
+			EXCEPT ((SELECT C.* 
+			FROM Course C
+			INNER JOIN Student_Instructor_Course_Take SCT ON (C.course_id = SCT.course_id AND SCT.student_id = @StudentID)
+			WHERE (SCT.grade = 'F' OR SCT.grade = 'FF') AND dbo.FN_StudentCheckSMEligiability(C.course_id, @StudentID) = 0)
+			UNION
+			(
+			(SELECT C.*
+			FROM Course C
+			WHERE C.semester < (SELECT S.semester
+								FROM Student S
+								WHERE S.student_id = @StudentID AND S.major = C.major))
+			EXCEPT 
+			(SELECT C.* 
+			FROM Course C
+			INNER JOIN Student_Instructor_Course_Take SCT ON (C.course_id = SCT.course_id AND SCT.student_id = @StudentID)
+			WHERE SCT.grade NOT LIKE 'F%')
+			))
+			EXCEPT
+			((SELECT C.*
+		FROM Course C
+		WHERE C.semester >= (SELECT S.semester
+							FROM Student S
+							WHERE S.student_id = @StudentID AND S.major = C.major)
+			AND NOT EXISTS( 
+						(SELECT P.prerequisite_course_id
+						FROM PreqCourse_course P
+						WHERE P.course_id = C.course_id
+						)
+						EXCEPT
+						(SELECT SCT.course_id
+						FROM Student_Instructor_Course_Take SCT
+						WHERE SCT.student_id = @StudentID AND SCT.grade NOT LIKE 'F%')
+		))
+			EXCEPT (SELECT C.*
+					FROM Course C
+					INNER JOIN Student_Instructor_Course_Take SCT ON (C.course_id = SCT.course_id AND SCT.student_id = @StudentID)
+					WHERE SCT.grade NOT LIKE 'F%'))
 GO
+EXEC Procedures_ViewMS 1;
 -----OO  
 GO	
 CREATE PROCEDURE Procedures_ChooseInstructor
@@ -1213,4 +1317,4 @@ CREATE PROCEDURE Procedures_ChooseInstructor
 		SET instructor_id = @InstructorID
 		WHERE student_id = @StudentID AND course_id = @CourseID AND semester_code = @current_semester_code;
 GO
-
+EXEC Procedures_ChooseInstructor 5,1,5,'W23';
