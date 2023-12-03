@@ -4,6 +4,7 @@ CREATE DATABASE Advising_Team_6;
 USE Advising_Team_6;
 
 USE master;
+DROP DATABASE Advising_Team_6;
 
 
 EXECUTE CreateAllTables;
@@ -398,7 +399,7 @@ GO
 GO
 	CREATE VIEW Student_Payment
 	AS
-		SELECT P.* , S.f_name + ' ' + S.l_name AS 'Student Name'
+		SELECT P.* , S.f_name AS 'Student First Name' , S.l_name AS 'Student Last Name'
 		FROM Payment P
 		INNER JOIN Student S ON(P.student_id=S.student_id);
 GO
@@ -451,18 +452,18 @@ GO
 -----A
 GO
 	CREATE PROCEDURE Procedures_StudentRegistration
-		@f_name VARCHAR(40),
-		@l_name VARCHAR(40),
+		@FirstName VARCHAR(40),
+		@LastName VARCHAR(40),
 		@password VARCHAR(40),
 		@faculty VARCHAR(40),
 		@email VARCHAR(40),
 		@major VARCHAR(40),
-		@semester INT,
-		@student_id INT OUTPUT
+		@Semester INT,
+		@StudentID INT OUTPUT
 	AS
 		INSERT INTO Student(f_name,l_name,password,faculty,email,major,semester)
-		VALUES(@f_name,@l_name,@password,@faculty,@email,@major,@semester);
-		SELECT @student_id = student_id FROM Student WHERE f_name = @f_name AND l_name = @l_name AND password = @password AND faculty = @faculty AND email = @email AND major = @major AND semester = @semester;
+		VALUES(@FirstName ,@LastName ,@password, @faculty, @email, @major, @Semester);
+		SELECT @StudentID = student_id FROM Student WHERE f_name = @FirstName AND l_name = @LastName AND password = @password AND faculty = @faculty AND email = @email AND major = @major AND semester = @Semester;
 GO
 -----B
 GO	
@@ -519,17 +520,16 @@ GO
 		INSERT INTO Course(major,semester,credit_hours,name,is_offered)
 		VALUES(@major,@semester,@credit_hours,@course_name,@offered);
 GO
------H  --Is the instructor already linked to the course or should we just link the course to the instructor
+-----H
 GO 
 	CREATE PROCEDURE Procedures_AdminLinkInstuctorToCourse
-		@instructor_id INT,
-		@course_id INT,
-		@slot_id INT
+		@InstructorId INT,
+		@courseID INT,
+		@slotID INT
 		AS
-			INSERT INTO Instructor_Course(instructor_id,course_id)
-			VALUES(@instructor_id,@course_id);
-
-			UPDATE Slot SET instructor_id = @instructor_id WHERE slot_id = @slot_id;
+			UPDATE Slot
+			SET instructor_id = @InstructorId, course_id = @courseID
+			WHERE slot_id = @slotID;
 GO
 -----I
 GO
@@ -613,7 +613,7 @@ GO
 GO
 -----N
 GO
-CREATE FUNCTION get_status(@student_id INT)
+CREATE FUNCTION get_status(@StudentID INT)
 	RETURNS BIT
 	AS
 	BEGIN
@@ -623,7 +623,7 @@ CREATE FUNCTION get_status(@student_id INT)
 			FROM Student S 
 			INNER JOIN Payment P ON S.student_id=P.student_id 
 			INNER JOIN Installment I ON P.payment_id=I.payment_id
-			WHERE student_id=@student_id AND CURRENT_TIMESTAMP > I.deadline AND I.status='NotPaid'
+			WHERE S.student_id=@StudentID AND CURRENT_TIMESTAMP > I.deadline AND I.status='NotPaid'
 			)
 		SET @status = 0;
 		ELSE
@@ -652,13 +652,15 @@ GO
 GO
 	CREATE PROC Prcedures_AdminDeleteSlots
 		@current_semester VARCHAR(40)
-	As
-		DELETE FROM Slot WHERE Slot.course_id IN (
+	As	
+		UPDATE Slot
+		SET Slot.course_id = NULL, Slot.instructor_id = NULL
+		WHERE Slot.course_id IN (
 			SELECT C.course_id
 			FROM Course_Semester C 
 			WHERE C.semester_code<>@current_semester
 			);	
-Go
+GO
 -----Q
 GO
 	CREATE FUNCTION FN_AdvisorLogin (@iD iNT,@password VARCHAR(40))
@@ -712,7 +714,7 @@ GO
 	AS
 		UPDATE Graduation_Plan 
 		SET expected_grad_date = @expected_grad_date
-		WHERE student_id= @id
+		WHERE student_id= @studentID;
 GO
 
 -----U
@@ -908,12 +910,12 @@ GO
 		FROM Request R   
 		WHERE R.status='Pending' AND R.advisor_id=@AdvisorID;
 GO
------AA (REVIEW)
+-----AA
 GO
 
 CREATE FUNCTION FN_StudentLogin
 (
-	@student_id INT,
+	@StudentID INT,
 	@password VARCHAR(40)
 )
 RETURNS BIT
@@ -921,7 +923,7 @@ AS
 BEGIN
 	DECLARE @Success BIT
 
-	IF EXISTS(SELECT * FROM Student WHERE student_id = @student_id AND password = @password)
+	IF EXISTS(SELECT * FROM Student WHERE student_id = @StudentID AND password = @password)
 		SET @Success = 1;
 	ELSE
 		SET @Success = 0;
@@ -1197,12 +1199,13 @@ GO
 -----OO  
 GO	
 CREATE PROCEDURE Procedures_ChooseInstructor
-	@student_id INT,
-	@instructor_id INT,
-	@course_id INT,
+	@StudentID INT,
+	@InstructorID INT,
+	@CourseID INT,
 	@current_semester_code varchar(40)
 	AS
 		UPDATE Student_Instructor_Course_Take
-		SET instructor_id = @instructor_id
-		WHERE student_id = @student_id AND course_id = @course_id AND semester_code = @current_semester_code;
+		SET instructor_id = @InstructorID
+		WHERE student_id = @StudentID AND course_id = @CourseID AND semester_code = @current_semester_code;
 GO
+
