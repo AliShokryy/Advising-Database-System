@@ -1,0 +1,51 @@
+﻿@page
+@model Team6_Advising.Pages.Advisor.RegisterAdvisorModel
+@{
+}
+
+@if (ViewData["Message"] != null)
+{
+    <!-- Display the message and show the alert using JavaScript -->
+    <script>
+        var message = '@Html.Raw(ViewData["Message"].ToString())';
+        alert(message);
+
+        // Redirect after the alert
+        window.location.href = '/Advisor/Home';
+    </script>
+}
+
+<h1>Register</h1>
+
+<form method="post">
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">First Name</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="name" value"">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">password</label>
+        <div class="col-sm-6">
+            <input type="password" class="form-control" name="password" value"">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Email</label>
+        <div class="col-sm-6">
+            <input type="email" class="form-control" name="mail" value"">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Office</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="office" value"">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-sm-6">
+            <button type="submit" class="btn btn-primary btn-sm"> Submit </button>
+        </div>
+    </div>
+</form>
+

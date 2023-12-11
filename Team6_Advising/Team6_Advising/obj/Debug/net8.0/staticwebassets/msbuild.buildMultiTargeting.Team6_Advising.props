@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\Team6_Advising.props" />
+</Project>
