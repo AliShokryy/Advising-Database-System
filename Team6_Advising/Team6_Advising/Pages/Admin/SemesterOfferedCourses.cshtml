@@ -1,0 +1,25 @@
+﻿@page
+@model Team6_Advising.Pages.Admin.SemesterOfferedCoursesModel
+@{
+}
+<h1>Semesters & Offered Courses</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Course ID</th>
+            <th>Course Name</th>
+            <th>Semester Code</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.semesterOfferedCourses)
+        {
+            <tr>
+                <td>@item.course_id</td>
+                <td>@item.course_name</td>
+                <td>@item.semester_code</td>
+            </tr>
+        }
+    </tbody>
+</table>

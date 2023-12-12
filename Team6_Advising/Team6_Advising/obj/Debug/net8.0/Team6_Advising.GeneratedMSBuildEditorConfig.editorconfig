@@ -18,12 +18,24 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\abdel\Documents\Advising-Database-System\Team6_Advising\Team6_Advising
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/abdel/Documents/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Admin/GradPlanAdvisors.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cR3JhZFBsYW5BZHZpc29ycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/abdel/Documents/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Admin/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/abdel/Documents/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Admin/InstructorAssignedCourses.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cSW5zdHJ1Y3RvckFzc2lnbmVkQ291cnNlcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/abdel/Documents/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Admin/LinkStudentAdvisor.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cTGlua1N0dWRlbnRBZHZpc29yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/abdel/Documents/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Admin/ListActiveStudents.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cTGlzdEFjdGl2ZVN0dWRlbnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/abdel/Documents/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Admin/ListAdvisors.cshtml]
@@ -48,6 +60,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/abdel/Documents/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Admin/NewSemester.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cTmV3U2VtZXN0ZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/abdel/Documents/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Admin/SemesterOfferedCourses.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cU2VtZXN0ZXJPZmZlcmVkQ291cnNlcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/abdel/Documents/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Advisor/AdvisorMenu.cshtml]

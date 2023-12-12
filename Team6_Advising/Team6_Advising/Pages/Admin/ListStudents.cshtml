@@ -2,3 +2,28 @@
 @model Team6_Advising.Pages.Admin.ListStudentsModel
 @{
 }
+<h1>Students & Advisors</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Student ID</th>
+            <th>Student First Name</th>
+            <th>Student Last Name</th>
+            <th>Advisor ID</th>
+            <th>Advisor Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.student_advisor)
+        {
+            <tr>
+                <td>@item.student_id</td>
+                <td>@item.fname</td>
+                <td>@item.lname</td>
+                <td>@item.advisor_id</td>  
+                <td>@item.advisor_name</td>
+            </tr>
+        }
+    </tbody>
+</table>
