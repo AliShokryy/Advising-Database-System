@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Data.SqlClient;
+using static Team6_Advising.Pages.Advisor.ViewStudentsModel;
 
 namespace Team6_Advising.Pages.Advisor
 {
@@ -10,7 +11,7 @@ namespace Team6_Advising.Pages.Advisor
         {
         }
 
-        public IActionResult OnPost()
+        public void OnPost()
         {
             int advisorId = int.Parse(Request.Form["id"]);
             string password = Request.Form["password"];
@@ -32,14 +33,12 @@ namespace Team6_Advising.Pages.Advisor
                         if ((bool)result == true)
                         {
                             Console.WriteLine("Login Successful");
-                            //Response.Redirect("/Advisor/AdvisorMenu");
-                            return new RedirectToPageResult("/Advisor/AdvisorMenu", new { id = advisorId });
+                            Response.Redirect("/Advisor/AdvisorMenu?id=" + advisorId);
                         }
                         else
                         {
                             Console.WriteLine("Login failed");
                             ViewData["Message"] = "Login Failed";
-                            return Page();
 
                         }
                     }
@@ -51,7 +50,6 @@ namespace Team6_Advising.Pages.Advisor
             {
                 ViewData["Message"] = "Advisor not found";
                 Console.WriteLine(e.ToString());
-                return Page();
             }
         }
     }

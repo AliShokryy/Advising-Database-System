@@ -16,7 +16,7 @@
       "applicationUrl": "http://localhost:5050",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "ConnectionString": "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Advising_System;Integrated Security=True;"
+        "ConnectionString": "Data Source=alishokry\\sqlexpress03;Initial Catalog=Advising_System;Integrated Security=True;Encrypt=False"
       }
     },
     "IIS Express": {
@@ -24,6 +24,7 @@
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
+
       }
     }
   }

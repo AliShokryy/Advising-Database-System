@@ -1,5 +1,5 @@
 ﻿@page
-@model Team6_Advising.Pages.Advisor.ViewStudentsModel
+@model Team6_Advising.Pages.Advisor.DeleteCourseFromGPModel
 @{
     String id = Request.Query["id"];
 }
@@ -63,32 +63,43 @@
         </div>
     </nav>
 </header>
-<h1>View Students</h1>
+<h1>Delete Course from a Graduation Plan</h1>
 
+<form method="post" class="bg-blue">
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Student ID</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="stdID" value"">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Semester Code</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="semCode" value"" required>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Course ID</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="crsID" value"">
+        </div>
+    </div>
+    <div class="row mb-3 justify-content-center">
+        <div class="col-sm-6">
+            <button type="submit" class="btn btn-primary btn-lg"> Submit </button>
+        </div>
+    </div>
+</form>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Student ID</th>
-            <th>Student Name</th>
-            <th>Student Email</th>
-            <th>Student Faculty</th>
-            <th>Student Major</th>
-            <th>Student Semester</th>
-
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.studentList)
-        {
-            <tr>
-                <td>@item.studentId</td>
-                <td>@item.name</td>
-                <td>@item.email</td>
-                <td>@item.faculty</td>
-                <td>@item.major</td>
-                <td>@item.semester</td>
-            </tr>
-        }
-    </tbody>
-</table>
+@if (ViewData["Message"] != null && ViewData["Message"].ToString().Equals("Course deleted Successfully"))
+{
+    <div class="bg-blue">
+        <label class="col-sm-3 col-form-label">Course deleted Successfully</label>
+    </div>
+}
+@if (ViewData["Message"] != null && ViewData["Message"].ToString().Equals("Course not deleted"))
+{
+    <div class="bg-blue">
+        <label class="col-sm-3 col-form-label">Course not deleted</label>
+    </div>
+}

@@ -17,13 +17,10 @@ namespace Team6_Advising.Pages.Advisor
             public string faculty;
             public int semester;
         }
-        public void OnGet()
-        {
-        }
-
-        public void OnPost(String? id)
+        public void OnGet(String? id)
         {
             int advisorId = int.Parse(id);
+            Console.WriteLine(advisorId);
             try
             {
                 string connectionString = Environment.GetEnvironmentVariable("ConnectionString");
@@ -45,17 +42,22 @@ namespace Team6_Advising.Pages.Advisor
                             student.email = reader.GetString(6);
                             student.major = reader.GetString(7);
                             student.faculty = reader.GetString(5);
-                            student.semester = reader.GetInt32(8);
+                            student.semester = reader.GetInt32(9);
                             studentList.Add(student);
                         }
                     }
                     connection.Close();
-                }   
+                }
             }
             catch (SqlException e)
             {
                 Console.WriteLine(e.ToString());
             }
+        }
+
+        public void OnPost()
+        {
+           
         }
     }
 }

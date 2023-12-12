@@ -1,5 +1,5 @@
 ﻿@page
-@model Team6_Advising.Pages.Advisor.ViewStudentsModel
+@model Team6_Advising.Pages.Advisor.ViewAssignedStudentsWithCoursesModel
 @{
     String id = Request.Query["id"];
 }
@@ -64,30 +64,35 @@
     </nav>
 </header>
 <h1>View Students</h1>
+<form method="post">
+    <div class="row mb-3 bg-blue">
+        <label class="col-sm-3 col-form-label">Major</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="major" value"">
+        </div>
 
+        <button type="submit" class="btn btn-primary btn-sm">View Assigned Students</button>
+    </div>
+</form>
 
 <table class="table">
     <thead>
         <tr>
             <th>Student ID</th>
             <th>Student Name</th>
-            <th>Student Email</th>
-            <th>Student Faculty</th>
             <th>Student Major</th>
-            <th>Student Semester</th>
+            <th>Course Name</th>
 
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.studentList)
+        @foreach (var item in Model.studentWithCoursesList)
         {
             <tr>
-                <td>@item.studentId</td>
+                <td>@item.id</td>
                 <td>@item.name</td>
-                <td>@item.email</td>
-                <td>@item.faculty</td>
                 <td>@item.major</td>
-                <td>@item.semester</td>
+                <td>@item.course_name</td>
             </tr>
         }
     </tbody>
