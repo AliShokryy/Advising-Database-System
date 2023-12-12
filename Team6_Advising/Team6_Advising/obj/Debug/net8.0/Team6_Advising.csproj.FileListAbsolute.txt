@@ -75,3 +75,42 @@ G:\Semester 5\[CSEN501] Data Base I\Project Repo\Advising-Database-System\Team6_
 G:\Semester 5\[CSEN501] Data Base I\Project Repo\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\Team6_Advising.pdb
 G:\Semester 5\[CSEN501] Data Base I\Project Repo\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\Team6_Advising.genruntimeconfig.cache
 G:\Semester 5\[CSEN501] Data Base I\Project Repo\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\ref\Team6_Advising.dll
+C:\Users\DELL\Source\Repos\Advising-Database-System\Team6_Advising\Team6_Advising\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\DELL\Source\Repos\Advising-Database-System\Team6_Advising\Team6_Advising\bin\Debug\net8.0\appsettings.json
+C:\Users\DELL\Source\Repos\Advising-Database-System\Team6_Advising\Team6_Advising\bin\Debug\net8.0\Team6_Advising.staticwebassets.runtime.json
+C:\Users\DELL\Source\Repos\Advising-Database-System\Team6_Advising\Team6_Advising\bin\Debug\net8.0\Team6_Advising.exe
+C:\Users\DELL\Source\Repos\Advising-Database-System\Team6_Advising\Team6_Advising\bin\Debug\net8.0\Team6_Advising.deps.json
+C:\Users\DELL\Source\Repos\Advising-Database-System\Team6_Advising\Team6_Advising\bin\Debug\net8.0\Team6_Advising.runtimeconfig.json
+C:\Users\DELL\Source\Repos\Advising-Database-System\Team6_Advising\Team6_Advising\bin\Debug\net8.0\Team6_Advising.dll
+C:\Users\DELL\Source\Repos\Advising-Database-System\Team6_Advising\Team6_Advising\bin\Debug\net8.0\Team6_Advising.pdb
+C:\Users\DELL\Source\Repos\Advising-Database-System\Team6_Advising\Team6_Advising\bin\Debug\net8.0\System.Data.SqlClient.dll
+C:\Users\DELL\Source\Repos\Advising-Database-System\Team6_Advising\Team6_Advising\bin\Debug\net8.0\runtimes\win-arm64\native\sni.dll
+C:\Users\DELL\Source\Repos\Advising-Database-System\Team6_Advising\Team6_Advising\bin\Debug\net8.0\runtimes\win-x64\native\sni.dll
+C:\Users\DELL\Source\Repos\Advising-Database-System\Team6_Advising\Team6_Advising\bin\Debug\net8.0\runtimes\win-x86\native\sni.dll
+C:\Users\DELL\Source\Repos\Advising-Database-System\Team6_Advising\Team6_Advising\bin\Debug\net8.0\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\DELL\Source\Repos\Advising-Database-System\Team6_Advising\Team6_Advising\bin\Debug\net8.0\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\DELL\Source\Repos\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\Team6_Advising.csproj.AssemblyReference.cache
+C:\Users\DELL\Source\Repos\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\Team6_Advising.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\DELL\Source\Repos\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\Team6_Advising.AssemblyInfoInputs.cache
+C:\Users\DELL\Source\Repos\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\Team6_Advising.AssemblyInfo.cs
+C:\Users\DELL\Source\Repos\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\Team6_Advising.csproj.CoreCompileInputs.cache
+C:\Users\DELL\Source\Repos\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\Team6_Advising.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\DELL\Source\Repos\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\Team6_Advising.RazorAssemblyInfo.cache
+C:\Users\DELL\Source\Repos\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\Team6_Advising.RazorAssemblyInfo.cs
+C:\Users\DELL\Source\Repos\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\Team6_Advising.sourcelink.json
+C:\Users\DELL\Source\Repos\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\DELL\Source\Repos\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\DELL\Source\Repos\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\staticwebassets\msbuild.Team6_Advising.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\DELL\Source\Repos\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\staticwebassets\msbuild.build.Team6_Advising.props
+C:\Users\DELL\Source\Repos\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.Team6_Advising.props
+C:\Users\DELL\Source\Repos\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.Team6_Advising.props
+C:\Users\DELL\Source\Repos\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\staticwebassets.pack.json
+C:\Users\DELL\Source\Repos\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\scopedcss\Pages\Shared\_Layout.cshtml.rz.scp.css
+C:\Users\DELL\Source\Repos\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\scopedcss\bundle\Team6_Advising.styles.css
+C:\Users\DELL\Source\Repos\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\scopedcss\projectbundle\Team6_Advising.bundle.scp.css
+C:\Users\DELL\Source\Repos\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\Team6_Advising.csproj.CopyComplete
+C:\Users\DELL\Source\Repos\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\Team6_Advising.dll
+C:\Users\DELL\Source\Repos\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\refint\Team6_Advising.dll
+C:\Users\DELL\Source\Repos\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\Team6_Advising.pdb
+C:\Users\DELL\Source\Repos\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\Team6_Advising.genruntimeconfig.cache
+C:\Users\DELL\Source\Repos\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\ref\Team6_Advising.dll

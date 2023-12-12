@@ -1,0 +1,31 @@
+﻿@page
+@model Team6_Advising.Pages.Advisor.ViewStudentsModel
+@{
+}
+<h1>View Students</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Student ID</th>
+            <th>Student Name</th>
+            <th>Student Email</th>
+            <th>Student Major</th>
+            <th>Student Semester</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.studentList)
+        {
+            <tr>
+                <td>@item.studentId</td>
+                <td>@item.name</td>
+                <td>@item.email</td>
+                <td>@item.major</td>
+                <td>@item.semester</td>
+            </tr>
+        }
+    </tbody>
+</table>

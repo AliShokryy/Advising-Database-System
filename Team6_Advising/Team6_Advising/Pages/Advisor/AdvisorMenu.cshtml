@@ -1,0 +1,87 @@
+﻿@page
+@model Team6_Advising.Pages.Advisor.AdvisorMenuModel
+@{
+}
+
+<!DOCTYPE html>
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container">
+            <a class="navbar-brand" asp-area="" asp-page="/Index">Team6_Advising</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <ul class="navbar-nav justify-content-center">
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-page="/Advisor/AdvisorMenu">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-page="/Advisor/AdvisorMenu">Advisor</a>
+                </li>
+                <div class="dropdown">
+                    <a class="nav-link text-dark" href="#" id="dropdownMenuLink" data-bs-toggle="dropdown">
+                        View
+                    </a>
+
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <li><a class="dropdown-item" asp-area="" asp-page="/Advisor/ViewStudents">Advising Students</a></li>
+                        <li><a class="dropdown-item" asp-area="" asp-page="">Advising Students with their taken courses</a></li>
+                    </ul>
+                </div>
+                <div class="dropdown">
+                    <a class="nav-link text-dark" href="#" id="dropdownMenuLink" data-bs-toggle="dropdown">
+                        Graduation Plan
+                    </a>
+
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <li><a class="dropdown-item" asp-area="" asp-page="">Insert Graduation Plan</a></li>
+                        <li><a class="dropdown-item" asp-area="" asp-page="">Insert Courses to a Graduation Plan</a></li>
+                        <li><a class="dropdown-item" asp-area="" asp-page="">Update Expected Graduation Semester In a Graduation Plan</a></li>
+                        <li><a class="dropdown-item" asp-area="" asp-page="">Delete Course from a Gradutaion Plan</a></li>
+                    </ul>
+                </div>
+                <div class="dropdown">
+                    <a class="nav-link text-dark" href="#" id="dropdownMenuLink" data-bs-toggle="dropdown">
+                        Requests
+                    </a>
+
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <li><a class="dropdown-item" asp-area="" asp-page="">View all Requests</a></li>
+                        <li><a class="dropdown-item" asp-area="" asp-page="">View Pending Requests</a></li>
+                        <li><a class="dropdown-item" asp-area="" asp-page="">Update Expected Graduation Semester In a Graduation Plan</a></li>
+                        <li><a class="dropdown-item" asp-area="" asp-page="">Delete Course from a Gradutaion Plan</a></li>
+                    </ul>
+                </div>
+            </ul>
+            <ul class="navbar-nav justify-content-end">
+                
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-page="/Index">Sign Out</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Options Page</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Welcome to Options Page</h1>
+        <div class="text-center">
+            <button class="btn btn-primary mr-2">View All Assigned Students</button>
+            <button class="btn btn-primary">Insert Graduation Plan</button>
+        </div>
+    </div>
+    <!-- jQuery and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</body>
+</html>
