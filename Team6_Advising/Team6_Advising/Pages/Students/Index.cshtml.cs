@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Data.SqlClient;
 
 namespace Team6_Advising.Pages.Students
 {
@@ -11,5 +12,7 @@ namespace Team6_Advising.Pages.Students
             id = Request.Query["id"];
         }
           
+      
+
     }
 }

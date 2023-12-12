@@ -58,8 +58,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3R1ZGVudHNcQ291cnNlcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[G:/Semester 5/\[CSEN501\] Data Base I/Project Repo/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Students/GraduationPlan.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3R1ZGVudHNcR3JhZHVhdGlvblBsYW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [G:/Semester 5/\[CSEN501\] Data Base I/Project Repo/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Students/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3R1ZGVudHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Semester 5/\[CSEN501\] Data Base I/Project Repo/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Students/Installment.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3R1ZGVudHNcSW5zdGFsbG1lbnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [G:/Semester 5/\[CSEN501\] Data Base I/Project Repo/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Students/Login.cshtml]

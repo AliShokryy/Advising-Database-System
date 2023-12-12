@@ -1,0 +1,12 @@
+﻿@page
+@model Team6_Advising.Pages.Students.InstallmentModel
+@{
+    String s = ViewData["Message"].ToString();
+    String id = Request.Query["id"];
+}
+
+
+<div class="bg-blue">
+    <label style="color: #fff; font-size:25px; font-weight:bold; margin-right: 20px">Upcoming Installment Deadline: @s </label>
+    <a class="btn btn-primary btn-lg" asp-area="" asp-page="/Students/Index" asp-route-id="@id">Back</a>
+</div>

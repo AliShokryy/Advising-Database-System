@@ -1,0 +1,39 @@
+﻿@page
+@model Team6_Advising.Pages.Students.GraduationPlanModel
+@{
+}
+
+<h1>Graduation Plan</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Student Name</th>
+            <th>Plan Id</th>
+            <th>Semester Code</th>
+            <th>Semester Credit Hours</th>
+            <th>Expected Graduation Date</th>
+            <th>Advisor Id</th> 
+            <th>Student Id</th>
+            <th>Course Id</th>
+            <th>Course Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.grad_plan)
+        {
+            <tr>
+                <td>@item.student_name</td>
+                <td>@item.plan_id</td>
+                <td>@item.semester_code</td>
+                <td>@item.credit_hours</td>
+                <td>@item.expected_grad_date</td>
+                <td>@item.advisor_id</td>
+                <td>@item.student_id</td>
+                <td>@item.course_id</td>
+                <td>@item.course_name</td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
