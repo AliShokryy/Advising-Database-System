@@ -1,0 +1,43 @@
+﻿@page
+@model Team6_Advising.Pages.Admin.NewCourseModel
+@{
+}
+
+<h1>Add New Course</h1>
+
+<form method="post">
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Major</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="major" value"">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Semester</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="semster" value"">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Credit Hours</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="credit_hours" value"">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Course Name</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="course_name" value"">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Is Offered</label>
+        <input type="checkbox" class="largerCheckbox" name="is_offered" value="True">
+    </div>
+    
+    <div class="row mb-3">
+        <div class="col-sm-6">
+            <button type="submit" class="btn btn-primary btn-sm"> Submit </button>
+        </div>
+    </div>
+</form>

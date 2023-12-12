@@ -16,7 +16,7 @@
       "applicationUrl": "http://localhost:5050",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "ConnectionString": "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Advising_System;Integrated Security=True;"
+        "ConnectionString": "TALAAT_ZYPHYRUS\\SQLEXPRESS;Initial Catalog=Advising_System;Integrated Security=True;"
       }
     },
     "IIS Express": {
