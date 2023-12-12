@@ -12,12 +12,11 @@ namespace Team6_Advising.Pages.Students
 
         public void OnPost()
         {
-            int studentId = int.Parse(Request.Form["id"]);
-            string password = Request.Form["password"];
-
             try
             {
-                String connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Advising_System;Integrated Security=True;";
+                int studentId = int.Parse(Request.Form["id"]);
+                string password = Request.Form["password"];
+                string connectionString = Environment.GetEnvironmentVariable("ConnectionString");
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
@@ -29,12 +28,13 @@ namespace Team6_Advising.Pages.Students
                         command.Parameters.Add(new SqlParameter("@Student_id", studentId));
                         command.Parameters.Add(new SqlParameter("@password", password));
                         var result = command.ExecuteScalar();
-                        Console.WriteLine(result);
-                        // Check the result, assuming it's an integer
+
                         if ((bool)result == true)
                         {
-                            Console.WriteLine("Login Successful");
-                            Response.Redirect("/Students/Index");
+                            //pass the student id to the next page
+                            ViewData["Message"] = "Login Successful";
+                            Response.Redirect("/Students/Index?id="+studentId);
+                            
                         }
                         else
                         {
@@ -46,6 +46,11 @@ namespace Team6_Advising.Pages.Students
 
                     connection.Close();
                 }
+            }
+            catch(FormatException e)
+            {
+                ViewData["Message"] = "Invalid Student ID";
+                Console.WriteLine(e.ToString());
             }
             catch(SqlException e)
             {

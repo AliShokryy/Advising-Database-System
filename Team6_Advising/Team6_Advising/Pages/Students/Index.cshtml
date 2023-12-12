@@ -1,35 +1,64 @@
 ﻿@page
 @model Team6_Advising.Pages.Students.IndexModel
 @{
-
+    String id = Request.Query["id"];
 }
 
 <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
         <div class="container">
             <a class="navbar-brand" asp-area="" asp-page="/Index">Team6_Advising</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            
-                <ul class="navbar-nav justify-content-center">
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-evenly">
+                <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-page="/Students/Index">Students</a>
                     </li>
+                    @if (@Model.id != null)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Students/Phone" asp-route-id="@id">Add Phone</a>
+                        </li>
+                        <div class="dropdown">
+                            <a class="nav-link text-dark" href="#"  id="dropdownMenuLink" data-bs-toggle="dropdown">
+                                Courses
+                            </a>
+
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <li><a class="dropdown-item" asp-area="" asp-page="/Students/Courses" asp-route-id="@id">Available Courses</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-page="/Students/ReqCourses" asp-route-id="@id">Required Courses</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-page="/Students/OpCourses" asp-route-id="@id">Optional Courses</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-page="/Students/MissCourse" asp-route-id="@id">Missing Courses</a></li>
+                            </ul>
+                        </div>
+                        <div class="dropdown">
+                            <a class="nav-link text-dark" href="#" id="dropdownMenuLink" data-bs-toggle="dropdown">
+                                Requests
+                            </a>
+
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <li><a class="dropdown-item" asp-area="" asp-page="/Students/CourseRequest" asp-route-id="@id">Course Request</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-page="/Students/CHRequest" asp-route-id="@id">Credit Hour Request</a></li>
+                            </ul>
+                        </div>
+                    }
                 </ul>
-                <ul class="navbar-nav justify-content-end">
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Students/Login">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Students/Register">Register</a>
-                    </li>
-                </ul>
+            </div>
+                @if (@Model.id == null){
+                    <ul class="navbar-nav justify-content-end">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Students/Login">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Students/Register">Register</a>
+                        </li>
+                    </ul>
+                }
         </div>
     </nav>
 </header>
 <h1>Welcome to the advising system</h1>
+
+

@@ -1,0 +1,40 @@
+﻿@page
+@model Team6_Advising.Pages.Students.CourseRequestModel
+@{
+    String id = Request.Query["id"];
+}
+
+<div class="col-sm-6">
+    <h1>Course Request</h1>
+    <a class="btn btn-primary btn-lg" asp-area="" asp-page="/Students/Index" asp-route-id="@id">Back</a>
+</div>
+
+
+<form method="post" class="bg-blue">
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Course ID</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="cid" value"" required>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Comment</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="cmnt" value"">
+        </div>
+    </div>
+    <div class="row mb-3 justify-content-center">
+        <div class="col-sm-6">
+            <button type="submit" class="btn btn-primary btn-lg"> Submit </button>
+        </div>
+    </div>
+</form>
+
+@if (ViewData["Message"] != null)
+{
+    <div class="bg-blue">
+        <label class="col-sm-3 col-form-label">Request Sent Successfully</label>
+    </div>
+}
+
+

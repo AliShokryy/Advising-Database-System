@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Data.SqlClient;
 using System.Data;
 
+
 namespace Team6_Advising.Pages.Advisor
 {
     public class RegisterAdvisorModel : PageModel
@@ -20,7 +21,7 @@ namespace Team6_Advising.Pages.Advisor
 
             try
             {
-                string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Advising_System;Integrated Security=True;";
+                string connectionString = Environment.GetEnvironmentVariable("ConnectionString");
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();

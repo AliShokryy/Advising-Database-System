@@ -20,3 +20,52 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.bg-blue {
+    margin: 50px;
+    padding: 50px;
+    border-radius: 20px;
+    background-color: #123456
+}
+
+.col-form-label
+{
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.btn-primary {
+    color: #000;
+    font-weight: bold;
+    background-color: #fff;
+    border-color: #fff;
+}
+
+.head
+{
+    color:#123456;
+    margin-top: 20px;
+}
+
+
+.btn-primary2 {
+    color: #fff;
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+btn-primary2:hover {
+    color: #fff;
+    background-color: #0b5ed7;
+    border-color: #0a58ca;
+    }
+
+btn {
+    transition: none;
+}
+
+}
+
+.btn:hover {
+    color: #212529;
+}

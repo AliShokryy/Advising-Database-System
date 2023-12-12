@@ -24,7 +24,7 @@ namespace Team6_Advising.Pages.Students
 
             try
             {
-                string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Advising_System;Integrated Security=True;";
+                string connectionString = Environment.GetEnvironmentVariable("ConnectionString");
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();

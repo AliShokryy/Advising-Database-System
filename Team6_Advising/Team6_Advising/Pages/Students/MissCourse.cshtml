@@ -1,0 +1,24 @@
+﻿@page
+@model Team6_Advising.Pages.Students.MissCourseModel
+@{
+}
+
+<h1>Missing Courses</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Course Name</th>
+            <th>Course ID</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.courses)
+        {
+            <tr>
+                <td>@item.name</td>
+                <td>@item.id</td>
+            </tr>
+        }
+    </tbody>
+</table>

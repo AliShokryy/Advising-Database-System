@@ -1,0 +1,34 @@
+﻿@page
+@model Team6_Advising.Pages.Students.PhoneModel
+@{
+}
+
+@if (ViewData["Message"] != null)
+{
+    <!-- Display the message and show the alert using JavaScript -->
+    <script>
+        var message = '@Html.Raw(ViewData["Message"].ToString())';
+        alert(message);
+
+        // Redirect to before previous page after the alert
+        window.history.go(-2);
+
+        
+    </script>
+}
+
+<h1>Add New Phone</h1>
+<form method="post">
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Phone</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="phone" value"">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">password</label>
+        <div class="col-sm-6">
+            <button type="submit" class="btn btn-primary btn-sm"> Submit </button>  
+        </div>
+    </div>
+</form>

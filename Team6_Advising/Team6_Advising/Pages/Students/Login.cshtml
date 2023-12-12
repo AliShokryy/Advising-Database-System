@@ -2,26 +2,31 @@
 @model Team6_Advising.Pages.Students.LoginModel
 @{
 }
+@if (ViewData["message"]!=null)
+{
+    <script>
+        var message = '@Html.Raw(ViewData["message"].ToString())';
+        alert(message);
+    </script>
+}
+<h1 class="head">Login</h1>
 
-<h1>Login</h1>
-
-<form method="post">
+<form method="post" class="bg-blue">
     <div class="row mb-3">
-        <label class="col-sm-3 col-form-label">id</label> 
+        <label class="col-sm-3 col-form-label">Student ID</label> 
         <div class="col-sm-6">
-                <input type="text" class="form-control" name="id" value"">
+                <input type="text" class="form-control" name="id" placeholder="Enter Your Name" >
         </div>
     </div>
     <div class="row mb-3">
-        <label class="col-sm-3 col-form-label">password</label>
+        <label class="col-sm-3 col-form-label">Password</label>
         <div class="col-sm-6">
-            <input type="password" class="form-control" name="password" value"">
+            <input type="password" class="form-control" name="password" placeholder="Enter Your Password">
         </div>
     </div>
-    <div class="row mb-3">
-        <label class="col-sm-3 col-form-label">password</label>
+    <div class="row mb-3 justify-content-center">
         <div class="col-sm-6">
-            <button type="submit" class="btn btn-primary btn-sm"> Submit </button>
+            <button type="submit" class="btn btn-primary btn-lg"> Submit </button>
         </div>
     </div>
 </form>

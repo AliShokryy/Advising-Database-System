@@ -36,3 +36,42 @@ C:\Users\DELL\source\repos\Team6_Advising\Team6_Advising\obj\Debug\net8.0\refint
 C:\Users\DELL\source\repos\Team6_Advising\Team6_Advising\obj\Debug\net8.0\Team6_Advising.pdb
 C:\Users\DELL\source\repos\Team6_Advising\Team6_Advising\obj\Debug\net8.0\Team6_Advising.genruntimeconfig.cache
 C:\Users\DELL\source\repos\Team6_Advising\Team6_Advising\obj\Debug\net8.0\ref\Team6_Advising.dll
+G:\Semester 5\[CSEN501] Data Base I\Project Repo\Advising-Database-System\Team6_Advising\Team6_Advising\bin\Debug\net8.0\appsettings.Development.json
+G:\Semester 5\[CSEN501] Data Base I\Project Repo\Advising-Database-System\Team6_Advising\Team6_Advising\bin\Debug\net8.0\appsettings.json
+G:\Semester 5\[CSEN501] Data Base I\Project Repo\Advising-Database-System\Team6_Advising\Team6_Advising\bin\Debug\net8.0\Team6_Advising.staticwebassets.runtime.json
+G:\Semester 5\[CSEN501] Data Base I\Project Repo\Advising-Database-System\Team6_Advising\Team6_Advising\bin\Debug\net8.0\Team6_Advising.exe
+G:\Semester 5\[CSEN501] Data Base I\Project Repo\Advising-Database-System\Team6_Advising\Team6_Advising\bin\Debug\net8.0\Team6_Advising.deps.json
+G:\Semester 5\[CSEN501] Data Base I\Project Repo\Advising-Database-System\Team6_Advising\Team6_Advising\bin\Debug\net8.0\Team6_Advising.runtimeconfig.json
+G:\Semester 5\[CSEN501] Data Base I\Project Repo\Advising-Database-System\Team6_Advising\Team6_Advising\bin\Debug\net8.0\Team6_Advising.dll
+G:\Semester 5\[CSEN501] Data Base I\Project Repo\Advising-Database-System\Team6_Advising\Team6_Advising\bin\Debug\net8.0\Team6_Advising.pdb
+G:\Semester 5\[CSEN501] Data Base I\Project Repo\Advising-Database-System\Team6_Advising\Team6_Advising\bin\Debug\net8.0\System.Data.SqlClient.dll
+G:\Semester 5\[CSEN501] Data Base I\Project Repo\Advising-Database-System\Team6_Advising\Team6_Advising\bin\Debug\net8.0\runtimes\win-arm64\native\sni.dll
+G:\Semester 5\[CSEN501] Data Base I\Project Repo\Advising-Database-System\Team6_Advising\Team6_Advising\bin\Debug\net8.0\runtimes\win-x64\native\sni.dll
+G:\Semester 5\[CSEN501] Data Base I\Project Repo\Advising-Database-System\Team6_Advising\Team6_Advising\bin\Debug\net8.0\runtimes\win-x86\native\sni.dll
+G:\Semester 5\[CSEN501] Data Base I\Project Repo\Advising-Database-System\Team6_Advising\Team6_Advising\bin\Debug\net8.0\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+G:\Semester 5\[CSEN501] Data Base I\Project Repo\Advising-Database-System\Team6_Advising\Team6_Advising\bin\Debug\net8.0\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
+G:\Semester 5\[CSEN501] Data Base I\Project Repo\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\Team6_Advising.csproj.AssemblyReference.cache
+G:\Semester 5\[CSEN501] Data Base I\Project Repo\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\Team6_Advising.GeneratedMSBuildEditorConfig.editorconfig
+G:\Semester 5\[CSEN501] Data Base I\Project Repo\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\Team6_Advising.AssemblyInfoInputs.cache
+G:\Semester 5\[CSEN501] Data Base I\Project Repo\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\Team6_Advising.AssemblyInfo.cs
+G:\Semester 5\[CSEN501] Data Base I\Project Repo\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\Team6_Advising.csproj.CoreCompileInputs.cache
+G:\Semester 5\[CSEN501] Data Base I\Project Repo\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\Team6_Advising.MvcApplicationPartsAssemblyInfo.cache
+G:\Semester 5\[CSEN501] Data Base I\Project Repo\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\Team6_Advising.RazorAssemblyInfo.cache
+G:\Semester 5\[CSEN501] Data Base I\Project Repo\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\Team6_Advising.RazorAssemblyInfo.cs
+G:\Semester 5\[CSEN501] Data Base I\Project Repo\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\Team6_Advising.sourcelink.json
+G:\Semester 5\[CSEN501] Data Base I\Project Repo\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\staticwebassets.build.json
+G:\Semester 5\[CSEN501] Data Base I\Project Repo\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\staticwebassets.development.json
+G:\Semester 5\[CSEN501] Data Base I\Project Repo\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\staticwebassets\msbuild.Team6_Advising.Microsoft.AspNetCore.StaticWebAssets.props
+G:\Semester 5\[CSEN501] Data Base I\Project Repo\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\staticwebassets\msbuild.build.Team6_Advising.props
+G:\Semester 5\[CSEN501] Data Base I\Project Repo\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.Team6_Advising.props
+G:\Semester 5\[CSEN501] Data Base I\Project Repo\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.Team6_Advising.props
+G:\Semester 5\[CSEN501] Data Base I\Project Repo\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\staticwebassets.pack.json
+G:\Semester 5\[CSEN501] Data Base I\Project Repo\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\scopedcss\Pages\Shared\_Layout.cshtml.rz.scp.css
+G:\Semester 5\[CSEN501] Data Base I\Project Repo\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\scopedcss\bundle\Team6_Advising.styles.css
+G:\Semester 5\[CSEN501] Data Base I\Project Repo\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\scopedcss\projectbundle\Team6_Advising.bundle.scp.css
+G:\Semester 5\[CSEN501] Data Base I\Project Repo\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\Team6_Advising.csproj.CopyComplete
+G:\Semester 5\[CSEN501] Data Base I\Project Repo\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\Team6_Advising.dll
+G:\Semester 5\[CSEN501] Data Base I\Project Repo\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\refint\Team6_Advising.dll
+G:\Semester 5\[CSEN501] Data Base I\Project Repo\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\Team6_Advising.pdb
+G:\Semester 5\[CSEN501] Data Base I\Project Repo\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\Team6_Advising.genruntimeconfig.cache
+G:\Semester 5\[CSEN501] Data Base I\Project Repo\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\ref\Team6_Advising.dll
