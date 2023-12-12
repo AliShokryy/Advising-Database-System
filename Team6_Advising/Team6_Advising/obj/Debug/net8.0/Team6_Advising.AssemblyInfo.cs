@@ -14,7 +14,11 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Team6_Advising")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
+<<<<<<< HEAD
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8382c1e0f5aa747f6e9fb6d238e05e86837d6191")]
+=======
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+696d19858b47ed4b6f7c0c6f81585db0de1cd672")]
+>>>>>>> 13ab5ac4c93117b42ad4a52b9951aad8662a2fcf
 [assembly: System.Reflection.AssemblyProductAttribute("Team6_Advising")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Team6_Advising")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

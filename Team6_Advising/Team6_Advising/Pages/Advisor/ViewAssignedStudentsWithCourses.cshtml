@@ -1,0 +1,99 @@
+﻿@page
+@model Team6_Advising.Pages.Advisor.ViewAssignedStudentsWithCoursesModel
+@{
+    String id = Request.Query["id"];
+}
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container">
+            <a class="navbar-brand" asp-area="" asp-page="/Index">Team6_Advising</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <ul class="navbar-nav justify-content-center">
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-page="/Advisor/AdvisorMenu" asp-route-id="@id">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-page="/Advisor/AdvisorMenu" asp-route-id="@id">Advisor</a>
+                </li>
+                <div class="dropdown">
+                    <a class="nav-link text-dark" href="#" id="dropdownMenuLink" data-bs-toggle="dropdown">
+                        View
+                    </a>
+
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <li><a class="dropdown-item" asp-area="" asp-page="/Advisor/ViewStudents" asp-route-id="@id">Advising Students</a></li>
+                        <li><a class="dropdown-item" asp-area="" asp-page="/Advisor/ViewAssignedStudentsWithCourses" asp-route-id="@id">Advising Students with their taken courses</a></li>
+                    </ul>
+                </div>
+                <div class="dropdown">
+                    <a class="nav-link text-dark" href="#" id="dropdownMenuLink" data-bs-toggle="dropdown">
+                        Graduation Plan
+                    </a>
+
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <li><a class="dropdown-item" asp-area="" asp-page="/Advisor/InsertGradPlan" asp-route-id="@id">Insert Graduation Plan</a></li>
+                        <li><a class="dropdown-item" asp-area="" asp-page="/Advisor/InsertCourseToGradPlan" asp-route-id="@id">Insert Courses to a Graduation Plan</a></li>
+                        <li><a class="dropdown-item" asp-area="" asp-page="/Advisor/UpdateExpGradDateGP" asp-route-id="@id">Update Expected Graduation Semester In a Graduation Plan</a></li>
+                        <li><a class="dropdown-item" asp-area="" asp-page="/Advisor/DeleteCourseFromGP" asp-route-id="@id">Delete Course from a Gradutaion Plan</a></li>
+                    </ul>
+                </div>
+                <div class="dropdown">
+                    <a class="nav-link text-dark" href="#" id="dropdownMenuLink" data-bs-toggle="dropdown">
+                        Requests
+                    </a>
+
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <li><a class="dropdown-item" asp-area="" asp-page="" asp-route-id="@id">View all Requests</a></li>
+                        <li><a class="dropdown-item" asp-area="" asp-page="" asp-route-id="@id">View Pending Requests</a></li>
+                        <li><a class="dropdown-item" asp-area="" asp-page="" asp-route-id="@id">Update Expected Graduation Semester In a Graduation Plan</a></li>
+                        <li><a class="dropdown-item" asp-area="" asp-page="" asp-route-id="@id">Delete Course from a Gradutaion Plan</a></li>
+                    </ul>
+                </div>
+            </ul>
+            <ul class="navbar-nav justify-content-end">
+
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-page="/Index">Sign Out</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<h1>View Students</h1>
+<form method="post">
+    <div class="row mb-3 bg-blue">
+        <label class="col-sm-3 col-form-label">Major</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="major" value"">
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-sm">View Assigned Students</button>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Student ID</th>
+            <th>Student Name</th>
+            <th>Student Major</th>
+            <th>Course Name</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.studentWithCoursesList)
+        {
+            <tr>
+                <td>@item.id</td>
+                <td>@item.name</td>
+                <td>@item.major</td>
+                <td>@item.course_name</td>
+            </tr>
+        }
+    </tbody>
+</table>
