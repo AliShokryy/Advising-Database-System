@@ -12,29 +12,28 @@ namespace Team6_Advising.Pages.Admin
         }
         public void OnPost() { 
             int studentId, advisorId;
-            if (int.TryParse(Request.Form["studentId"], out studentId) && int.TryParse(Request.Form["advisorId"], out advisorId))
+            if (int.TryParse(Request.Form["studentID"], out studentId) && int.TryParse(Request.Form["advisorID"], out advisorId))
             {
                 try 
                 {
-                string connectionString = Environment.GetEnvironmentVariable("ConnectionString");
-                    using (SqlConnection connection = new SqlConnection(connectionString))
-                    {
-                        connection.Open();
-                        string commandText = "Procedures_AdminLinkStudentToAdvisor";
+                    SqlHelper.DB_CONNECTION.Open();
 
-                        using (SqlCommand command = new SqlCommand(commandText, connection) { CommandType = CommandType.StoredProcedure })
-                        {
-                            command.Parameters.Add(new SqlParameter("@studentID", studentId));
-                            command.Parameters.Add(new SqlParameter("@advisorID", advisorId));
-                            command.ExecuteNonQuery();
-                        }
-                        connection.Close();
-                        Console.WriteLine("Successful Operation !");
-                    }
+                    SqlParameter studentParam, advisorParam;
+                    studentParam = new SqlParameter("@studentID", studentId);
+                    advisorParam = new SqlParameter("@advisorID", advisorId);
+
+                    string commandText = "Procedures_AdminLinkStudentToAdvisor";
+                    SqlHelper.ExecActionProc(commandText, studentParam, advisorParam);
+
+                    Console.WriteLine("Successful Operation !");
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
+                }
+                finally
+                {
+                    SqlHelper.DB_CONNECTION.Close();
                 }
             }
             else { 
