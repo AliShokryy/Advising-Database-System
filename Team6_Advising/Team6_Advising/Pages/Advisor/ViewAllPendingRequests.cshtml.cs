@@ -6,16 +6,65 @@ namespace Team6_Advising.Pages.Advisor
 {
     public class ViewAllPendingRequestsModel : PageModel
     {
-        public List<Request> requestList = new List<Request>();
-        public class Request
+        public List<request> requestList = new List<request>();
+        public class request
         {
             public int requestID;
             public string requestType;
             public string requestComment;
             public string requestStatus;
-            public int creditHours;
+            public String creditHours;
             public String courseID;
             public int studentID;
+        }
+        public void OnPost(String? id)
+        {
+            int advisorID = Int32.Parse(id);
+            int requestID = Int32.Parse(Request.Form["requestID"]);
+            string requestType = Request.Form["requestType"];
+            string currSemCode = Request.Form["semesterCode"];
+            try
+            {
+                Console.WriteLine("requestID: " + requestID);
+                string connectionString = Environment.GetEnvironmentVariable("ConnectionString");
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        command.Connection = connection;
+                        if(requestType.Contains("credit"))
+                        {
+                            command.CommandText = "Procedures_AdvisorApproveRejectCHRequest";
+                            command.CommandType = System.Data.CommandType.StoredProcedure;
+                            command.Parameters.AddWithValue("@requestID", requestID);
+                            //command.Parameters.AddWithValue("@Request_Type", requestType);
+                            command.Parameters.AddWithValue("@current_sem_code", currSemCode);
+                        }
+                        if (requestType.Contains("course"))
+                        {
+                            command.CommandText = "Procedures_AdvisorApproveRejectCourseRequest";
+                            command.CommandType = System.Data.CommandType.StoredProcedure;
+                            command.Parameters.AddWithValue("@requestID", requestID);
+                            //command.Parameters.AddWithValue("@Request_Type", requestType);
+                            command.Parameters.AddWithValue("@current_semester_code", currSemCode);
+                        }
+                        
+                        //command.CommandType = System.Data.CommandType.StoredProcedure;
+                        //command.Parameters.AddWithValue("@requestID", requestID);
+                        ////command.Parameters.AddWithValue("@Request_Type", requestType);
+                        //command.Parameters.AddWithValue("@current_sem_code", currSemCode);
+                        command.ExecuteNonQuery();
+                        //Response.Redirect("/Advisor/ViewAllPendingRequests?id=" + advisorID);
+                        connection.Close();
+                        OnGet(id);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
         }
         public void OnGet(String? id)
         {
@@ -35,18 +84,18 @@ namespace Team6_Advising.Pages.Advisor
                         SqlDataReader reader = command.ExecuteReader();
                         while (reader.Read())
                         {
-                            Request r = new Request();
+                            request r = new request();
                             r.requestID = reader.GetInt32(0);
                             r.requestType = reader.GetString(1);
                             r.requestComment = reader.GetString(2);
                             r.requestStatus = reader.GetString(3);
                             try
                             {
-                                r.creditHours = reader.GetInt32(4);
+                                r.creditHours = reader.GetInt32(4)+"";
                             }
                             catch (Exception e)
                             {
-                                r.creditHours = 0;
+                                r.creditHours = "";
                             }
                             try {                                
                                 r.courseID = reader.GetInt32(5) + " ";
