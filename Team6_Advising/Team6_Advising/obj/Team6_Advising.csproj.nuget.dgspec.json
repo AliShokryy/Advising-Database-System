@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\DELL\\source\\repos\\Advising-Database-System\\Team6_Advising\\Team6_Advising\\Team6_Advising.csproj": {}
+    "C:\\Users\\ahd\\Desktop\\Advising System\\Advising-Database-System\\Team6_Advising\\Team6_Advising\\Team6_Advising.csproj": {}
   },
   "projects": {
-    "C:\\Users\\DELL\\source\\repos\\Advising-Database-System\\Team6_Advising\\Team6_Advising\\Team6_Advising.csproj": {
+    "C:\\Users\\ahd\\Desktop\\Advising System\\Advising-Database-System\\Team6_Advising\\Team6_Advising\\Team6_Advising.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\DELL\\source\\repos\\Advising-Database-System\\Team6_Advising\\Team6_Advising\\Team6_Advising.csproj",
+        "projectUniqueName": "C:\\Users\\ahd\\Desktop\\Advising System\\Advising-Database-System\\Team6_Advising\\Team6_Advising\\Team6_Advising.csproj",
         "projectName": "Team6_Advising",
-        "projectPath": "C:\\Users\\DELL\\source\\repos\\Advising-Database-System\\Team6_Advising\\Team6_Advising\\Team6_Advising.csproj",
-        "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\DELL\\source\\repos\\Advising-Database-System\\Team6_Advising\\Team6_Advising\\obj\\",
+        "projectPath": "C:\\Users\\ahd\\Desktop\\Advising System\\Advising-Database-System\\Team6_Advising\\Team6_Advising\\Team6_Advising.csproj",
+        "packagesPath": "C:\\Users\\ahd\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ahd\\Desktop\\Advising System\\Advising-Database-System\\Team6_Advising\\Team6_Advising\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ahd\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

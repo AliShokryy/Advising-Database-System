@@ -1,0 +1,38 @@
+﻿@page
+@model Team6_Advising.Pages.Students.CourseSlotsModel
+@{
+}
+<h1>Course Slots</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Course ID</th>
+            <th>Course Name</th>
+            <th>Slot ID</th>
+            <th>Slot Day</th>
+            <th>Slot Time</th>
+            <th>Slot Location</th>
+            <th>Course ID</th>
+            <th>Instructor ID</th>
+            <th>Instructor Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.courseSlots)
+        {
+            <tr>
+                <td>@item.Course_Id</td>
+                <td>@item.Course_Name</td>
+                <td>@item.Slot_Id</td>
+                <td>@item.Slot_Day</td>
+                <td>@item.Slot_Time</td>
+                <td>@item.Slot_Location</td>
+                <td>@item.Course_Id2</td>
+                <td>@item.Instructor_Id</td>
+                <td>@item.Instructor_Name</td>
+                
+            </tr>
+        }
+    </tbody>
+</table>
+

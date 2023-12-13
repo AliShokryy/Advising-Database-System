@@ -1,0 +1,51 @@
+﻿@page
+@model Team6_Advising.Pages.Students.InstructorSlotsModel
+@{
+}
+<h1>Find Your Course</h1>
+<form method="post" class="bg-blue">
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Course ID</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="course_id" value"">
+        </div>
+        <label class="col-sm-3 col-form-label">Instructor ID</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="instructor_id" value"">
+        </div>
+        <button type="submit" class="btn btn-primary btn-sm">View Course Slots</button>
+    </div>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Course ID</th>
+            <th>Course Name</th>
+            <th>Slot ID</th>
+            <th>Slot Day</th>
+            <th>Slot Time</th>
+            <th>Slot Location</th>
+            <th>Course ID</th>
+            <th>Instructor ID</th>
+            <th>Instructor Name</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.instructorSlots)
+        {
+            <tr>
+                <td>@item.Course_Id</td>
+                <td>@item.Course_Name</td>
+                <td>@item.Slot_Id</td>
+                <td>@item.Slot_Day</td>
+                <td>@item.Slot_Time</td>
+                <td>@item.Slot_Location</td>
+                <td>@item.Course_Id2</td>
+                <td>@item.Instructor_Id</td>
+                <td>@item.Instructor_Name</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

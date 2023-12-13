@@ -1,0 +1,31 @@
+﻿@page
+@model Team6_Advising.Pages.Students.AllCoursesModel
+@{
+}
+<h1>Course Exams</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Exam Id</th>
+            <th>Exam Date</th>
+            <th>Exam Type</th>
+            <th>Course Id</th>
+            <th>Course Name</th>
+            <th>Course Semester</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.courseExams)
+        {
+            <tr>
+                <td>@item.Exam_Id</td>
+                <td>@item.Exam_Date</td>
+                <td>@item.Exam_Type</td>
+                <td>@item.Course_Id</td>
+                <td>@item.Course_Name</td>
+                <td>@item.Course_Semester</td>    
+            </tr>
+        }
+    </tbody>
+</table>
+
