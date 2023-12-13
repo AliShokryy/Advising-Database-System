@@ -1,0 +1,29 @@
+﻿@page
+@model Team6_Advising.Pages.Admin.ListAdvisorsModel
+@{
+}
+<h1>Advisors</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Advisor ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Office</th>
+            <th>Password</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.advisors)
+        {
+            <tr>
+                <td>@item.advisor_id</td>
+                <td>@item.advisor_name</td>
+                <td>@item.email</td>
+                <td>@item.office</td>
+                <td>@item.password</td>
+            </tr>
+        }
+    </tbody>
+</table>

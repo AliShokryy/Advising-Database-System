@@ -1,0 +1,27 @@
+﻿@page
+@model Team6_Advising.Pages.Admin.InstructorAssignedCoursesModel
+@{
+}
+<h1>Instructors & Assigned Courses</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Instructor ID</th>
+            <th>Instructor Name</th>
+            <th>Course ID</th>
+            <th>Course Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.instructorAssignedCourses)
+        {
+            <tr>
+                <td>@item.instructor_id</td>
+                <td>@item.instructor_name</td>
+                <td>@item.course_id</td>
+                <td>@item.course_name</td>
+            </tr>
+        }
+    </tbody>
+</table>

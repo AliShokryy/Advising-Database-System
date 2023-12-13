@@ -1,0 +1,33 @@
+﻿@page
+@model Team6_Advising.Pages.Admin.ListPendingRequestsModel
+@{
+}
+<h1>Pending Requests</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Request ID</th>
+            <th>Type</th>
+            <th>Comment</th>
+            <th>Credit Hours</th>
+            <th>Course ID</th>
+            <th>Student ID</th>
+            <th>Advisor ID</th> 
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.pendingRequests)
+        {
+            <tr>
+                <td>@item.request_id</td>
+                <td>@item.type</td>
+                <td>@item.comment</td>
+                <td>@item.credit_hours</td>
+                <td>@item.course_id</td>
+                <td>@item.student_id</td>
+                <td>@item.advisor_id</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,27 @@
+﻿@page
+@model Team6_Advising.Pages.Admin.StudentToAdvisorModel
+@{
+Layout = "./Shared/_LayoutAdmin";
+}
+
+<h1>Assign Student to Advisor</h1>
+
+<form method="post" class="bg-blue">
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Studnet ID</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="studentID" value"" required>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Advisor ID</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="advisorID" value"">
+        </div>
+    </div>
+    <div class="row mb-3 justify-content-center">
+        <div class="col-sm-6">
+            <button type="submit" class="btn btn-primary btn-lg"> Submit </button>
+        </div>
+    </div>
+</form>
