@@ -9,151 +9,227 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Team6_Advising
 build_property.RootNamespace = Team6_Advising
-build_property.ProjectDir = C:\Users\DELL\Source\Repos\Advising-Database-System\Team6_Advising\Team6_Advising\
+build_property.ProjectDir = C:\Users\DELL\source\repos\Advising-Database-System\Team6_Advising\Team6_Advising\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\DELL\Source\Repos\Advising-Database-System\Team6_Advising\Team6_Advising
+build_property.MSBuildProjectDirectory = C:\Users\DELL\source\repos\Advising-Database-System\Team6_Advising\Team6_Advising
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/DELL/Source/Repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Advisor/AdvisorMenu.cshtml]
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Admin/GradPlanAdvisors.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cR3JhZFBsYW5BZHZpc29ycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Admin/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Admin/InstructorAssignedCourses.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cSW5zdHJ1Y3RvckFzc2lnbmVkQ291cnNlcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Admin/InstructorToCourseToSlot.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cSW5zdHJ1Y3RvclRvQ291cnNlVG9TbG90LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Admin/LinkStudentAdvisor.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cTGlua1N0dWRlbnRBZHZpc29yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Admin/ListActiveStudents.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cTGlzdEFjdGl2ZVN0dWRlbnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Admin/ListAdvisors.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cTGlzdEFkdmlzb3JzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Admin/ListPendingRequests.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cTGlzdFBlbmRpbmdSZXF1ZXN0cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Admin/ListStudents.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cTGlzdFN0dWRlbnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Admin/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cTG9naW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Admin/NewCourse.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cTmV3Q291cnNlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Admin/NewSemester.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cTmV3U2VtZXN0ZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Admin/SemesterOfferedCourses.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cU2VtZXN0ZXJPZmZlcmVkQ291cnNlcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Admin/StudentToAdvisor.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cU3R1ZGVudFRvQWR2aXNvci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Admin/StudentToCourseToInstructor.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cU3R1ZGVudFRvQ291cnNlVG9JbnN0cnVjdG9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Advisor/AdvisorMenu.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWR2aXNvclxBZHZpc29yTWVudS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/DELL/Source/Repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Advisor/DeleteCourseFromGP.cshtml]
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Advisor/DeleteCourseFromGP.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWR2aXNvclxEZWxldGVDb3Vyc2VGcm9tR1AuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/DELL/Source/Repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Advisor/Home.cshtml]
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Advisor/Home.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWR2aXNvclxIb21lLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/DELL/Source/Repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Advisor/InsertCourseToGradPlan.cshtml]
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Advisor/InsertCourseToGradPlan.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWR2aXNvclxJbnNlcnRDb3Vyc2VUb0dyYWRQbGFuLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/DELL/Source/Repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Advisor/InsertGradPlan.cshtml]
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Advisor/InsertGradPlan.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWR2aXNvclxJbnNlcnRHcmFkUGxhbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/DELL/Source/Repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Advisor/LoginAdvisor.cshtml]
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Advisor/LoginAdvisor.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWR2aXNvclxMb2dpbkFkdmlzb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/DELL/Source/Repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Advisor/RegisterAdvisor.cshtml]
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Advisor/RegisterAdvisor.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWR2aXNvclxSZWdpc3RlckFkdmlzb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/DELL/Source/Repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Advisor/UpdateExpGradDateGP.cshtml]
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Advisor/UpdateExpGradDateGP.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWR2aXNvclxVcGRhdGVFeHBHcmFkRGF0ZUdQLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/DELL/Source/Repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Advisor/ViewAllPendingRequests.cshtml]
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Advisor/ViewAllPendingRequests.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWR2aXNvclxWaWV3QWxsUGVuZGluZ1JlcXVlc3RzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/DELL/Source/Repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Advisor/ViewAllRequests.cshtml]
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Advisor/ViewAllRequests.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWR2aXNvclxWaWV3QWxsUmVxdWVzdHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/DELL/Source/Repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Advisor/ViewAssignedStudentsWithCourses.cshtml]
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Advisor/ViewAssignedStudentsWithCourses.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWR2aXNvclxWaWV3QXNzaWduZWRTdHVkZW50c1dpdGhDb3Vyc2VzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/DELL/Source/Repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Advisor/ViewStudents.cshtml]
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Advisor/ViewStudents.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWR2aXNvclxWaWV3U3R1ZGVudHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/DELL/Source/Repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Error.cshtml]
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/DELL/Source/Repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Index.cshtml]
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/DELL/Source/Repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Privacy.cshtml]
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJpdmFjeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/DELL/Source/Repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/DELL/Source/Repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Students/AllCourses.cshtml]
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Students/AllCourses.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3R1ZGVudHNcQWxsQ291cnNlcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/DELL/Source/Repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Students/ChooseInstructor.cshtml]
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Students/ChooseInstructor.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3R1ZGVudHNcQ2hvb3NlSW5zdHJ1Y3Rvci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/DELL/Source/Repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Students/CHRequest.cshtml]
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Students/CHRequest.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3R1ZGVudHNcQ0hSZXF1ZXN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/DELL/Source/Repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Students/CourseRequest.cshtml]
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Students/CoursePrerequisites.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3R1ZGVudHNcQ291cnNlUHJlcmVxdWlzaXRlcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Students/CourseRequest.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3R1ZGVudHNcQ291cnNlUmVxdWVzdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/DELL/Source/Repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Students/Courses.cshtml]
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Students/Courses.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3R1ZGVudHNcQ291cnNlcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/DELL/Source/Repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Students/CourseSlots.cshtml]
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Students/CourseSlots.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3R1ZGVudHNcQ291cnNlU2xvdHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/DELL/Source/Repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Students/GraduationPlan.cshtml]
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Students/FirstMakeUp.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3R1ZGVudHNcRmlyc3RNYWtlVXAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Students/GraduationPlan.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3R1ZGVudHNcR3JhZHVhdGlvblBsYW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/DELL/Source/Repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Students/Index.cshtml]
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Students/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3R1ZGVudHNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/DELL/Source/Repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Students/Installment.cshtml]
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Students/Installment.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3R1ZGVudHNcSW5zdGFsbG1lbnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/DELL/Source/Repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Students/InstructorSlots.cshtml]
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Students/InstructorSlots.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3R1ZGVudHNcSW5zdHJ1Y3RvclNsb3RzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/DELL/Source/Repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Students/Login.cshtml]
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Students/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3R1ZGVudHNcTG9naW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/DELL/Source/Repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Students/MissCourse.cshtml]
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Students/MissCourse.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3R1ZGVudHNcTWlzc0NvdXJzZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/DELL/Source/Repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Students/OpCourses.cshtml]
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Students/OpCourses.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3R1ZGVudHNcT3BDb3Vyc2VzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/DELL/Source/Repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Students/Phone.cshtml]
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Students/Phone.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3R1ZGVudHNcUGhvbmUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/DELL/Source/Repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Students/Register.cshtml]
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Students/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3R1ZGVudHNcUmVnaXN0ZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/DELL/Source/Repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Students/ReqCourses.cshtml]
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Students/ReqCourses.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3R1ZGVudHNcUmVxQ291cnNlcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/DELL/Source/Repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/_ViewImports.cshtml]
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Students/SecondMakeUp.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3R1ZGVudHNcU2Vjb25kTWFrZVVwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/DELL/Source/Repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/_ViewStart.cshtml]
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/DELL/Source/Repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Shared/_Layout.cshtml]
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-uvdwf2lgu8
+
+[C:/Users/DELL/source/repos/Advising-Database-System/Team6_Advising/Team6_Advising/Pages/Shared/_LayoutAdmin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9MYXlvdXRBZG1pbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = b-wrkye2k0zu

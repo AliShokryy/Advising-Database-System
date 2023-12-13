@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Sgw45mAsATJElNky9wxhAxAcnFWJlZO4MYdosdBCykQSJqM5yLqRMVT8ply8uciNL//MxfQELqzJ4khCWfh+uA==",
+  "dgSpecHash": "K2umpxQgm3Eu8KU5NPq3dXy0ubeuLEBy4p779wIId0PXEPoj49gP9rw4Nd25JQE2L6mLPOKvizdPM6vVHU/dkg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\DELL\\Source\\Repos\\Advising-Database-System\\Team6_Advising\\Team6_Advising\\Team6_Advising.csproj",
+  "projectFilePath": "C:\\Users\\DELL\\source\\repos\\Advising-Database-System\\Team6_Advising\\Team6_Advising\\Team6_Advising.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\DELL\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
     "C:\\Users\\DELL\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
