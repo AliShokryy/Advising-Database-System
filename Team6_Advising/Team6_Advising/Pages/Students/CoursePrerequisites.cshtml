@@ -1,0 +1,33 @@
+﻿@page
+@model Team6_Advising.Pages.Students.CoursePrerequisitesModel
+@{
+}
+<h1>Course Prerequisites</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Course ID</th>
+            <th>Course Name</th>
+            <th>Major</th>
+            <th>Is Offered</th>
+            <th>Credit Hours</th>
+            <th>Semester</th>
+            <th>Prerequisite Course ID</th>
+            <th>Prerequisite Course Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.coursePrerequisites)
+        {
+            <tr>
+                <td>@item.course_id</td>
+                <td>@item.course_name</td>
+                <td>@item.major</td>
+                <td>@item.is_offered</td>
+                <td>@item.credit_hours</td>
+                <td>@item.semester</td>
+                <td>@item.pre_id</td>
+                <td>@item.pre_name</td>
+            </tr>
+        }
+    </tbody>
