@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Team6_Advising")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ce56c1cf091f467cb68c2b87e998a78a19c2fc53")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+edbddf6bbb304b151018be1bfd377c2f1007e650")]
 [assembly: System.Reflection.AssemblyProductAttribute("Team6_Advising")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Team6_Advising")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

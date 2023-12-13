@@ -1,5 +1,5 @@
 ﻿@page
-@model Team6_Advising.Pages.Advisor.UpdateExpGradDateGPModel
+@model Team6_Advising.Pages.Advisor.ViewAllRequestsModel
 @{
     String id = Request.Query["id"];
 }
@@ -26,7 +26,7 @@
 
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                         <li><a class="dropdown-item" asp-area="" asp-page="/Advisor/ViewStudents" asp-route-id="@id">Advising Students</a></li>
-                        <li><a class="dropdown-item" asp-area="" asp-page="" asp-route-id="@id">Advising Students with their taken courses</a></li>
+                        <li><a class="dropdown-item" asp-area="" asp-page="/Advisor/ViewAssignedStudentsWithCourses" asp-route-id="@id">Advising Students with their taken courses</a></li>
                     </ul>
                 </div>
                 <div class="dropdown">
@@ -63,37 +63,29 @@
         </div>
     </nav>
 </header>
-<h1>Update Expected Graduation Date in a Graduation Plan</h1>
+<h1>View Requests</h1>
 
-<form method="post" class="bg-blue">
-    <div class="row mb-3">
-        <label class="col-sm-3 col-form-label">Student ID</label>
-        <div class="col-sm-6">
-            <input type="text" class="form-control" name="stdID" value"">
-        </div>
-    </div>
-    <div class="row mb-3">
-        <label class="col-sm-3 col-form-label">Expected Graduation Date</label>
-        <div class="col-sm-6">
-            <input type="text" class="form-control" name="expgradDate" value"" required>
-        </div>
-    </div>
-    <div class="row mb-3 justify-content-center">
-        <div class="col-sm-6">
-            <button type="submit" class="btn btn-primary btn-lg"> Submit </button>
-        </div>
-    </div>
-</form>
 
-@if (ViewData["Message"] != null && ViewData["Message"].ToString().Equals("Graduation Plan updated Successfully"))
-{
-    <div class="bg-blue">
-        <label class="col-sm-3 col-form-label">Expected Graduation Date Updated Successfully </label>
-    </div>
-}
-@if (ViewData["Message"] != null && ViewData["Message"].ToString().Equals("Graduation Plan not updated"))
-{
-    <div class="bg-blue">
-        <label class="col-sm-3 col-form-label">Graduation Plan NOT Updated</label>
-    </div>
-}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Request ID</th>
+            <th>Request type</th>
+            <th>Request status</th>
+            <th>Student Name</th>
+            <th>Student ID</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.requestList)
+        {
+            <tr>
+                <td>@item.requestId</td>
+                <td>@item.requestType</td>
+                <td>@item.requestStatus</td>
+                <td>@item.studentName</td>
+                <td>@item.studentId</td>
+            </tr>
+        }
+    </tbody>
+</table>

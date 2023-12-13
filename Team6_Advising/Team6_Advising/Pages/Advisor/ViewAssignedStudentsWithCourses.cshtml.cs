@@ -32,6 +32,7 @@ namespace Team6_Advising.Pages.Advisor
 
                     using (SqlCommand command = new SqlCommand(commandText, connection))
                     {
+                        command.CommandType = System.Data.CommandType.StoredProcedure;
                         command.Parameters.Add(new SqlParameter("@AdvisorID", advisorID));
                         command.Parameters.Add(new SqlParameter("@major", major));
                         SqlDataReader reader = command.ExecuteReader();
@@ -39,9 +40,15 @@ namespace Team6_Advising.Pages.Advisor
                         {
                             StudentWithCourses student = new StudentWithCourses();
                             student.id = reader.GetInt32(0);
-                            student.name = reader.GetString(1) + " " + reader.GetString(2);
-                            student.major = reader.GetString(3);
-                            student.course_name = reader.GetString(4); 
+                            student.name = reader.GetString(1);
+                            student.major = reader.GetString(2);
+                            try { 
+                            student.course_name = reader.GetString(3); 
+                                }
+                            catch (Exception e)
+                            {
+                                student.course_name = "";
+                            }
                             studentWithCoursesList.Add(student);
                         }
                     }
