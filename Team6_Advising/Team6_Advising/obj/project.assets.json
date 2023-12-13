@@ -475,11 +475,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\DELL\\Source\\Repos\\Advising-Database-System\\Team6_Advising\\Team6_Advising\\Team6_Advising.csproj",
+      "projectUniqueName": "G:\\Semester 5\\[CSEN501] Data Base I\\Project Repo\\Advising-Database-System\\Team6_Advising\\Team6_Advising\\Team6_Advising.csproj",
       "projectName": "Team6_Advising",
-      "projectPath": "C:\\Users\\DELL\\Source\\Repos\\Advising-Database-System\\Team6_Advising\\Team6_Advising\\Team6_Advising.csproj",
+      "projectPath": "G:\\Semester 5\\[CSEN501] Data Base I\\Project Repo\\Advising-Database-System\\Team6_Advising\\Team6_Advising\\Team6_Advising.csproj",
       "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\DELL\\Source\\Repos\\Advising-Database-System\\Team6_Advising\\Team6_Advising\\obj\\",
+      "outputPath": "G:\\Semester 5\\[CSEN501] Data Base I\\Project Repo\\Advising-Database-System\\Team6_Advising\\Team6_Advising\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config",

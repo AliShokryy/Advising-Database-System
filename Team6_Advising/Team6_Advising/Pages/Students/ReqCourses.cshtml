@@ -1,14 +1,79 @@
 ﻿@page
 @model Team6_Advising.Pages.Students.ReqCoursesModel
 @{
+    String id = Request.Query["id"];
 }
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-blue2 border-bottom box-shadow mb-3">
+        <div class="container">
+            <a class="navbar-brand-white" asp-area="" asp-page="/Index">AAAAA</a>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-evenly">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link text-light" asp-area="" asp-page="/Students/Index" asp-route-id="@id">Home</a>
+                    </li>
 
+                    <li class="nav-item">
+                        <a class="nav-link text-light" asp-area="" asp-page="/Students/Phone" asp-route-id="@id">Add Phone</a>
+                    </li>
+                    <div class="dropdown nav-item">
+                        <a class="nav-link text-light" href="#" id="dropdownMenuLink" data-bs-toggle="dropdown">
+                            Courses
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <li><a class="dropdown-item" asp-area="" asp-page="/Students/Courses" asp-route-id="@id">Available Courses</a></li>
+                            <li><a class="dropdown-item" asp-area="" asp-page="/Students/ReqCourses" asp-route-id="@id">Required Courses</a></li>
+                            <li><a class="dropdown-item" asp-area="" asp-page="/Students/OpCourses" asp-route-id="@id">Optional Courses</a></li>
+                            <li><a class="dropdown-item" asp-area="" asp-page="/Students/MissCourse" asp-route-id="@id">Missing Courses</a></li>
+                            <li><a class="dropdown-item" asp-area="" asp-page="/Students/AllCourses" asp-route-id="@id">Course Exams</a></li>
+                            <li><a class="dropdown-item" asp-area="" asp-page="/Students/CourseSlots" asp-route-id="@id">Course Slots</a></li>
+                            <li><a class="dropdown-item" asp-area="" asp-page="/Students/InstructorSlots" asp-route-id="@id">Instructor Slots</a></li>
+                            <li><a class="dropdown-item" asp-area="" asp-page="/Students/ChooseInstructor" asp-route-id="@id">Choose Instructor</a></li>
+                            <li><a class="dropdown-item" asp-area="" asp-page="/Students/CoursePrerequisites" asp-route-id="@id">Course Prerequisites</a></li>
+                        </ul>
+                    </div>
+                    <div class="dropdown nav-item">
+                        <a class="nav-link text-light" href="#" id="dropdownMenuLink" data-bs-toggle="dropdown">
+                            Requests
+                        </a>
+
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <li><a class="dropdown-item" asp-area="" asp-page="/Students/CourseRequest" asp-route-id="@id">Course Request</a></li>
+                            <li><a class="dropdown-item" asp-area="" asp-page="/Students/CHRequest" asp-route-id="@id">Credit Hour Request</a></li>
+                        </ul>
+                    </div>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" asp-area="" asp-page="/Students/GraduationPlan" asp-route-id="@id">Graduation Plan</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" asp-area="" asp-page="/Students/Installment" asp-route-id="@id">Installment</a>
+                    </li>
+                    <div class="dropdown nav-item">
+                        <a class="nav-link text-light" href="#" id="dropdownMenuLink" data-bs-toggle="dropdown">
+                            Make Up Exams
+                        </a>
+
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <li><a class="dropdown-item" asp-area="" asp-page="/Students/FirstMakeUp" asp-route-id="@id">First MakeUp</a></li>
+                            <li><a class="dropdown-item" asp-area="" asp-page="/Students/SecondMakeUp" asp-route-id="@id">Second MakeUp</a></li>
+                        </ul>
+                    </div>
+                </ul>
+            </div>
+        </div>
+        <ul class="navbar-nav justify-content-end">
+            <li class="nav-item">
+                <a class="nav-link text-light" asp-area="" asp-page="/Students/Index">Logout</a>
+            </li>
+        </ul>
+    </nav>
+</header>
 <h1>Required Courses</h1>
-<form method="post">
+<form method="post" class="bg-blue">
     <div class="row mb-3">
         <label class="col-sm-3 col-form-label">Current Semester Code</label>
         <div class="col-sm-6">
-            <input type="text" class="form-control" name="semcode" value"">
+            <input type="text" class="form-control" name="semcode" value"" required>
         </div>
 
         <button type="submit" class="btn btn-primary btn-sm">View Required Courses</button>

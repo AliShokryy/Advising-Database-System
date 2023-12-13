@@ -154,3 +154,4 @@ C:\Users\ahd\Desktop\Advising System\Advising-Database-System\Team6_Advising\Tea
 C:\Users\ahd\Desktop\Advising System\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\Team6_Advising.genruntimeconfig.cache
 C:\Users\ahd\Desktop\Advising System\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\ref\Team6_Advising.dll
 C:\Users\DELL\source\repos\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\scopedcss\Pages\Shared\_LayoutAdmin.cshtml.rz.scp.css
+G:\Semester 5\[CSEN501] Data Base I\Project Repo\Advising-Database-System\Team6_Advising\Team6_Advising\obj\Debug\net8.0\scopedcss\Pages\Shared\_LayoutAdmin.cshtml.rz.scp.css
