@@ -4,33 +4,28 @@
     String id = Request.Query["id"];
 }
 <header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-blue2 border-bottom box-shadow mb-3">
         <div class="container">
-            <a class="navbar-brand" asp-area="" asp-page="/Index">Team6_Advising</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
+            <a class="navbar-brand-white" asp-area="" asp-page="/Index">AAAAA</a>
             <ul class="navbar-nav justify-content-center">
                 <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-page="/Advisor/AdvisorMenu" asp-route-id="@id">Home</a>
+                    <a class="nav-link text-light" asp-area="" asp-page="/Advisor/AdvisorMenu" asp-route-id="@id">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-page="/Advisor/AdvisorMenu" asp-route-id="@id">Advisor</a>
+                    <a class="nav-link text-light" asp-area="" asp-page="/Advisor/AdvisorMenu" asp-route-id="@id">Advisor</a>
                 </li>
-                <div class="dropdown">
-                    <a class="nav-link text-dark" href="#" id="dropdownMenuLink" data-bs-toggle="dropdown">
+                <div class="dropdown nav-item">
+                    <a class="nav-link text-light" href="#" id="dropdownMenuLink" data-bs-toggle="dropdown">
                         View
                     </a>
 
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                         <li><a class="dropdown-item" asp-area="" asp-page="/Advisor/ViewStudents" asp-route-id="@id">Advising Students</a></li>
-                        <li><a class="dropdown-item" asp-area="" asp-page="" asp-route-id="@id">Advising Students with their taken courses</a></li>
+                        <li><a class="dropdown-item" asp-area="" asp-page="/Advisor/ViewAssignedStudentsWithCourses" asp-route-id="@id">Advising Students with their taken courses</a></li>
                     </ul>
                 </div>
-                <div class="dropdown">
-                    <a class="nav-link text-dark" href="#" id="dropdownMenuLink" data-bs-toggle="dropdown">
+                <div class="dropdown nav-item">
+                    <a class="nav-link text-light" href="#" id="dropdownMenuLink" data-bs-toggle="dropdown">
                         Graduation Plan
                     </a>
 
@@ -41,22 +36,21 @@
                         <li><a class="dropdown-item" asp-area="" asp-page="/Advisor/DeleteCourseFromGP" asp-route-id="@id">Delete Course from a Gradutaion Plan</a></li>
                     </ul>
                 </div>
-                <div class="dropdown">
-                    <a class="nav-link text-dark" href="#" id="dropdownMenuLink" data-bs-toggle="dropdown">
+                <div class="dropdown nav-item">
+                    <a class="nav-link text-light" href="#" id="dropdownMenuLink" data-bs-toggle="dropdown">
                         Requests
                     </a>
 
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                         <li><a class="dropdown-item" asp-area="" asp-page="/Advisor/ViewAllRequests" asp-route-id="@id">View all Requests</a></li>
                         <li><a class="dropdown-item" asp-area="" asp-page="/Advisor/ViewAllPendingRequests" asp-route-id="@id">View Pending Requests</a></li>
-                       
                     </ul>
                 </div>
             </ul>
             <ul class="navbar-nav justify-content-end">
 
                 <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-page="/Index">Sign Out</a>
+                    <a class="nav-link text-light" asp-area="" asp-page="/Index">Logout</a>
                 </li>
             </ul>
         </div>

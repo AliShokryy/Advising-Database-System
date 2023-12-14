@@ -2,26 +2,40 @@
 @model Team6_Advising.Pages.Advisor.LoginAdvisorModel
 @{
 }
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-blue2 border-bottom box-shadow mb-3">
+        <div class="container">
+            <a class="navbar-brand-white" asp-area="" asp-page="/Index">AAAA</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Form</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
+            <ul class="navbar-nav justify-content-center">
+                <li class="nav-item">
+                    <a class="nav-link text-light" asp-area="" asp-page="/Index">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" asp-area="" asp-page="/Advisor/Home">Advisor</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav justify-content-end">
+                <li class="nav-item">
+                    <a class="nav-link text-light" asp-area="" asp-page="/Advisor/RegisterAdvisor">Don't have an account?</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
     <div class="container">
-        <h1 class="text-center">Welcome Back!</h1>
-        <form method="post">
+        <h1>Welcome Back!</h1>
+        <form method="post" class="bg-blue">
             <div class="form-group">
-                <label for="id">ID</label>
+                <label class="col-sm-3 col-form-label">ID</label>
                 <input type="text" class="form-control" id="id" name="id" value="">
             </div>
             <div class="form-group">
-                <label for="password">Password</label>
+                <label class="col-sm-3 col-form-label">Password</label>
                 <input type="password" class="form-control" id="password" name="password" value="">
             </div>
             <div class="text-center">
@@ -29,8 +43,3 @@
             </div>
         </form>
     </div>
-    <!-- jQuery and Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-</body>
-</html>

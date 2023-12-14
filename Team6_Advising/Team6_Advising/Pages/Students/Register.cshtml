@@ -3,20 +3,33 @@
 @{
 }
 
+
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-blue2 border-bottom box-shadow mb-3">
+        <div class="container">
+            <a class="navbar-brand-white" asp-area="" asp-page="/Index">AAAAA</a>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-evenly">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link text-light" asp-area="" asp-page="/Students/Index">Home</a>
+                    </li>
+                    
+                </ul>                                
+        </div>
+            <ul class="navbar-nav" style="display: flex; justify-content:right">
+                <li class="nav-item">
+                    <a class="nav-link text-light" asp-area="" asp-page="/Students/Login">Already registerd?</a>
+                </li>
+            </ul>
+    </nav>
+</header>
+<h1>Register</h1>
 @if (ViewData["Message"] != null)
 {
-    <!-- Display the message and show the alert using JavaScript -->
-    <script>
-        var message = '@Html.Raw(ViewData["Message"].ToString())';
-        alert(message);
-
-        // Redirect after the alert
-        window.location.href = '/Students/Index';
-    </script>
+    <div class="bg-blue2" style="display:flex; justify-content:center">
+        <p class="col-form-label">@ViewData["Message"]</p>
+    </div>
 }
-
-<h1>Register</h1>
-
 <form method="post" class="bg-blue">
     <div class="row mb-3">
         <label class="col-sm-3 col-form-label">First Name</label>
@@ -27,37 +40,37 @@
     <div class="row mb-3">
         <label class="col-sm-3 col-form-label">Last Name</label>
         <div class="col-sm-6">
-            <input type="text" class="form-control" name="lname" value"">
+            <input type="text" class="form-control" name="lname" value"" required>
         </div>
     </div>
     <div class="row mb-3">
         <label class="col-sm-3 col-form-label">password</label>
         <div class="col-sm-6">
-            <input type="password" class="form-control" name="password" value"">
+            <input type="password" class="form-control" name="password" value"" required>
         </div>
     </div>
     <div class="row mb-3">
         <label class="col-sm-3 col-form-label">Faculty</label>
         <div class="col-sm-6">
-            <input type="text" class="form-control" name="faculty" value"">
+            <input type="text" class="form-control" name="faculty" value"" required>
         </div>
     </div>
     <div class="row mb-3">
         <label class="col-sm-3 col-form-label">Email</label>
         <div class="col-sm-6">
-            <input type="email" class="form-control" name="mail" value"">
+            <input type="email" class="form-control" name="mail" value"" required>
         </div>
     </div>
     <div class="row mb-3">
         <label class="col-sm-3 col-form-label">Major</label>
         <div class="col-sm-6">
-            <input type="text" class="form-control" name="major" value"">
+            <input type="text" class="form-control" name="major" value"" required>
         </div>
     </div>
     <div class="row mb-3">
         <label class="col-sm-3 col-form-label">Semester</label>
         <div class="col-sm-6">
-            <input type="text" class="form-control" name="semester" value"">
+            <input type="text" class="form-control" name="semester" value"" required>
         </div>
     </div>
     <div class="row mb-3 justify-content-center">
@@ -66,4 +79,6 @@
         </div>
     </div>
 </form>
+
+
 

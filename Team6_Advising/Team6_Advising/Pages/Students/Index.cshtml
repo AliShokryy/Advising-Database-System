@@ -5,24 +5,21 @@
 }
 
 <header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-blue2 border-bottom box-shadow mb-3">
         <div class="container">
-            <a class="navbar-brand" asp-area="" asp-page="/Index">Team6_Advising</a>
+            <a class="navbar-brand-white" asp-area="" asp-page="/Index">AAAAA</a>
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-evenly">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Students/Index">Students</a>
+                        <a class="nav-link text-light" asp-area="" asp-page="/Index">Home</a>
                     </li>
                     @if (@Model.id != null)
                     {
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Students/Phone" asp-route-id="@id">Add Phone</a>
+                            <a class="nav-link text-light" asp-area="" asp-page="/Students/Phone" asp-route-id="@id">Add Phone</a>
                         </li>
-                        <div class="dropdown">
-                            <a class="nav-link text-dark" href="#"  id="dropdownMenuLink" data-bs-toggle="dropdown">
+                        <div class="dropdown nav-item">
+                            <a class="nav-link text-light" href="#"  id="dropdownMenuLink" data-bs-toggle="dropdown">
                                 Courses
                             </a>
 
@@ -35,13 +32,11 @@
                                 <li><a class="dropdown-item" asp-area="" asp-page="/Students/CourseSlots" asp-route-id="@id">Course Slots</a></li>
                                 <li><a class="dropdown-item" asp-area="" asp-page="/Students/InstructorSlots" asp-route-id="@id">Instructor Slots</a></li>
                                 <li><a class="dropdown-item" asp-area="" asp-page="/Students/ChooseInstructor" asp-route-id="@id">Choose Instructor</a></li>
-
-
-                         
+                                <li><a class="dropdown-item" asp-area="" asp-page="/Students/CoursePrerequisites" asp-route-id="@id">Course Prerequisites</a></li>
                             </ul>
                         </div>
-                        <div class="dropdown">
-                            <a class="nav-link text-dark" href="#" id="dropdownMenuLink" data-bs-toggle="dropdown">
+                        <div class="dropdown nav-item">
+                            <a class="nav-link text-light" href="#" id="dropdownMenuLink" data-bs-toggle="dropdown">
                                 Requests
                             </a>
 
@@ -51,27 +46,46 @@
                             </ul>
                         </div>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Students/GraduationPlan" asp-route-id="@id">Graduation Plan</a>
+                            <a class="nav-link text-light" asp-area="" asp-page="/Students/GraduationPlan" asp-route-id="@id">Graduation Plan</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Students/Installment" asp-route-id="@id">Installment</a>
+                            <a class="nav-link text-light" asp-area="" asp-page="/Students/Installment" asp-route-id="@id">Installment</a>
                         </li>
-                    }
+                        <div class="dropdown nav-item">
+                            <a class="nav-link text-light" href="#" id="dropdownMenuLink" data-bs-toggle="dropdown">
+                                Make Up Exams
+                            </a>
+
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <li><a class="dropdown-item" asp-area="" asp-page="/Students/FirstMakeUp" asp-route-id="@id">First MakeUp</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-page="/Students/SecondMakeUp" asp-route-id="@id">Second MakeUp</a></li>
+                            </ul>
+                        </div>          
+            }
                 </ul>
             </div>
+            @if (Model.id != null)
+            {
+                <ul class="navbar-nav justify-content-end">
+                    <li class="nav-item">
+                        <a class="nav-link text-light" asp-area="" asp-page="/Students/Index">Logout</a>
+                    </li>
+                </ul>
+            }
                 @if (@Model.id == null){
                     <ul class="navbar-nav justify-content-end">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Students/Login">Login</a>
+                            <a class="nav-link text-light" asp-area="" asp-page="/Students/Login">Login</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Students/Register">Register</a>
+                            <a class="nav-link text-light" asp-area="" asp-page="/Students/Register">Register</a>
                         </li>
                     </ul>
                 }
         </div>
     </nav>
 </header>
-<h1>Welcome to the advising system</h1>
-
+<div style="display: flex; justify-content:center">
+<h1>Welcome To The Students Portal</h1>
+</div>
 

@@ -3,94 +3,62 @@
 @{
 }
 
-@if (ViewData["Message"] != null)
-{
-    <!-- Display the message and show the alert using JavaScript -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var modal = document.getElementById('myModal');
-            var span = document.getElementsByClassName('close')[0];
-            var modalMessage = document.getElementById('modal-message');
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-blue2 border-bottom box-shadow mb-3">
+        <div class="container">
+            <a class="navbar-brand-white" asp-area="" asp-page="/Index">AAAA</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-            var message = '@Html.Raw(ViewData["Message"].ToString())';
-            modalMessage.innerHTML = message;
-
-            span.onclick = function () {
-                modal.style.display = 'none';
-            }
-
-            window.onclick = function (event) {
-                if (event.target == modal) {
-                    modal.style.display = 'none';
-                }
-            }
-
-            if (message) {
-                modal.style.display = 'block';
-            }
-        });
-    </script>
-}
-<style>
-    .modal {
-        display: none;
-        position: fixed;
-        z-index: 1;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0, 0, 0, 0.4);
-    }
-
-    #modal-message {
-        font-size: 30px;
-        text-align: center;
-    }
-
-    .modal-content {
-        background-color: #fefefe;
-        margin: 15% auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 500px;
-        height: 500px;
-    }
-
-</style>
-<div id="myModal" class="modal" >
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <p id="modal-message"></p>
-        <button style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);" onclick="location.href='/Advisor/Home';">Go to Home Page</button>
-    </div>
-</div>
+            <ul class="navbar-nav justify-content-center">
+                <li class="nav-item">
+                    <a class="nav-link text-light" asp-area="" asp-page="/Index">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" asp-area="" asp-page="/Advisor/Home">Advisor</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav justify-content-end">
+                <li class="nav-item">
+                    <a class="nav-link text-light" asp-area="" asp-page="/Advisor/LoginAdvisor">Already registered?</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
 <h1>Register</h1>
 
+@if (ViewData["Message"] != null)
+{
+    <div class="bg-blue2" style="display:flex; justify-content:center">
+        <p class="col-form-label">@ViewData["Message"]</p>
+    </div>
+}
 <form method="post" class="bg-blue">
     <div class="row mb-3" >
         <label class="col-sm-3 col-form-label">Name</label>
         <div class="col-sm-6">
-            <input type="text" class="form-control" name="name" value"">
+            <input type="text" class="form-control" name="name" value"" required>
         </div>
     </div>
     <div class="row mb-3">
         <label class="col-sm-3 col-form-label">Password</label>
         <div class="col-sm-6">
-            <input type="password" class="form-control" name="password" value"">
+            <input type="password" class="form-control" name="password" value"" required>
         </div>
     </div>
     <div class="row mb-3">
         <label class="col-sm-3 col-form-label">Email</label>
         <div class="col-sm-6">
-            <input type="email" class="form-control" name="mail" value"">
+            <input type="email" class="form-control" name="mail" value"" required>
         </div>
     </div>
     <div class="row mb-3">
         <label class="col-sm-3 col-form-label">Office</label>
         <div class="col-sm-6">
-            <input type="text" class="form-control" name="office" value"">
+            <input type="text" class="form-control" name="office" value"" required>
         </div>
     </div>
     <div class="row mb-3">
@@ -99,4 +67,5 @@
         </div>
     </div>
 </form>
+
 

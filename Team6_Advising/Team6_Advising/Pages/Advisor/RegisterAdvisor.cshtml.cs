@@ -20,7 +20,7 @@ namespace Team6_Advising.Pages.Advisor
 
             try
             {
-                string connectionString = "Data Source=alishokry\\sqlexpress03;Initial Catalog=Advising_System;Integrated Security=True;Encrypt=False";
+                string connectionString = Environment.GetEnvironmentVariable("ConnectionString");
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
