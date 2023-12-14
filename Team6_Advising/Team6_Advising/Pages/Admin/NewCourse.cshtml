@@ -6,39 +6,46 @@
 
 <h1>Add New Course</h1>
 
-<form method="post">
+<form method="post" class="bg-blue">
     <div class="row mb-3">
         <label class="col-sm-3 col-form-label">Major</label>
         <div class="col-sm-6">
-            <input type="text" class="form-control" name="major" value"">
+            <input type="text" class="form-control" name="major" value="" required>
         </div>
     </div>
     <div class="row mb-3">
         <label class="col-sm-3 col-form-label">Semester</label>
         <div class="col-sm-6">
-            <input type="text" class="form-control" name="semster" value"">
+            <input type="text" class="form-control" name="semester" value="" required>
         </div>
     </div>
     <div class="row mb-3">
         <label class="col-sm-3 col-form-label">Credit Hours</label>
         <div class="col-sm-6">
-            <input type="text" class="form-control" name="credit_hours" value"">
+            <input type="text" class="form-control" name="credit_hours" value="" required>
         </div>
     </div>
     <div class="row mb-3">
         <label class="col-sm-3 col-form-label">Course Name</label>
         <div class="col-sm-6">
-            <input type="text" class="form-control" name="course_name" value"">
+            <input type="text" class="form-control" name="course_name" value="" required>
         </div>
     </div>
     <div class="row mb-3">
         <label class="col-sm-3 col-form-label">Is Offered</label>
-        <input type="checkbox" class="largerCheckbox" name="is_offered" value="True">
+        <div class="col-sm-6 d-flex justify-content-center">
+            <div class="form-check" style="padding-top: 12px;">
+                <input type="checkbox" class="form-check-input" name="is_offered" value="True">
+            </div>
+        </div>
     </div>
-    
-    <div class="row mb-3">
+
+    <div class="row mb-3 justify-content-center">
         <div class="col-sm-6">
-            <button type="submit" class="btn btn-primary btn-sm"> Create </button>
+            <button type="submit" class="btn btn-primary btn-lg"> Create </button>
         </div>
     </div>
 </form>
+
+
+

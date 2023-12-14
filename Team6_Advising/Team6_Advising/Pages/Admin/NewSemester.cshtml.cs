@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Data.SqlClient;
 using System.Data;
-using System;
 
 namespace Team6_Advising.Pages.Admin
 {
@@ -14,42 +13,33 @@ namespace Team6_Advising.Pages.Admin
         public void OnPost()
         {
             
-    
             try
             {
-                DateTime end_date = DateTime.Parse(Request.Form["end_date"]);
                 DateTime start_date = DateTime.Parse(Request.Form["start_date"]);
+                DateTime end_date = DateTime.Parse(Request.Form["end_date"]);
                 String semster_code = Request.Form["semester_code"];
 
-                string connectionString = Environment.GetEnvironmentVariable("ConnectionString");
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-                    string commandText = "AdminAddingSemester";
+                SqlHelper.DB_CONNECTION.Open();
 
-                    using (SqlCommand command = new SqlCommand(commandText, connection) { CommandType = CommandType.StoredProcedure })
-                    {
-                        command.Parameters.Add(new SqlParameter("@start_date", start_date));
-                        command.Parameters.Add(new SqlParameter("@end_date", end_date));
-                        command.Parameters.Add(new SqlParameter("@semester_code", semster_code));
-                        
+                string commandText = "AdminAddingSemester";
 
-                        command.ExecuteNonQuery();
+                SqlParameter startDateParam = new SqlParameter("@start_date", start_date.ToString("yyyy-MM-dd"));
+                SqlParameter endDateParam =  new SqlParameter("@end_date", end_date.ToString("yyyy-MM-dd"));
+                SqlParameter semesterCodeParam = new SqlParameter("@semester_code", semster_code);
 
-                       
-                    }
-                    connection.Close();
-                }
+                SqlHelper.ExecActionProc(commandText, startDateParam, endDateParam, semesterCodeParam);
+
+                Console.WriteLine("Successful Operation !");
+                
             }
-            catch (SqlException e)
+            catch (Exception e)
             {
                 ViewData["Message"] = "Student not found";
                 Console.WriteLine(e.ToString());
             }
-            catch (FormatException e)
+            finally
             {
-                ViewData["Message"] = "Invalid Date";
-                Console.WriteLine(e.ToString());
+                SqlHelper.DB_CONNECTION.Close();
             }
         }
     }

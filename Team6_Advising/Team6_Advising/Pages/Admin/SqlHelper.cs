@@ -19,6 +19,7 @@ namespace Team6_Advising.Pages.Admin
                 }
             
         }
+
         public static bool ExistIn(String? value, String commandText) {
             bool result = false;
             using (SqlCommand command = new SqlCommand(commandText, DB_CONNECTION))
@@ -73,17 +74,15 @@ namespace Team6_Advising.Pages.Admin
         }
 
         // Set the connection, command, and then execute the command with query and return the reader.  
-        public static SqlDataReader ExecuteReader(String connectionString, String commandText,
+        public static SqlDataReader ExecuteReader(String commandText,
             CommandType commandType, params SqlParameter[] parameters)
         {
-            SqlConnection conn = new SqlConnection(connectionString);
 
-            using (SqlCommand cmd = new SqlCommand(commandText, conn))
+            using (SqlCommand cmd = new SqlCommand(commandText, DB_CONNECTION))
             {
                 cmd.CommandType = commandType;
                 cmd.Parameters.AddRange(parameters);
 
-                conn.Open();
                 // When using CommandBehavior.CloseConnection, the connection will be closed when the   
                 // IDataReader is closed.  
                 SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);

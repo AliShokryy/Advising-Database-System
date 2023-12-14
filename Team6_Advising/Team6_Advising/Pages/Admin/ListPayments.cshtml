@@ -1,0 +1,39 @@
+﻿@page
+@model ListPaymentsModel
+@{
+    Layout = "./Shared/_LayoutAdmin";
+}
+
+<h1>Advisors</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Student Id</th>
+            <th>Student First Name</th>
+            <th>Student Last Name</th>
+            <th>Payment Id</th>
+            <th>Payment Amount</th>
+            <th>Payment Start Date</th>
+            <th>Payment Deadline</th>
+            <th>Number of Installments</th>
+            <th>Fund Percentage</th>
+            <th>Payment Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.payments)
+        {
+            <tr>
+                @foreach(var info in item.StudentInfo)
+                {
+                    <td>@info</td>
+                }
+                @foreach(var info in item.PaymentInfo)
+                {
+                    <td>@info</td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>

@@ -7,29 +7,29 @@
 
 <h1>Add New Semester</h1>
 
-<form method="post">
+<form method="post", class="bg-blue">
     <div class="row mb-3">
         <label class="col-sm-3 col-form-label">Start Date</label>
         <div class="col-sm-6">
-            <input type="text" class="form-control" name="start_date" placeholder="enter the start date" required>
+            <input type="date" class="form-control" name="start_date" value"" required>
         </div>
     </div>
     <div class="row mb-3">
         <label class="col-sm-3 col-form-label">End Date</label>
         <div class="col-sm-6">
-            <input type="text" class="form-control" name="end_date" placeholder="enter the end date" required>
+            <input type="date" class="form-control" name="end_date" value"" required>
         </div>
     </div>
     <div class="row mb-3">
         <label class="col-sm-3 col-form-label">Semester Code</label>
         <div class="col-sm-6">
-            <input type="text" class="form-control" name="semester_code" placeholder="enter the semster code" required>
+            <input type="text" class="form-control" name="semester_code"  required>
         </div>
     </div>
   
-    <div class="row mb-3">
+    <div class="row mb-3 justify-content-center">
         <div class="col-sm-6">
-            <button type="submit" class="btn btn-primary btn-sm"> Create </button>
+            <button type="submit" class="btn btn-primary btn-lg"> Create </button>
         </div>
     </div>
 </form>

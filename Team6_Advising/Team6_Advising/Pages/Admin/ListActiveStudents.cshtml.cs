@@ -26,7 +26,7 @@ namespace Team6_Advising.Pages.Admin
                         {
                             while (reader.Read())
                             {
-                                
+
                                 Student student = new Student();
                                 student.student_id = reader.GetInt32(0);
                                 student.fname = reader.GetString(1);
@@ -37,10 +37,10 @@ namespace Team6_Advising.Pages.Admin
                                 student.email = reader.GetString(6);
                                 student.major = reader.GetString(7);
                                 student.financial_status = reader.GetBoolean(8);
-                                student.semester = (reader.IsDBNull(9))?null:reader.GetInt32(9);
-                                student.acquired_hours = (reader.IsDBNull(10)) ? null:reader.GetInt32(10);
-                                student.assigned_hours = (reader.IsDBNull(11)) ? null : reader.GetInt32(11);
-                                student.advisor_id = (reader.IsDBNull(12)) ? null : reader.GetInt32(12);
+                                student.semester = reader.IsDBNull(9) ? null : reader.GetInt32(9);
+                                student.acquired_hours = reader.IsDBNull(10) ? null : reader.GetInt32(10);
+                                student.assigned_hours = reader.IsDBNull(11) ? null : reader.GetInt32(11);
+                                student.advisor_id = reader.IsDBNull(12) ? null : reader.GetInt32(12);
                                 activeStudents.Add(student);
                             }
                         }
@@ -60,13 +60,13 @@ namespace Team6_Advising.Pages.Admin
         public class Student
         {
             public int student_id;
-            public String fname;
-            public String lname;
-            public String password;
+            public string fname;
+            public string lname;
+            public string password;
             public decimal gpa;
-            public String faculty;
-            public String email;
-            public String major;
+            public string faculty;
+            public string email;
+            public string major;
             public bool financial_status;
             public int? semester;
             public int? acquired_hours;

@@ -7,6 +7,22 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Team6_Advising.styles.css" asp-append-version="true" />
+
+    <style>
+        /* Apply styles for normal state */
+        a {
+            color: lightblue; /* Set the default text color */
+            text-decoration: none; /* Remove underline */
+        }
+
+            /* Apply styles for hover state */
+        a:hover {
+                color: #123456; /* Change the text color on hover */
+                text-decoration : underline;
+        }
+
+    </style>
+
 </head>
 <body style="padding:20px">
     <div class="container">
@@ -17,7 +33,8 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2023 - AAAAA
+            &copy; 2023 - AAAAA - 
+            <a asp-page="./Admin/Login">Admin</a>
         </div>
     </footer>
 

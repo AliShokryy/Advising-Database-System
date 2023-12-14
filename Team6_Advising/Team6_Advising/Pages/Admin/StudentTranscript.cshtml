@@ -1,0 +1,36 @@
+﻿@page
+@model StudentTranscriptModel
+@{
+    Layout = "./Shared/_LayoutAdmin";
+}
+<h1>Students Transcript</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Student ID</th>
+            <th>Student First Name</th>
+            <th>Student Last Name</th>
+            <th>Course ID</th>
+            <th>Course Name</th>
+            <th>Exam Type</th>
+            <th>Grade</th>
+            <th>Semester Code</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.studentTranscrips)
+        {
+            <tr>
+                <td>@item.student_id</td>
+                <td>@item.student_fname</td>
+                <td>@item.student_lname</td>
+                <td>@item.course_id</td>
+                <td>@item.course_name</td>
+                <td>@item.type</td>
+                <td>@item.grade</td>
+                <td>@item.semester_code</td>
+            </tr>
+        }
+    </tbody>
+</table>

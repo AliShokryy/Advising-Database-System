@@ -12,7 +12,8 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="Admin/Index">Team6_Advising</a>
+                <a class="navbar-brand" asp-area="" asp-page="../Index">Team6_Advising</a>
+
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -57,10 +58,12 @@
 
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                     <a class="dropdown-item" asp-area="" asp-page="ListAdvisors">Advisors</a>
-                                    <a class="dropdown-item" asp-area="" asp-page="ListAdvisors">Instructors</a>
-                                    <a class="dropdown-item" asp-area="" asp-page="ListAdvisors">Semesters</a>
-                                    <a class="dropdown-item" asp-area="" asp-page="ListAdvisors">Pending Requests</a>
-                                    <a class="dropdown-item" asp-area="" asp-page="ListAdvisors">Students</a>
+                                    <a class="dropdown-item" asp-area="" asp-page="InstructorAssignedCourses">Instructors</a>
+                                    <a class="dropdown-item" asp-area="" asp-page="SemesterOfferedCourses">Semesters</a>
+                                    <a class="dropdown-item" asp-area="" asp-page="ListPendingRequests">Pending Requests</a>
+                                    <a class="dropdown-item" asp-area="" asp-page="StudentsInfo">Students</a>
+                                    <a class="dropdown-item" asp-area="" asp-page="ListPayments">Payments</a>
+                                    
                                 </ul>
                             </div>
                         </li>
@@ -76,12 +79,6 @@
 
                                 </ul>
                             </div>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="UpdateStudentStatus">Update Student Status</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="IssueInstallments">Issue Payment Installments</a>
                         </li>
                     </ul>
                 </div>

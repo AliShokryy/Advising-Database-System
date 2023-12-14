@@ -11,7 +11,7 @@ namespace Team6_Advising.Pages.Admin
         public List<StudentwithAdvisor> student_advisor = new List<StudentwithAdvisor>();
         public void OnGet()
         {
-            
+
             try
             {
                 string connectionString = Environment.GetEnvironmentVariable("ConnectionString");
@@ -52,10 +52,10 @@ namespace Team6_Advising.Pages.Admin
         public class StudentwithAdvisor
         {
             public int student_id;
-            public String fname;
-            public String lname;
+            public string fname;
+            public string lname;
             public int advisor_id;
-            public String advisor_name;
+            public string advisor_name;
         }
     }
 }

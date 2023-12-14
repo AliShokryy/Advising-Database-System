@@ -1,0 +1,106 @@
+﻿@page
+@model StudentsInfo
+@{
+    Layout = "./Shared/_LayoutAdmin";
+}
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<style>
+    .card-box {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        color: #fff;
+        padding: 40px 10px; /* Adjusted padding to increase height */
+        margin: 20px 0px;
+        height: 200px; /* Added explicit height */
+    }
+
+    .card-box:hover {
+        text-decoration: none;
+        color: #f1f1f1;
+    }
+
+        .card-box:hover .icon i {
+            font-size: 150px;
+            transition: 1s;
+            -webkit-transition: 1s;
+        }
+
+    .card-box .inner {
+        padding: 5px 10px 0 10px;
+    }
+
+    .card-box a {
+        font-size: 45px;
+        font-weight: bold;
+        margin: 0 0 8px 0;
+        white-space: nowrap;
+        padding: 0;
+        text-align: center;
+        text-decoration: none;
+    }
+
+
+    .card-box .icon {
+        position: absolute;
+        top: auto;
+        bottom: 5px;
+        right: 5px;
+        z-index: 0;
+        font-size: 100px;
+        color: rgba(151, 150, 150, 0.15)
+    }
+
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card-box bg-blue mx-auto">
+                <div class="inner">
+                    <a asp-page="ListActiveStudents" class=card-box>Active Student</a>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card-box bg-blue mx-auto">
+                <div class="inner">
+                    <a asp-page="StudentTranscript" class=card-box>Students Transcript</a>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card-box bg-blue mx-auto">
+                <div class="inner">
+                    <a asp-page="ListStudents" class=card-box>Students With Their Advisors</a>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
