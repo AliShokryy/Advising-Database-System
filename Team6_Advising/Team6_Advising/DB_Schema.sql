@@ -530,18 +530,29 @@ Returns bit   	  --Define Function Output
 AS
 Begin
 Declare
-@status bit,
-@install_status varchar(40)
+@status bit
+--@install_status varchar(40)
 
-Select @install_status = Installment.status 
-from Installment inner join Payment on Payment.payment_id = Installment.payment_id
-and Payment.student_id = @Student_id and Installment.deadline < current_timestamp
+--Select @install_status = Installment.status 
+--from Installment inner join Payment on Payment.payment_id = Installment.payment_id
+--and Payment.student_id = @Student_id and Installment.deadline < current_timestamp
 
-if @install_status = 'Paid'
-set @status =1
+--if @install_status = 'Paid'
+--set @status =1
 
-Else if @install_status = 'NotPaid'
-set @status =0
+--Else if @install_status = 'NotPaid'
+--set @status =0
+
+IF EXISTS
+(
+    SELECT I.payment_id 
+    FROM Installment I 
+    INNER JOIN Payment P ON P.payment_id = I.payment_id and P.student_id = @Student_id
+    WHERE CURRENT_TIMESTAMP > I.deadline AND I.status='NotPaid'
+)
+SET @status = 0
+ELSE
+SET @status = 1
 
 Return @status 	 --Return Function Output
 END

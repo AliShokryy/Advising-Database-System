@@ -31,6 +31,7 @@
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                     <a class="dropdown-item" asp-area="" asp-page="NewCourse">New Course</a>
                                     <a class="dropdown-item" asp-area="" asp-page="NewSemester">New Semester</a>
+                                    <a class="dropdown-item" asp-area="" asp-page="NewMakeupExam">New Makeup Exam</a>
                                 </ul>
                             </div>
                         </li>
@@ -41,9 +42,25 @@
                                 </a>
 
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                    <a class="dropdown-item" asp-area="" asp-page="StudentToAdvisor">Student to Advisor</a>
-                                    <a class="dropdown-item" asp-area="" asp-page="InstructorToCourseToSlot">Instructor to Course to Slot</a>
-                                    <a class="dropdown-item" asp-area="" asp-page="StudentToCourseToInstructor">Student to Course to Instructor</a>
+                                    <a class="dropdown-item" asp-area="" asp-page="LinkStudentAdvisor">Student to Advisor</a>
+                                    <a class="dropdown-item" asp-area="" asp-page="LinkInstructorCourseSlot">Instructor to Course to Slot</a>
+                                    <a class="dropdown-item" asp-area="" asp-page="LinkStudentCourseInstructor">Student to Course to Instructor</a>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="nav-item">
+                            <div class="dropdown">
+                                <a class="nav-link text-dark" href="#" id="dropdownMenuLink" data-bs-toggle="dropdown">
+                                    View
+                                </a>
+
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <a class="dropdown-item" asp-area="" asp-page="ListAdvisors">Advisors</a>
+                                    <a class="dropdown-item" asp-area="" asp-page="ListAdvisors">Instructors</a>
+                                    <a class="dropdown-item" asp-area="" asp-page="ListAdvisors">Semesters</a>
+                                    <a class="dropdown-item" asp-area="" asp-page="ListAdvisors">Pending Requests</a>
+                                    <a class="dropdown-item" asp-area="" asp-page="ListAdvisors">Students</a>
                                 </ul>
                             </div>
                         </li>
@@ -59,6 +76,12 @@
 
                                 </ul>
                             </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="UpdateStudentStatus">Update Student Status</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="IssueInstallments">Issue Payment Installments</a>
                         </li>
                     </ul>
                 </div>

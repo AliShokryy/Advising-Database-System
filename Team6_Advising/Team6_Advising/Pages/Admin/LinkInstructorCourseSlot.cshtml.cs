@@ -6,7 +6,7 @@ using static Team6_Advising.Pages.Admin.ListAdvisorsModel;
 
 namespace Team6_Advising.Pages.Admin
 {
-    public class InstructorToCourseToSlotModel : PageModel
+    public class LinkInstructorCourseSlotModel : PageModel
     {
         public void OnGet()
         {

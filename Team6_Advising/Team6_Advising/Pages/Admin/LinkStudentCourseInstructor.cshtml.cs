@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 
 namespace Team6_Advising.Pages.Admin
 {
-    public class StudentToCourseToInstructorModel : PageModel
+    public class LinkStudentCourseInstructorModel : PageModel
     {
         public void OnGet()
         {

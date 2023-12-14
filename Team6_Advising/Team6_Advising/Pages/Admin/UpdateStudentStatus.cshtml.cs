@@ -1,29 +1,28 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Data;
 using System.Data.SqlClient;
 
 namespace Team6_Advising.Pages.Admin
 {
-    public class LinkStudentAdvisorModel : PageModel
+    public class UpdateStudentStatusModel : PageModel
     {
         public void OnGet()
         {
         }
-        public void OnPost() { 
-            int studentId, advisorId;
-            if (int.TryParse(Request.Form["studentID"], out studentId) && int.TryParse(Request.Form["advisorID"], out advisorId))
+
+        public void OnPost()
+        {
+            int studentId;
+            if (int.TryParse(Request.Form["student_id"], out studentId))
             {
-                try 
+                try
                 {
                     SqlHelper.DB_CONNECTION.Open();
 
-                    SqlParameter studentParam, advisorParam;
-                    studentParam = new SqlParameter("@studentID", studentId);
-                    advisorParam = new SqlParameter("@advisorID", advisorId);
+                    SqlParameter studentParam = new SqlParameter("@student_id", studentId);
 
-                    string commandText = "Procedures_AdminLinkStudentToAdvisor";
-                    SqlHelper.ExecActionProc(commandText, studentParam, advisorParam);
+                    string commandText = "Procedure_AdminUpdateStudentStatus";
+                    SqlHelper.ExecActionProc(commandText, studentParam);
 
                     Console.WriteLine("Successful Operation !");
                 }
@@ -36,7 +35,8 @@ namespace Team6_Advising.Pages.Admin
                     SqlHelper.DB_CONNECTION.Close();
                 }
             }
-            else { 
+            else
+            {
                 Console.WriteLine("Invalid input");
             }
         }
