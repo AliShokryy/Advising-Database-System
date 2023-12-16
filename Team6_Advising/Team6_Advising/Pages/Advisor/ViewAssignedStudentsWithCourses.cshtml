@@ -4,9 +4,9 @@
     String id = Request.Query["id"];
 }
 <header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-blue2 border-bottom box-shadow mb-3">
         <div class="container">
-            <a class="navbar-brand" asp-area="" asp-page="/Index">Team6_Advising</a>
+            <a class="navbar-brand-white" asp-area="" asp-page="/Index">Team6_Advising</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -14,13 +14,13 @@
 
             <ul class="navbar-nav justify-content-center">
                 <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-page="/Advisor/AdvisorMenu" asp-route-id="@id">Home</a>
+                    <a class="nav-link text-light" asp-area="" asp-page="/Advisor/AdvisorMenu" asp-route-id="@id">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-page="/Advisor/AdvisorMenu" asp-route-id="@id">Advisor</a>
+                    <a class="nav-link text-light" asp-area="" asp-page="/Advisor/AdvisorMenu" asp-route-id="@id">Advisor</a>
                 </li>
                 <div class="dropdown">
-                    <a class="nav-link text-dark" href="#" id="dropdownMenuLink" data-bs-toggle="dropdown">
+                    <a class="nav-link text-light" href="#" id="dropdownMenuLink" data-bs-toggle="dropdown">
                         View
                     </a>
 
@@ -30,7 +30,7 @@
                     </ul>
                 </div>
                 <div class="dropdown">
-                    <a class="nav-link text-dark" href="#" id="dropdownMenuLink" data-bs-toggle="dropdown">
+                    <a class="nav-link text-light" href="#" id="dropdownMenuLink" data-bs-toggle="dropdown">
                         Graduation Plan
                     </a>
 
@@ -42,7 +42,7 @@
                     </ul>
                 </div>
                 <div class="dropdown">
-                    <a class="nav-link text-dark" href="#" id="dropdownMenuLink" data-bs-toggle="dropdown">
+                    <a class="nav-link text-light" href="#" id="dropdownMenuLink" data-bs-toggle="dropdown">
                         Requests
                     </a>
 
@@ -56,18 +56,24 @@
             <ul class="navbar-nav justify-content-end">
 
                 <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-page="/Index">Sign Out</a>
+                    <a class="nav-link text-light" asp-area="" asp-page="/Index">Sign Out</a>
                 </li>
             </ul>
         </div>
     </nav>
 </header>
 <h1>View Students</h1>
+@if(ViewData["Message"]!= null)
+{
+    <div class="bg-blue2" style="display:flex; justify-content:center">
+        <label class="col-form-label">@ViewData["Message"]</label>
+    </div>
+}
 <form method="post">
     <div class="row mb-3 bg-blue">
         <label class="col-sm-3 col-form-label">Major</label>
         <div class="col-sm-6">
-            <input type="text" class="form-control" name="major" value"">
+            <input type="text" class="form-control" name="major" value"" required>
         </div>
 
         <button type="submit" class="btn btn-primary btn-sm">View Assigned Students</button>

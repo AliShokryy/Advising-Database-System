@@ -41,7 +41,7 @@ namespace Team6_Advising.Pages.Students
             }
             catch (SqlException e)
             {
-                ViewData["Message"] = "Phone number not added";
+                ViewData["Message"] = "Phone Already Added";
                 Console.WriteLine(e.ToString());
             }
         }

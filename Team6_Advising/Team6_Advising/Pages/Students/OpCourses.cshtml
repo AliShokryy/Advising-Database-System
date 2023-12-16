@@ -70,6 +70,15 @@
 </header>
 
 <h1>Optional Courses</h1>
+
+@if (ViewData["Message"] != null)
+{
+    <div class="bg-blue2" style="display:flex; justify-content:center">
+
+        <label class="col-form-label">@ViewData["Message"]</label>
+    </div>
+}
+
 <form method="post" class="bg-blue">
     <div class="row mb-3">
         <label class="col-sm-3 col-form-label">Current Semester Code</label>

@@ -69,6 +69,14 @@
     </nav>
 </header>
     <h1>Choose Your Instructor</h1>
+
+@if (ViewData["Message"] != null)
+{
+    <div class="bg-blue2" style="display:flex; justify-content:center">
+
+        <label class="col-form-label">@ViewData["Message"]</label>
+    </div>
+}
 <form method="post" class="bg-blue">
     <div class="row mb-3">
         

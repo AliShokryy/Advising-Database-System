@@ -21,6 +21,7 @@ namespace Team6_Advising.Pages.Advisor
         public void OnPost(String? id)
         {
             int advisorID = int.Parse(id);
+            bool major_exists = false;
             try
             {
                 string connectionString = Environment.GetEnvironmentVariable("ConnectionString");
@@ -29,29 +30,50 @@ namespace Team6_Advising.Pages.Advisor
                     connection.Open();
                     string commandText = "Procedures_AdvisorViewAssignedStudents";
                     string major = Request.Form["major"];
-
-                    using (SqlCommand command = new SqlCommand(commandText, connection))
+                    string commandText1 = "SELECT major From Student";
+                    using (SqlCommand command1 = new SqlCommand(commandText1, connection))
                     {
-                        command.CommandType = System.Data.CommandType.StoredProcedure;
-                        command.Parameters.Add(new SqlParameter("@AdvisorID", advisorID));
-                        command.Parameters.Add(new SqlParameter("@major", major));
-                        SqlDataReader reader = command.ExecuteReader();
+
+                        SqlDataReader reader = command1.ExecuteReader();
                         while (reader.Read())
                         {
-                            StudentWithCourses student = new StudentWithCourses();
-                            student.id = reader.GetInt32(0);
-                            student.name = reader.GetString(1);
-                            student.major = reader.GetString(2);
-                            try { 
-                            student.course_name = reader.GetString(3); 
-                                }
-                            catch (Exception e)
+                            if (reader.GetString(0).Equals(major))
                             {
-                                student.course_name = "";
+                                major_exists = true;
+                                break;
                             }
-                            studentWithCoursesList.Add(student);
+                        }
+                        reader.Close();
+                    }
+                    if (major_exists) {
+                        using (SqlCommand command = new SqlCommand(commandText, connection))
+                        {
+                            command.CommandType = System.Data.CommandType.StoredProcedure;
+                            command.Parameters.Add(new SqlParameter("@AdvisorID", advisorID));
+                            command.Parameters.Add(new SqlParameter("@major", major));
+                            SqlDataReader reader = command.ExecuteReader();
+                            while (reader.Read())
+                            {
+                                StudentWithCourses student = new StudentWithCourses();
+                                student.id = reader.GetInt32(0);
+                                student.name = reader.GetString(1);
+                                student.major = reader.GetString(2);
+                                try
+                                {
+                                    student.course_name = reader.GetString(3);
+                                }
+                                catch (Exception e)
+                                {
+                                    student.course_name = "";
+                                }
+                                studentWithCoursesList.Add(student);
+                            }
                         }
                     }
+                    else
+                    {
+                        ViewData["Message"] = "Major does not exist";
+                    }                    
                     connection.Close();
                 }
                 }

@@ -24,25 +24,47 @@ namespace Team6_Advising.Pages.Students
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string commandText = "Procedures_ViewOptionalCourse";
-
-                    using (SqlCommand command = new SqlCommand(commandText, connection) { CommandType = CommandType.StoredProcedure })
+                    bool sem_exists = false;
+                    string commandText1 = "SELECT semester_code From Semester";
+                    using (SqlCommand command1 = new SqlCommand(commandText1, connection))
                     {
-                        command.Parameters.Add(new SqlParameter("@StudentID", student_id));
-                        command.Parameters.Add(new SqlParameter("@current_semester_code", semester));
 
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        SqlDataReader reader = command1.ExecuteReader();
+                        while (reader.Read())
                         {
-                            while (reader.Read())
+                            if (reader.GetString(0).Equals(semester))
                             {
-                                Course course = new Course();
-                                course.id = reader.GetInt32(0);
-                                course.name = reader.GetString(1);                                
-                                courses.Add(course);
+                                sem_exists = true;
+                                break;
                             }
                         }
-
+                        reader.Close();
                     }
+                    string commandText = "Procedures_ViewOptionalCourse";
+                    if (sem_exists) {
+                        using (SqlCommand command = new SqlCommand(commandText, connection) { CommandType = CommandType.StoredProcedure })
+                        {
+                            command.Parameters.Add(new SqlParameter("@StudentID", student_id));
+                            command.Parameters.Add(new SqlParameter("@current_semester_code", semester));
+
+                            using (SqlDataReader reader = command.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    Course course = new Course();
+                                    course.id = reader.GetInt32(0);
+                                    course.name = reader.GetString(1);
+                                    courses.Add(course);
+                                }
+                            }
+
+                        }
+                    }
+                    else
+                    {
+                        ViewData["Message"] = "Semester does not exist";
+                    }
+                    
                     connection.Close();
                 }
             }
