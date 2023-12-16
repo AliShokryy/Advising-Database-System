@@ -38,7 +38,7 @@ namespace Team6_Advising.Pages.Advisor
                             Student student = new Student();
                             student.studentId = reader.GetInt32(0);
                             student.name = reader.GetString(1) + " " + reader.GetString(2);
-                            //student.l_name = reader.GetString(2);
+                            
                             student.email = reader.GetString(6);
                             student.major = reader.GetString(7);
                             student.faculty = reader.GetString(5);

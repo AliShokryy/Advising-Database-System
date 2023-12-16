@@ -36,6 +36,7 @@ namespace Team6_Advising.Pages.Advisor
                         {
                             checkStudent = !reader.IsDBNull(0);
                         }
+                        reader.Close();
                     }
                     if (checkStudent)
                     {
@@ -52,12 +53,13 @@ namespace Team6_Advising.Pages.Advisor
                             command.ExecuteNonQuery();
                         }
                         ViewData["Message"] = "Graduation Plan added Successfully";
-                        connection.Close();
+                        
                     }
                     else
                     {
                         ViewData["Message"] = "Not One of Your Assigned Students";
                     }
+                    connection.Close();
                 }
             }
             catch (Exception e)
