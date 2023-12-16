@@ -88,4 +88,35 @@
 <div style="display: flex; justify-content:center">
 <h1>Welcome To The Students Portal</h1>
 </div>
+<br/>
+@if (@Model.id != null)
+{
+   <div style="display:flex; justify-content:center">
+        <div class="card">
+            <div class="features" style="text-align:left">
+                <label class="col-form-label">Student ID: @Model.s.id </label><br />
+
+                <label class="col-form-label">Name: @Model.s.name </label><br />
+
+                <label class="col-form-label">GPA: @Model.s.gpa</label><br />
+
+                <label class="col-form-label">Faculty: @Model.s.faculty</label><br />
+
+                <label class="col-form-label">Email: @Model.s.email</label><br />
+
+                <label class="col-form-label">Major: @Model.s.major</label><br />
+
+                <label class="col-form-label">Semester: @Model.s.semester</label><br />
+
+                <label class="col-form-label">Acquired Hours: @Model.s.acquired_hours</label> <br />
+
+                <label class="col-form-label">Assigned Hours: @Model.s.assigned_hours</label><br />
+
+                <label class="col-form-label">Advisor Name: @Model.s.advisor_name</label><br />
+
+            </div>
+        </div>
+    </div>
+    
+}
 

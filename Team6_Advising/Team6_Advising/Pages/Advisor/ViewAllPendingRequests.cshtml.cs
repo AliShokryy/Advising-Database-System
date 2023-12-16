@@ -38,7 +38,7 @@ namespace Team6_Advising.Pages.Advisor
                             command.CommandText = "Procedures_AdvisorApproveRejectCHRequest";
                             command.CommandType = System.Data.CommandType.StoredProcedure;
                             command.Parameters.AddWithValue("@requestID", requestID);
-                            //command.Parameters.AddWithValue("@Request_Type", requestType);
+                            
                             command.Parameters.AddWithValue("@current_sem_code", currSemCode);
                         }
                         if (requestType.Contains("course"))
@@ -46,16 +46,13 @@ namespace Team6_Advising.Pages.Advisor
                             command.CommandText = "Procedures_AdvisorApproveRejectCourseRequest";
                             command.CommandType = System.Data.CommandType.StoredProcedure;
                             command.Parameters.AddWithValue("@requestID", requestID);
-                            //command.Parameters.AddWithValue("@Request_Type", requestType);
+                            
                             command.Parameters.AddWithValue("@current_semester_code", currSemCode);
                         }
                         
-                        //command.CommandType = System.Data.CommandType.StoredProcedure;
-                        //command.Parameters.AddWithValue("@requestID", requestID);
-                        ////command.Parameters.AddWithValue("@Request_Type", requestType);
-                        //command.Parameters.AddWithValue("@current_sem_code", currSemCode);
+                        
                         command.ExecuteNonQuery();
-                        //Response.Redirect("/Advisor/ViewAllPendingRequests?id=" + advisorID);
+                       
                         connection.Close();
                         OnGet(id);
                     }
@@ -109,6 +106,7 @@ namespace Team6_Advising.Pages.Advisor
                             requestList.Add(r);
                         }
                     }
+                    connection.Close();
                 }
             }
             catch (Exception e)
