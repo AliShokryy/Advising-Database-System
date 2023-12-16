@@ -24,7 +24,7 @@
     </style>
 
 </head>
-<body style="padding:20px">
+<body style="padding:20px; background: #D1EAF0">
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -32,10 +32,11 @@
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - AAAAA - 
-            <a asp-page="./Admin/Login">Admin</a>
-        </div>
+        <!--if the current page is the landing page-->
+            <div class="container" style="color: #123456">
+                &copy; 2023 - AAAAA -
+                <a asp-page="./Admin/Login">Admin</a>
+            </div>
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

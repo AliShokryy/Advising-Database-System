@@ -63,6 +63,7 @@ namespace Team6_Advising.Pages.Advisor
             }
             catch (Exception e)
             {
+                ViewData["Message"] = "Error: Wrong Insertion ";
                 Console.WriteLine(e.ToString());
             }
         }

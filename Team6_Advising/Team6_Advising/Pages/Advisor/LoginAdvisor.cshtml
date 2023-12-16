@@ -27,8 +27,14 @@
         </div>
     </nav>
 </header>
-    <div class="container">
-        <h1>Welcome Back!</h1>
+    <div class="container justify-content-center">
+        <h1 style="text-align:center">Welcome Back!</h1>
+        @if(ViewData["Message"] != null)
+        {
+            <div class="bg-blue2" style="display:flex; justify-content:center">
+            <label class="col-form-label">@ViewData["Message"]</label>
+            </div>
+        }
         <form method="post" class="bg-blue">
             <div class="form-group">
                 <label class="col-sm-3 col-form-label">ID</label>

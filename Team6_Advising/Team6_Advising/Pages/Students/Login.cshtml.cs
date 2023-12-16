@@ -38,8 +38,7 @@ namespace Team6_Advising.Pages.Students
                         }
                         else
                         {
-                            Console.WriteLine("Login failed");
-                            ViewData["Message"] = "Login Failed";
+                            ViewData["Message"] = "Invalid Credentials";
 
                         }
                     }
@@ -49,13 +48,11 @@ namespace Team6_Advising.Pages.Students
             }
             catch(FormatException e)
             {
-                ViewData["Message"] = "Invalid Student ID";
-                Console.WriteLine(e.ToString());
+                ViewData["Message"] = "Student ID must be a number";               
             }
             catch(SqlException e)
             {
                 ViewData["Message"] = "Student not found";
-                Console.WriteLine(e.ToString());
             }
         }
     }

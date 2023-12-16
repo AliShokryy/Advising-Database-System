@@ -58,6 +58,16 @@
     </nav>
 </header>
 <h1>View Pending Requests</h1>
+@if(Model.requestList.Count == 0)
+{
+    <h3>No Pending Requests</h3>
+}
+@if(ViewData["message"] != null)
+{
+    <div class="bg-blue2" style="display:flex; justify-content:center">
+        @ViewData["message"]
+    </div>
+}
 <table class="table">
     <thead>
         <tr>

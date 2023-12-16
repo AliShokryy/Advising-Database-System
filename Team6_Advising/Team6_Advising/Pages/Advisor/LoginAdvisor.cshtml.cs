@@ -32,13 +32,13 @@ namespace Team6_Advising.Pages.Advisor
                         // Check the result, assuming it's an integer
                         if ((bool)result == true)
                         {
-                            Console.WriteLine("Login Successful");
+                            
                             Response.Redirect("/Advisor/AdvisorMenu?id=" + advisorId);
                         }
                         else
                         {
-                            Console.WriteLine("Login failed");
-                            ViewData["Message"] = "Login Failed";
+                            
+                            ViewData["Message"] = "Invalid Credentials";
 
                         }
                     }
