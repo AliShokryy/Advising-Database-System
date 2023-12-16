@@ -42,9 +42,9 @@ namespace Team6_Advising.Pages.Students
             }
 
 
-            catch (SqlException e)
+            catch (Exception e)
             {
-                ViewData["Message"] = "Student not found";
+                ViewData["Message"] = "Invalid Input";
                 Console.WriteLine(e.ToString());
             }
 

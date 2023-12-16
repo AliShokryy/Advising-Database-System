@@ -40,7 +40,7 @@ namespace Team6_Advising.Pages.Students
                 }
             }
 
-            catch (SqlException e)
+            catch (Exception e)
             {
 
                 Console.WriteLine(e.ToString());

@@ -46,7 +46,7 @@ namespace Team6_Advising.Pages.Advisor
                     connection.Close();
                 }
             }
-            catch(SqlException e)
+            catch(Exception e)
             {
                 ViewData["Message"] = "Advisor not found";
                 Console.WriteLine(e.ToString());

@@ -27,7 +27,7 @@ namespace Team6_Advising.Pages.Admin
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    if (reader.GetString(0).Equals(value))
+                    if (reader[0].ToString().Equals(value))
                     {
                         result = true;
                         break;

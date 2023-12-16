@@ -33,8 +33,8 @@ namespace Team6_Advising.Pages.Students
                                 courseSlot.Slot_Time = reader.GetString(4);
                                 courseSlot.Slot_Location = reader.GetString(5);
                                 courseSlot.Course_Id2 = reader.GetInt32(6);
-                                courseSlot.Instructor_Id = reader.GetInt32(7);
-                                courseSlot.Instructor_Name = reader.GetString(8);
+                                courseSlot.Instructor_Id = reader.IsDBNull(7)?null:reader.GetInt32(7);
+                                courseSlot.Instructor_Name = reader.IsDBNull(8)?null : reader.GetString(8);
                                 courseSlots.Add(courseSlot);    
                                
                             }
@@ -44,10 +44,10 @@ namespace Team6_Advising.Pages.Students
                     connection.Close();
                 }
             }
-            catch (SqlException e)
+            catch (Exception e)
             {
                 ViewData["Message"] = "error";
-                Console.WriteLine(e.ToString());
+                
             }
 
         }
@@ -55,14 +55,14 @@ namespace Team6_Advising.Pages.Students
         public class courseSlot
         {
             public int Course_Id;
-            public String Course_Name;
-            public int Slot_Id;
-            public String Slot_Day;
-            public String Slot_Time;
-            public String Slot_Location;
-            public int Course_Id2;
-            public int Instructor_Id;
-            public String Instructor_Name;
+            public String? Course_Name;
+            public int? Slot_Id;
+            public String? Slot_Day;
+            public String? Slot_Time;
+            public String? Slot_Location;
+            public int? Course_Id2;
+            public int? Instructor_Id;
+            public String? Instructor_Name;
         }
     }
     

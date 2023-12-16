@@ -58,7 +58,7 @@ namespace Team6_Advising.Pages.Students
             }
             
 
-            catch (SqlException e)
+            catch (Exception e)
             {
                 ViewData["Message"] = "Student not found";
                 Console.WriteLine(e.ToString());

@@ -26,7 +26,7 @@ namespace Team6_Advising.Pages.Admin
 
                     SqlParameter typeParam, dateTimeParam, courseParam;
                     typeParam = new SqlParameter("@Type", examType);
-                    dateTimeParam = new SqlParameter("@date", examDateAndTime.ToString("yyyy-MM-dd HH:mm:ss"));
+                    dateTimeParam = new SqlParameter("@date", examDateAndTime.ToString("yyyy-MM-dd"));
                     courseParam = new SqlParameter("@courseID", courseID);
 
                     string commandText = "Procedures_AdminAddExam";

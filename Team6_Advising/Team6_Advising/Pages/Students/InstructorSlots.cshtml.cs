@@ -28,7 +28,7 @@ namespace Team6_Advising.Pages.Students
                         SqlDataReader reader = command1.ExecuteReader();
                         while (reader.Read())
                         {
-                            if (reader.GetInt32(0) == instructor_id && reader.GetInt32(1) == course_id)
+                            if (reader.GetInt32(1) == instructor_id && reader.GetInt32(0) == course_id)
                             {
                                 instructor_exists = true;
                                 break;
@@ -73,7 +73,7 @@ namespace Team6_Advising.Pages.Students
                     connection.Close();
                 }
             }
-            catch (SqlException e)
+            catch (Exception e)
             {
                 ViewData["Message"] = "error";
                 

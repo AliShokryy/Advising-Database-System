@@ -19,18 +19,18 @@ namespace Team6_Advising.Pages.Admin
                     SqlHelper.DB_CONNECTION.Open();
 
                     SqlParameter instructorParam, courseParam, slotParam; 
-                    instructorParam = new SqlParameter("@cours_id", instructorId);
-                    courseParam = new SqlParameter("@instructor_id", courseId);
+                    instructorParam = new SqlParameter("@instructor_id", instructorId);
+                    courseParam = new SqlParameter("@cours_id", courseId);
                     slotParam = new SqlParameter("@slot_id", slotId);
 
                     string commandText = "Procedures_AdminLinkInstructor";
                     SqlHelper.ExecActionProc(commandText, courseParam, instructorParam, slotParam);
 
-                    Console.WriteLine("Successful Operation !");
+                    ViewData["Message"] = "Linked Instructor to Course Successfully !";
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.Message);
+                    ViewData["Message"] = "Invalid Instructor ID or Course ID or Slot ID";
                 }
                 finally
                 {
@@ -38,7 +38,7 @@ namespace Team6_Advising.Pages.Admin
                 }
             }
             else { 
-                Console.WriteLine("Invalid input");
+                ViewData["Message"] = "Invalid Input !";
             }
         }
     }

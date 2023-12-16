@@ -25,11 +25,11 @@ namespace Team6_Advising.Pages.Admin
                     string commandText = "Procedures_AdminDeleteCourse";
                     SqlHelper.ExecActionProc(commandText, courseParam);
 
-                    Console.WriteLine("Successful Operation !");
+                    ViewData["Message"] = "Deleted Course Successfully !";
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.Message);
+                    ViewData["Message"] = "Invalid Course ID";
                 }
                 finally
                 {

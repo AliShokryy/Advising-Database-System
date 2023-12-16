@@ -43,7 +43,7 @@ namespace Team6_Advising.Pages.Students
                     connection.Close();
                 }
             }
-            catch (SqlException e)
+            catch (Exception e)
             {
                 ViewData["Message"] = "error";
                 Console.WriteLine(e.ToString());

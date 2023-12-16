@@ -22,33 +22,33 @@ namespace Team6_Advising.Pages.Admin
                     if (SqlHelper.ExistIn(semesterCode, "SELECT semester_code FROM Semester"))
                     { 
                         SqlParameter instructorParam, courseParam, studentParam, semesterParam;
-                        courseParam = new SqlParameter("@cours_id", instructorId);
-                        instructorParam = new SqlParameter("@instructor_id", courseId);
+                        courseParam = new SqlParameter("@cours_id", courseId);
+                        instructorParam = new SqlParameter("@instructor_id", instructorId);
                         studentParam = new SqlParameter("@studentID", studentId);
                         semesterParam = new SqlParameter("@semester_code", semesterCode);
 
                         string commandText = "Procedures_AdminLinkStudent";
                         SqlHelper.ExecActionProc(commandText, courseParam, instructorParam, studentParam, semesterParam);
 
-                        Console.WriteLine("Successful Operation !");
+                        ViewData["Message"] = "Linked Student to Course Successfully !";
 
                     }
                     else
                     {
-                        Console.WriteLine("Semester code does not exist");
+                        ViewData["Message"] = "Invalid Input";
                     }
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.Message);
+                    ViewData["Message"] = "Invalid Instructor ID or Course ID or Student ID";
                 }
                 finally
                 {
                     SqlHelper.DB_CONNECTION.Close();
                 }
             }
-            else { 
-                Console.WriteLine("Invalid input");
+            else {
+                ViewData["Message"] = "Invalid Input !";
             }
         }
         

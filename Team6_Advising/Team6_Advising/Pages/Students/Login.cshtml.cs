@@ -50,7 +50,7 @@ namespace Team6_Advising.Pages.Students
             {
                 ViewData["Message"] = "Student ID must be a number";               
             }
-            catch(SqlException e)
+            catch(Exception e)
             {
                 ViewData["Message"] = "Student not found";
             }

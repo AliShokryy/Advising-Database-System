@@ -32,7 +32,7 @@ namespace Team6_Advising.Pages.Admin
                                 studentTranscrip.course_id = reader.GetInt32(3);
                                 studentTranscrip.course_name = reader.GetString(4);
                                 studentTranscrip.type = reader.GetString(5);
-                                studentTranscrip.grade = reader.GetString(6);
+                                studentTranscrip.grade = reader.IsDBNull(6)?null:reader.GetString(6);
                                 studentTranscrip.semester_code = reader.GetString(7);
                                 studentTranscrips.Add(studentTranscrip);
                             }
@@ -53,13 +53,13 @@ namespace Team6_Advising.Pages.Admin
         public class StudentTranscrip
         {
             public int student_id;
-            public String student_fname;
-            public String student_lname;
-            public int course_id;
-            public String course_name;
-            public String type;
-            public String grade;
-            public String semester_code;
+            public String? student_fname;
+            public String? student_lname;
+            public int? course_id;
+            public String? course_name;
+            public String? type;
+            public String? grade;
+            public String? semester_code;
         }
     }
 }

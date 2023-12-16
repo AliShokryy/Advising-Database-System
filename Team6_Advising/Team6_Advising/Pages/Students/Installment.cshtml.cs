@@ -35,7 +35,7 @@ namespace Team6_Advising.Pages.Students
                 ViewData["Message"] = "Invalid Student ID";
                 Console.WriteLine(e.ToString());
             }
-            catch (SqlException e)
+            catch (Exception e)
             {
                 ViewData["Message"] = "Student not found";
                 Console.WriteLine(e.ToString());

@@ -70,7 +70,7 @@ namespace Team6_Advising.Pages.Students
                 }
 
             }
-            catch (SqlException e)
+            catch (Exception e)
             {
                 ViewData["Message"] = "error";
                 Console.WriteLine(e.ToString());

@@ -25,11 +25,11 @@ namespace Team6_Advising.Pages.Admin
                     string commandText = "Procedures_AdminLinkStudentToAdvisor";
                     SqlHelper.ExecActionProc(commandText, studentParam, advisorParam);
 
-                    Console.WriteLine("Successful Operation !");
+                    ViewData["Message"] = "Linked Student to Advisor Successfully !";
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.Message);
+                    ViewData["Message"] = "Invalid Student ID or Advisor ID";
                 }
                 finally
                 {
@@ -37,7 +37,7 @@ namespace Team6_Advising.Pages.Admin
                 }
             }
             else { 
-                Console.WriteLine("Invalid input");
+                ViewData["Message"] = "Invalid Input!";
             }
         }
     }

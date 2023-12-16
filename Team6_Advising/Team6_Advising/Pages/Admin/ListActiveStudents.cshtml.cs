@@ -32,7 +32,7 @@ namespace Team6_Advising.Pages.Admin
                                 student.fname = reader.GetString(1);
                                 student.lname = reader.GetString(2);
                                 student.password = reader.GetString(3);
-                                student.gpa = reader.GetDecimal(4);
+                                student.gpa = reader.IsDBNull(4)?null:reader.GetDecimal(4);
                                 student.faculty = reader.GetString(5);
                                 student.email = reader.GetString(6);
                                 student.major = reader.GetString(7);
@@ -50,7 +50,7 @@ namespace Team6_Advising.Pages.Admin
                 }
             }
 
-            catch (SqlException e)
+            catch (Exception e)
             {
 
                 Console.WriteLine(e.ToString());
@@ -63,7 +63,7 @@ namespace Team6_Advising.Pages.Admin
             public string fname;
             public string lname;
             public string password;
-            public decimal gpa;
+            public decimal? gpa;
             public string faculty;
             public string email;
             public string major;

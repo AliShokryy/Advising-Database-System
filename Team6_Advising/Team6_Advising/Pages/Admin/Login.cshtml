@@ -7,13 +7,13 @@
 
 <form method="post" class="bg-blue">
     <div class="row mb-3">
-        <label class="col-sm-3 col-form-label">id</label>
+        <label class="col-sm-3 col-form-label">ID</label>
         <div class="col-sm-6">
             <input type="text" class="form-control" name="id" value"">
         </div>
     </div>
     <div class="row mb-3">
-        <label class="col-sm-3 col-form-label">password</label>
+        <label class="col-sm-3 col-form-label">PASSWORD</label>
         <div class="col-sm-6">
             <input type="password" class="form-control" name="password" value"">
         </div>
@@ -24,3 +24,10 @@
         </div>
     </div>
 </form>
+
+@if (ViewData["message"] != null)
+{
+    <div class="bg-blue2" style="display:flex; justify-content:center">
+        <p class="col-form-label">@ViewData["Message"]</p>
+    </div>
+}

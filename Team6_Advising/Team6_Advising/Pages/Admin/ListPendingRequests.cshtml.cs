@@ -45,7 +45,7 @@ namespace Team6_Advising.Pages.Admin
                 }
             }
 
-            catch (SqlException e)
+            catch (Exception e)
             {
 
                 Console.WriteLine(e.ToString());

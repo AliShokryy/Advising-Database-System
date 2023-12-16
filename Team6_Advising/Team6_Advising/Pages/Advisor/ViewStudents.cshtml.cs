@@ -49,7 +49,7 @@ namespace Team6_Advising.Pages.Advisor
                     connection.Close();
                 }
             }
-            catch (SqlException e)
+            catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
             }

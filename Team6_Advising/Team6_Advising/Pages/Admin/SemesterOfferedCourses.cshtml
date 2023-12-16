@@ -8,18 +8,19 @@
 <table class="table">
     <thead>
         <tr>
+            <th>Semester Code</th>
             <th>Course ID</th>
             <th>Course Name</th>
-            <th>Semester Code</th>
+            
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model.semesterOfferedCourses)
         {
             <tr>
+                <td>@item.semester_code</td>
                 <td>@item.course_id</td>
                 <td>@item.course_name</td>
-                <td>@item.semester_code</td>
             </tr>
         }
     </tbody>

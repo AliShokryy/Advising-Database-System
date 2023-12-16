@@ -63,12 +63,13 @@ namespace Team6_Advising.Pages.Students
                         command.Parameters.Add(new SqlParameter("@studentCurr_sem", current_sem));
                         command.ExecuteNonQuery();
                     }
+                    Console.WriteLine("done");
                     connection.Close();
                     OnGet(id);
                 }
 
             }
-            catch (SqlException e)
+            catch (Exception e)
             {
                 ViewData["Message"] = "error";
                 Console.WriteLine(e.ToString());

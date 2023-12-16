@@ -26,11 +26,11 @@ namespace Team6_Advising.Pages.Admin
                     string commandText = "Procedures_AdminDeleteSlots";
                     SqlHelper.ExecActionProc(commandText, semesterParam);
 
-                    Console.WriteLine("Successful Operation !");
+                    ViewData["Message"] = "Deleted Slots Successfully !";
                 }
                 else
                 {
-                    Console.WriteLine("Semester code does not exist");
+                    ViewData["Message"] = "Invalid Input";
                 }
             }
             catch (Exception e)

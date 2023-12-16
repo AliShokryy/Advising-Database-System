@@ -24,11 +24,11 @@ namespace Team6_Advising.Pages.Admin
                     string commandText = "Procedures_AdminIssueInstallment";
                     SqlHelper.ExecActionProc(commandText, paymentParam);
 
-                    Console.WriteLine("Successful Operation !");
+                    ViewData["Message"] = "Issued Installments Successfully !";
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.Message);
+                    ViewData["Message"] = "Invalid Payment ID";
                 }
                 finally
                 {
@@ -37,7 +37,7 @@ namespace Team6_Advising.Pages.Admin
             }
             else
             {
-                Console.WriteLine("Invalid input");
+                ViewData["Message"] = "Invalid Payment ID";
             }
         }
     }
