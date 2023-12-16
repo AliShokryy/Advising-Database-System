@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "G:\\Semester 5\\[CSEN501] Data Base I\\Project Repo\\Advising-Database-System\\Team6_Advising\\Team6_Advising\\Team6_Advising.csproj": {}
+    "C:\\Users\\DELL\\source\\repos\\Advising-Database-System\\Team6_Advising\\Team6_Advising\\Team6_Advising.csproj": {}
   },
   "projects": {
-    "G:\\Semester 5\\[CSEN501] Data Base I\\Project Repo\\Advising-Database-System\\Team6_Advising\\Team6_Advising\\Team6_Advising.csproj": {
+    "C:\\Users\\DELL\\source\\repos\\Advising-Database-System\\Team6_Advising\\Team6_Advising\\Team6_Advising.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "G:\\Semester 5\\[CSEN501] Data Base I\\Project Repo\\Advising-Database-System\\Team6_Advising\\Team6_Advising\\Team6_Advising.csproj",
+        "projectUniqueName": "C:\\Users\\DELL\\source\\repos\\Advising-Database-System\\Team6_Advising\\Team6_Advising\\Team6_Advising.csproj",
         "projectName": "Team6_Advising",
-        "projectPath": "G:\\Semester 5\\[CSEN501] Data Base I\\Project Repo\\Advising-Database-System\\Team6_Advising\\Team6_Advising\\Team6_Advising.csproj",
+        "projectPath": "C:\\Users\\DELL\\source\\repos\\Advising-Database-System\\Team6_Advising\\Team6_Advising\\Team6_Advising.csproj",
         "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
-        "outputPath": "G:\\Semester 5\\[CSEN501] Data Base I\\Project Repo\\Advising-Database-System\\Team6_Advising\\Team6_Advising\\obj\\",
+        "outputPath": "C:\\Users\\DELL\\source\\repos\\Advising-Database-System\\Team6_Advising\\Team6_Advising\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config",

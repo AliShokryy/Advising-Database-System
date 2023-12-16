@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Data.SqlClient;
+using Team6_Advising.Pages.Admin;
+using static Team6_Advising.Pages.Admin.ListAdvisorsModel;
 
 namespace Team6_Advising.Pages.Advisor
 {
@@ -9,8 +11,8 @@ namespace Team6_Advising.Pages.Advisor
         public void OnGet()
         {
         }
-        public void OnPost(String? id) 
-        { 
+        public void OnPost(String? id)
+        {
             int advisorID = int.Parse(id);
             try
             {
@@ -21,19 +23,42 @@ namespace Team6_Advising.Pages.Advisor
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string commandText = "Procedures_AdvisorDeleteFromGP";
-
-                    using (SqlCommand command = new SqlCommand(commandText, connection))
+                    string checkAdvisor = "SELECT advisor_id FROM Student WHERE advisor_id=@advisor_id AND student_id = @student_id";
+                    Boolean checkStudent = false;
+                    using (SqlCommand cmd = new SqlCommand(checkAdvisor, connection))
                     {
-                        command.CommandType = System.Data.CommandType.StoredProcedure;
-                        command.Parameters.Add(new SqlParameter("@studentID", studentID));
-                        command.Parameters.Add(new SqlParameter("sem_code", semesterCode));
-                        command.Parameters.Add(new SqlParameter("@courseID", courseID));
-                        
-                        command.ExecuteNonQuery();
+                        cmd.Parameters.Add(new SqlParameter("@advisor_Id", advisorID));
+                        cmd.Parameters.Add(new SqlParameter("@student_id", studentID));
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            checkStudent = !reader.IsDBNull(0);
+                        }
                     }
-                    ViewData["Message"] = "Course deleted Successfully";
-                    connection.Close();
+                    //Boolean checkStudent = SqlHelper.ExistIn(studentID + "", "SELECT student_id FROM Student WHERE advisor_id = " +advisorID);
+                    if (checkStudent)
+                    {
+                        string commandText = "Procedures_AdvisorDeleteFromGP";
+
+                        using (SqlCommand command = new SqlCommand(commandText, connection))
+                        {
+                            command.CommandType = System.Data.CommandType.StoredProcedure;
+                            command.Parameters.Add(new SqlParameter("@studentID", studentID));
+                            command.Parameters.Add(new SqlParameter("@sem_code", semesterCode));
+                            command.Parameters.Add(new SqlParameter("@courseID", courseID));
+
+                            command.ExecuteNonQuery();
+                        }
+                        ViewData["Message"] = "Course deleted Successfully";
+                        connection.Close();
+                    }
+                    else
+                    {
+                        ViewData["Message"] = "Not One of Your Assigned Students";
+                    }
+
+
+
                 }
             }
             catch (Exception e)

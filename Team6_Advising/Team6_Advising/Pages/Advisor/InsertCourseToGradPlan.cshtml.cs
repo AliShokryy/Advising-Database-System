@@ -21,17 +21,36 @@ namespace Team6_Advising.Pages.Advisor
                 {
                     connection.Open();
                     string commandText = "Procedures_AdvisorAddCourseGP";
-
-                    using (SqlCommand command = new SqlCommand(commandText, connection))
+                    string checkAdvisor = "SELECT advisor_id FROM Student WHERE advisor_id=@advisor_id AND student_id = @student_id";
+                    Boolean checkStudent = false;
+                    using (SqlCommand cmd = new SqlCommand(checkAdvisor, connection))
                     {
-                        command.CommandType = System.Data.CommandType.StoredProcedure;
-                        command.Parameters.Add(new SqlParameter("@student_id", studentID));
-                        command.Parameters.Add(new SqlParameter("@Semester_code", semesterCode));
-                        command.Parameters.Add(new SqlParameter("@course_name", courseName));
-                        command.ExecuteNonQuery();
+                        cmd.Parameters.Add(new SqlParameter("@advisor_Id", advisorID));
+                        cmd.Parameters.Add(new SqlParameter("@student_id", studentID));
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            checkStudent = !reader.IsDBNull(0);
+                        }
                     }
-                    ViewData["Message"] = "Course added Successfully";
-                    connection.Close();
+                    if (checkStudent)
+                    {
+                        using (SqlCommand command = new SqlCommand(commandText, connection))
+                        {
+                            command.CommandType = System.Data.CommandType.StoredProcedure;
+                            command.Parameters.Add(new SqlParameter("@student_id", studentID));
+                            command.Parameters.Add(new SqlParameter("@Semester_code", semesterCode));
+                            command.Parameters.Add(new SqlParameter("@course_name", courseName));
+                            command.ExecuteNonQuery();
+                        }
+                        ViewData["Message"] = "Course added Successfully";
+                        connection.Close();
+
+                    }
+                    else
+                    {
+                        ViewData["Message"] = "Not One of Your Assigned Students";
+                    }
                 }
             }
             catch (Exception e)

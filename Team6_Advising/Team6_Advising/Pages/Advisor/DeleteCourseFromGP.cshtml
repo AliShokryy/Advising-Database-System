@@ -96,3 +96,9 @@
         <label class="col-sm-3 col-form-label">Course not deleted</label>
     </div>
 }
+@if (ViewData["Message"] != null && ViewData["Message"].ToString().Equals("Not One of Your Assigned Students"))
+{
+    <div class="bg-blue">
+        <label class="col-form-label">Not One of Your Assigned Students</label>
+    </div>
+}
