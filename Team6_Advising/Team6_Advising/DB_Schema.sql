@@ -124,7 +124,7 @@ day varchar(40),
 time varchar(40), 
 location varchar(40), 
 course_id int Foreign key references course(course_id)  on update cascade on delete cascade,
-instructor_id int Foreign key references Isnstructor(instructor_id) on update cascade on delete cascade
+instructor_id int Foreign key references Instructor(instructor_id) on update cascade on delete cascade
 )
 
 ---------------------------Request-----------------------------------------
@@ -1247,8 +1247,37 @@ GO
 
 
 --//////////////////////////////////////////////////////////////////////////////////////////////
+
 --EXEC Procedures_CreateAllTables
 
+--ALTER DATABASE Advising_System SET single_user WITH ROLLBACK IMMEDIATE
+--DROP DATABASE Advising_System
+
+--Data Sample for M3 evaluation
+--An admin should have a login that is hardcoded .
+
+INSERT INTO Instructor VALUES 
+(1,'Amr', 'Amr@example.com', 'MET', 'Office A')
+--required course
 
 
+Exec Procedures_AdminAddingCourse  'Engineering', 1, 4,'CSEN104',1
+--A course that has a prerequisite
+Exec Procedures_AdminAddingCourse 'Engineering', 2, 4,'CSEN204',1
+Exec [AdminAddingSemester] '2024-03-01', '2024-06-30' ,'S24'
+
+insert into Course_Semester values(1,'S24')
+insert into Course_Semester values(2,'S24')
+
+insert into PreqCourse_course values(1,2)
+
+--optional course
+Exec Procedures_AdminAddingCourse 'Engineering', 2, 4,'CSEN205',1
+insert into Course_Semester values(3,'S24')
+
+Insert into Slot values(1,'Sunday','12:30','C6.204',null,null)
+Insert into Slot values(2,'Monday','12:30','C6.205',null,null)
+
+Exec Procedures_AdminLinkInstructor 1,1,1
+Exec Procedures_AdminLinkInstructor 3,1,2
 

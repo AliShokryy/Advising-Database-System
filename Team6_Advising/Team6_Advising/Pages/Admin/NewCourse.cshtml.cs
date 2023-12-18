@@ -37,12 +37,11 @@ namespace Team6_Advising.Pages.Admin
                     string commandText = "Procedures_AdminAddingCourse";
                     SqlHelper.ExecActionProc(commandText, majorParam, semesterParam, creditHoursParam, courseNameParam, isOfferedParam);
 
-                    Console.WriteLine("Successful Operation !");
+                    ViewData["Message"] = "The course has been added successfully !";
 
                 }
                 catch (Exception e)
                 {
-                    ViewData["Message"] = "Student not found";
                     Console.WriteLine(e.ToString());
                 }
                 finally
@@ -53,7 +52,7 @@ namespace Team6_Advising.Pages.Admin
 
             else
             {
-                Console.WriteLine("Invalid semester or credit hours");
+                ViewData["Message"] = "Invalid semester or credit hours";
             }
 
             //string connectionString = Environment.GetEnvironmentVariable("ConnectionString");

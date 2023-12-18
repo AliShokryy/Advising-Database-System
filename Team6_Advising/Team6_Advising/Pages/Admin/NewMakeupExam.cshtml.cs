@@ -32,11 +32,12 @@ namespace Team6_Advising.Pages.Admin
                     string commandText = "Procedures_AdminAddExam";
                     SqlHelper.ExecActionProc(commandText, typeParam, dateTimeParam, courseParam);
 
-                    Console.WriteLine("Successful Operation !");
+                    ViewData["Message"] = "The makeup exam has been added successfully !";
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
+
                 }
                 finally
                 {
@@ -45,7 +46,7 @@ namespace Team6_Advising.Pages.Admin
             }
             else
             {
-                Console.WriteLine("Invalid input");
+                ViewData["Message"] = "Invalid Course ID";
             }
         }
     }

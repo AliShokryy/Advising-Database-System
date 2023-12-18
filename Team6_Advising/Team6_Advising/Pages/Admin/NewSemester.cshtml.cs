@@ -29,12 +29,11 @@ namespace Team6_Advising.Pages.Admin
 
                 SqlHelper.ExecActionProc(commandText, startDateParam, endDateParam, semesterCodeParam);
 
-                Console.WriteLine("Successful Operation !");
-                
+                ViewData["Message"] = "The semester has been added succefully !";
+
             }
             catch (Exception e)
             {
-                ViewData["Message"] = "Student not found";
                 Console.WriteLine(e.ToString());
             }
             finally

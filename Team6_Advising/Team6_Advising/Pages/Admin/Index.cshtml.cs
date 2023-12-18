@@ -58,6 +58,7 @@ namespace Team6_Advising.Pages.Admin
                 }
                 catch (Exception e)
                 {
+                    Console.WriteLine(e.ToString());
                     ViewData["Message"] = "Invalid Payment ID";
                 }
                 finally

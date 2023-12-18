@@ -34,3 +34,10 @@
         </div>
     </div>
 </form>
+
+@if (ViewData["Message"] != null)
+{
+    <div class="bg-blue2" style="display:flex; justify-content:center">
+        <label class="col-form-label">@ViewData["Message"]</label>
+    </div>
+}
