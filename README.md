@@ -38,7 +38,7 @@ To access the admin panel, click on **Admin** in the bottom left corner, then lo
 
 From the home page, the admin can navigate through the different sections via the top menu bar.
 
-![SECTIONS](readme_assets\admin_sections.gif)
+![SECTIONS](readme_assets/admin_sections.gif)
 
 The admin can easily access different sets of information and view them in an organized tabular form.
 
