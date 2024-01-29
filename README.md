@@ -41,12 +41,13 @@ From the home page, the admin can navigate through the different sections via th
 ![SECTIONS](readme_assets\admin_sections.gif)
 
 The admin can easily access different sets of information and view them in an organized tabular form.
-
+![STUDENTTYPE](readme_assets/student_type.png)
 ![TABLES](readme_assets/table_view.png)
 
 Admin can also alter and modify the existing data by specifying the required parameters through the corresponding forms.
 
 ![FORMS](readme_assets/admin_form.png)
+![FORMS](readme_assets/admin_form2.png)
 
 ### Stduent Panel
 
