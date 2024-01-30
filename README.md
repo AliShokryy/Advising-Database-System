@@ -51,19 +51,21 @@ Admin can also alter and modify the existing data by specifying the required par
 
 ### Student Panel
 
-To access the Student panel, click on **Enter As A Student** in the left card, then you can either **Login** or **Register** a new account (Note that: after registeration the student financial status should be updated to be able to access the student page)
+To access the Student panel, click on **Enter As A Student** in the left card, then you can either **Login** or **Register** a new account (Note that: after registration the student financial status should be updated to be able to access the student page)
 
-![ACEESS_ADMIN](readme_assets/admin_login.gif)
+![Student](readme_assets/enter_as_student.gif)
 
 From the home page, the student can navigate through the different sections via the top menu bar.
 
-![SECTIONS](readme_assets/admin_sections.gif)
+![SECTIONS](readme_assets/navigate_student.gif)
 
 The student can easily access different sets of information and view them in an organized tabular form.
-![STUDENTTYPE](readme_assets/student_type.png)
-![TABLES](readme_assets/table_view.png)
+
+![TABLES](readme_assets/student_table_view.png)
 
 Student can also add data (phone numbers, requests & choosing intsructors) by specifying the required parameters through the corresponding forms.
+
+![SECTIONS](readme_assets/student_form.png)
 
 ### Advisor Panel
 
