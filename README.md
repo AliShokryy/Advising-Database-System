@@ -53,7 +53,7 @@ Admin can also alter and modify the existing data by specifying the required par
 
 To access the Student panel, click on **Enter As A Student** in the left card, then you can either **Login** or **Register** a new account (Note that: after registration the student financial status should be updated to be able to access the student page)
 
-![Student](readme_assets/enter_as_student.gif)
+![Student](readme_assets/enter_student.gif)
 
 From the home page, the student can navigate through the different sections via the top menu bar.
 
