@@ -7,7 +7,7 @@ A comprehensive platform designed to serve both students and their advisors, pro
 - 🧑‍💻 [Tech Stack](#tech-stack)
 - 🛫 [Main Features](#main-features)
   - [Admin Panel](#admin-panel)
-  - [Student Panel](#stduent-panel)
+  - [Student Panel](#student-panel)
   - [Advisor Panel](#advisor-panel)
 - 🔨 [Try it on your Machine](#try-it-on-your-machine)
 - 🤝 [Contributers](#contributors)
@@ -49,7 +49,21 @@ Admin can also alter and modify the existing data by specifying the required par
 ![FORMS](readme_assets/admin_form.png)
 ![FORMS](readme_assets/admin_form2.png)
 
-### Stduent Panel
+### Student Panel
+
+To access the Student panel, click on **Enter As A Student** in the left card, then you can either **Login** or **Register** a new account (Note that: after registeration the student financial status should be updated to be able to access the student page)
+
+![ACEESS_ADMIN](readme_assets/admin_login.gif)
+
+From the home page, the student can navigate through the different sections via the top menu bar.
+
+![SECTIONS](readme_assets/admin_sections.gif)
+
+The student can easily access different sets of information and view them in an organized tabular form.
+![STUDENTTYPE](readme_assets/student_type.png)
+![TABLES](readme_assets/table_view.png)
+
+Student can also add data (phone numbers, requests & choosing intsructors) by specifying the required parameters through the corresponding forms.
 
 ### Advisor Panel
 
